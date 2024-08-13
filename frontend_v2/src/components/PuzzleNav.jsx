@@ -1,12 +1,14 @@
 import React from 'react'
+import PuzzleTile from './PuzzleTile'
 
 function PuzzleNav() {
   return (
     <div className='puzzle-nav-container'>
+        <h2>Puzzles</h2>
         <nav className='puzzle-navbar'>
-            <span>puzzle one</span>
-            <span>puzzle two</span>
-            <span>puzzle three</span>
+            <PuzzleTile />
+            <PuzzleTile />
+            <PuzzleTile />
         </nav>
     </div>
   )
