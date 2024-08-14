@@ -71,12 +71,18 @@ body {
   margin-right: 10px;
   margin-top: 10px;
   margin-bottom: 10px;
+  
 }
 
 .link-wrapper a {
   text-decoration: none;
+  color: var(--text-color);
   text-align: center;
   margin-left: 80px; 
+}
+
+.link-wrapper a:hover {
+  color: var(--highlight-color);
 }
 
 .selector {
@@ -85,10 +91,6 @@ body {
   height: 35px;
   background-color: var(--highlight-color);
   align-self: start;
-}
-
-.link-wrapper a:hover {
-  color: var(--highlight-color);
 }
 
 @keyframes puzzlenav {
@@ -107,7 +109,7 @@ body {
   border-left-width: 1px;
   margin-left: auto;
   animation-name: puzzlenav;
-  animation-duration: .8s;
+  animation-duration: .7s;
   animation-iteration-count: 1;
   animation-timing-function: ease;
   overflow-y: scroll;
@@ -164,9 +166,34 @@ body {
   height: 70px;
 }
 
+.notification-icon {
+  border-radius: 5px;
+  margin-right: 20px;
+  padding: 5px;
+  cursor: pointer;
+  transition: background-color .2s;
+}
+
+.notification-icon:hover {
+  background-color: var(--secondary-color);
+}
+
+.login-icon {
+  border-radius: 5px;
+  margin-right: 20px;
+  padding: 5px;
+  cursor: pointer;
+  background-color: var(--highlight-color);
+  transition: background-color .2s;
+}
+
+.login-icon:hover {
+  background-color: var(--secondary-color);
+}
+
 .topbar svg {
   width: 1.5em;
-  margin-right: 20px;
+  background-color: transparent;
 }
 
 .bottombar {
@@ -178,19 +205,31 @@ body {
   height: 70px;
 }
 
-.bottombar div {
+.bottom-icons {
   display: flex;
   flex-direction: row;
-  align-items: ;
   cursor: pointer;
-  margin-right: 20px;
+  margin-right: 40px;
+  border-radius: 5px;
+  padding-left: 6px;
+  padding-right: 6px;
+  padding-top: 7px;
+  transition: background-color .2s;
+}
+
+.bottom-icons:hover {
+  background-color: var(--secondary-color);
+}
+
+.bottom-icons span {
+  background-color: transparent;
 }
 
 .bottombar svg {
   width: 1.5em;
-  margin-right: 40px;
   margin-left: 10px;
   transform: translate(0, -4px);
+  background-color: transparent;
 }
 
 .logo {
@@ -220,6 +259,7 @@ body {
   border-radius: 10px;
   width: 250px;
   height: 40px;
+  margin: 20px;
   display: flex;
   flex-direction: row;
   align-items: center; 

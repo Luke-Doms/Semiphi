@@ -12,15 +12,15 @@ function NavBar() {
         <nav className='main-navbar'>
           <div className='link-wrapper'>
             <div style={location.pathname == '/' ? {width:5} : {width:0}} className='selector'></div>
-            <Link style={location.pathname == '/' ? {color:'var(--highlight-color)'} : {color:'var(--text-color)'}} to='/'>Home</Link>
+            <Link className='testing' style={location.pathname == '/' ? {color:'var(--highlight-color)'} : null } to='/'>Home</Link>
           </div >
           <div className='link-wrapper'>
             <div style={location.pathname == '/Puzzles' ? {width:5} : {width:0}} className='selector'></div>
-            <Link style={location.pathname == '/Puzzles' ? {color:'var(--highlight-color)'} : {color:'var(--text-color)'}} to='/Puzzles'>Puzzles</Link>
+            <Link style={location.pathname == '/Puzzles' ? {color:'var(--highlight-color)'} : null } to='/Puzzles'>Puzzles</Link>
           </div>
           <div className='link-wrapper'>
             <div style={location.pathname == '/Settings' ? {width:5} : {width:0}} className='selector'></div>
-            <Link style={location.pathname == '/Settings' ? {color:'var(--highlight-color)'} : {color:'var(--text-color)'}} to='/Settings'>Settings</Link>
+            <Link style={location.pathname == '/Settings' ? {color:'var(--highlight-color)'} : null } to='/Settings'>Settings</Link>
           </div>
         </nav>
     </div>
