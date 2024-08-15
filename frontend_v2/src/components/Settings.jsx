@@ -29,7 +29,7 @@ function Settings() {
       secondary: 'rgb(243, 8, 196)',
       text: 'rgb(121, 25, 185)'
     }, {
-      id: "incensepunk", 
+      id: "alt dark", 
       primary: 'rgb(9, 24, 51)',
       highlight: 'rgb(234,0,217)',
       secondary: 'black', 
