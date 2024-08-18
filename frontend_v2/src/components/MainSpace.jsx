@@ -3,13 +3,14 @@ import Home from './Home';
 import Puzzles from './Puzzles';
 import Settings from './Settings';
 import Modal from './Backdrop';
-import {Route, Routes} from "react-router-dom";
+import {Route, Routes, Link, useNavigate} from "react-router-dom";
 import {useState} from 'react';
 import ContactUs from './ContactUs';
 
 function MainSpace() {
   const [modal, setModal] = useState(false);
   const [contactUs, setContactUs] = useState(false);
+  const navigate = useNavigate();
   return (
     <div className='mainspace'>
         <div className='topbar'>
@@ -26,9 +27,10 @@ function MainSpace() {
             <Route path="/" element={<Home />}/>
             <Route path="/puzzles" element={<Puzzles />}/>
             <Route path="/settings" element={<Settings />}/>
+            <Route path="/Contact" element={<ContactUs />} />
         </Routes>
         <div className='bottombar'>
-            <div className='bottom-icons' onClick={() => {setModal(true); setContactUs(true)}}>
+            <div className='bottom-icons' onClick={() => {navigate('/Contact')}}>
               <span>Contact Us</span>
               <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512"><rect x="48" y="96" width="416" height="320" rx="40" ry="40" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M112 160l144 112 144-112"/></svg>
             </div>
