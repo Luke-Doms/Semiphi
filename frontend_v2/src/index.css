@@ -320,6 +320,11 @@ body {
   background-color: black;
 }
 
+.login-link {
+  color: purple;
+  cursor: pointer;
+}
+
 .theme:hover {
   transform: scale(1.15);
 }
