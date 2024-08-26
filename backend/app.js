@@ -14,13 +14,26 @@ const MongoStore = require('connect-mongo');
 const app = express();
 const PORT = 3005;
 
+app.use((req, res, next) => {
+	const { url } = req;
+	const isCookieSent = req.headers.cookie;
+	console.log({ url });
+	console.log({ isCookieSent });
+	next();
+  });
+
+app.get('/robots.txt', function (req, res) {
+    res.type('text/plain');
+    res.send("User-agent: *\nDisallow: /");
+});
+
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
 app.use(session({
 	secret: process.env.SECRET,
 	resave: false,
-	saveUninitialized: true,
+	saveUninitialized: false,
 	cookie: {
 	  maxAge: 1000 * 60 * 60 * 24
 	},

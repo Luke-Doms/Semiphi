@@ -30,8 +30,19 @@ router.post('/register', (req, res, next) => {
   res.redirect('/login');
 })
 
-router.get('/loggin-status', (req, res) => {
-  res.json({ 'loggedIn' : req.isAuthenticated()});
+router.get('/get-user', (req, res) => {
+  if (req.user) {
+    res.json({ 
+      'username' : req.user.username, 
+      'theme' : req.session.theme
+    });
+  };
+})
+
+router.post('/set-theme', (req, res) => {
+  console.log(req.body);
+  req.session.theme = req.body;
+  req.session.save();
 })
 
 router.get('/2x2x2/sequences', async (req, res) => {
@@ -107,7 +118,9 @@ router.get('/protected-route', isAuth, (req, res, next) => {
 
 // Visiting this route logs the user out
 router.get('/logout', (req, res, next) => {
-    req.logout((err) => {res.redirect('/')});
+    req.logout(() => {
+      req.session.destroy((err) => res.redirect('/'));
+    });
 });
 
 router.get('/login-success', (req, res, next) => {
