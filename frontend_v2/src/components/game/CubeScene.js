@@ -107,9 +107,9 @@ puzzleScene.prototype.Begin = function () {
   window.addEventListener("mousedown", this.__MouseDownWindowListener);
   window.addEventListener("mouseup", this.__MouseUpWindowListener);
   window.addEventListener("mousemove", this.__MouseMoveWindowListener);
-  this.shuffle.addEventListener("click", this.__ShuffleClickWindowListener);
-  this.createCheckpoint.addEventListener("click", () => this.cube.createCheckpoint(this.gl));
-  this.loadCheckpoint.addEventListener("click", () => this.cube.loadCheckpoint(this.gl));
+  //this.shuffle.addEventListener("click", this.__ShuffleClickWindowListener);
+  //this.createCheckpoint.addEventListener("click", () => this.cube.createCheckpoint(this.gl));
+  //this.loadCheckpoint.addEventListener("click", () => this.cube.loadCheckpoint(this.gl));
 
   var previousFrame = performance.now();
   var dt = 0;

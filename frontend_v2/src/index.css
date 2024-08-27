@@ -93,6 +93,12 @@ body {
   align-self: start;
 }
 
+.game-surface {
+  border-color: black;
+  border-style: solid;
+  border-width: 1px;
+}
+
 @keyframes puzzlenav {
   from {width: 0;}
   to {width: 400px;}
@@ -149,6 +155,12 @@ body {
 
 .puzzle-tile:hover {
   scale: 110%;
+}
+
+.canvas-container {
+  background-color: black;
+  width: 400px;
+  height: 400px;
 }
 
 .mainspace {

@@ -30,11 +30,6 @@ function MainSpace() {
     })
   }, []);
 
-  /*useEffect(() => {
-
-  }, {});
-  */
-
   const handleClick = () => {
     if (user) {
       setUser(null);
