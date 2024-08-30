@@ -15,7 +15,7 @@ function App() {
     } else {
       if (document.getElementById('puzzleNav')) {
         document.getElementById('puzzleNav').style.width=0;
-        setTimeout(() => {setPuzzleNav(false)}, 700);
+        setTimeout(() => {setPuzzleNav(false)}, 500);
       }
     }
   }, [location.pathname]);
