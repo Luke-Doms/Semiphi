@@ -1,16 +1,33 @@
 import NavBar from './components/NavBar';
 import MainSpace from './components/MainSpace';
 import PuzzleNav from './components/PuzzleNav';
-import {Route, Routes} from "react-router-dom";
+import {Route, Routes, useLocation} from "react-router-dom";
+import {useState, useEffect} from 'react';
 
 function App() {
+  const location = useLocation();
+  const [puzzleNav, setPuzzleNav] = useState(false);
+  useEffect(() => {
+    console.log(puzzleNav);
+    console.log('testing');
+    if (location.pathname == '/Puzzles') {
+    setPuzzleNav(true);
+    } else {
+      if (document.getElementById('puzzleNav')) {
+        document.getElementById('puzzleNav').style.width=0;
+        setTimeout(() => {setPuzzleNav(false)}, 700);
+      }
+    }
+  }, [location.pathname]);
+  
   return (
     <div className='background'>
       <NavBar />
       <MainSpace />
-      <Routes>
+      {/*<Routes>
         <Route path="/puzzles" element={<PuzzleNav />}/>
-      </Routes>
+      </Routes>*/}
+      {puzzleNav ? <PuzzleNav /> : null }
     </div>
   );
 }

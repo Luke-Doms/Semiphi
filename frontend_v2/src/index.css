@@ -121,6 +121,7 @@ body {
   animation-iteration-count: 1;
   animation-timing-function: ease;
   overflow-y: scroll;
+  transition: width .7s;
 }
 
 .puzzle-nav-container h2 {

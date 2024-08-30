@@ -3,7 +3,7 @@ import PuzzleTile from './PuzzleTile'
 
 function PuzzleNav() {
   return (
-    <div className='puzzle-nav-container'>
+    <div id='puzzleNav' className='puzzle-nav-container'>
         <h2>Puzzles</h2>
         <nav className='puzzle-navbar'>
             <PuzzleTile />
