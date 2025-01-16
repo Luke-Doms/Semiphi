@@ -8,8 +8,6 @@ function App() {
   const location = useLocation();
   const [puzzleNav, setPuzzleNav] = useState(false);
   useEffect(() => {
-    console.log(puzzleNav);
-    console.log('testing');
     if (location.pathname == '/Puzzles') {
     setPuzzleNav(true);
     } else {

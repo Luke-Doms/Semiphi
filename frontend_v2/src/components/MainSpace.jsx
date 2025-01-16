@@ -36,7 +36,7 @@ function MainSpace() {
     if (location.pathname == '/Puzzles') {
       setPuzzles(true);
     } else {
-      setTimeout(() => {setPuzzles(false)}, 500);
+      setTimeout(() => {setPuzzles(false)}, 300);
     }
   }, [location.pathname])
 
