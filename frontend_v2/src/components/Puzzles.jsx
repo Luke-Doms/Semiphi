@@ -2,10 +2,10 @@ import React from 'react'
 import { useState, useEffect } from 'react';
 import { initApp } from './game_files/App.js';
 
-function Puzzles() {
+function Puzzles(props) {
   useEffect(() => {
-    initApp(3, 3, 3);
-  }, []);
+  initApp(props.puzzleDimensions.x, props.puzzleDimensions.y, props.puzzleDimensions.z);
+  }, [props.puzzleDimensions]);
 
   return (
     <div>

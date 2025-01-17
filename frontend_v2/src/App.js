@@ -5,6 +5,13 @@ import {Route, Routes, useLocation} from "react-router-dom";
 import {useState, useEffect} from 'react';
 
 function App() {
+  const [puzzleDimensions, setPuzzleDimensions] = useState({ x: 3, y:3, z:3 });
+
+  const handleDimensionSelect = (dimensions) => {
+    setPuzzleDimensions(dimensions);
+    console.log(dimensions);
+  };
+
   const location = useLocation();
   const [puzzleNav, setPuzzleNav] = useState(false);
   useEffect(() => {
@@ -21,11 +28,11 @@ function App() {
   return (
     <div className='background'>
       <NavBar />
-      <MainSpace />
+      <MainSpace puzzleDimensions={puzzleDimensions}/>
       {/*<Routes>
         <Route path="/puzzles" element={<PuzzleNav />}/>
       </Routes>*/}
-      {puzzleNav ? <PuzzleNav /> : null }
+      {puzzleNav ? <PuzzleNav onDimensionSelect={handleDimensionSelect}/> : null }
     </div>
   );
 }

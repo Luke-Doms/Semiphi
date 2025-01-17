@@ -147,6 +147,7 @@ body {
 }
 
 .puzzle-tile {
+  background-color: black;
   width: 200px;
   height: 200px;
   border: 1px solid black;
@@ -154,10 +155,27 @@ body {
   margin-bottom: 50px;
   cursor: pointer;
   transition: scale .3s ease;
+  overflow: hidden; /* Clip content that overflows the container */
+}
+
+.puzzleImage {
+  /* Ensure the image doesn't exceed its parent's width */
+  max-width: 100%;
+  height: auto; /* Maintain aspect ratio */
 }
 
 .puzzle-tile:hover {
   scale: 110%;
+}
+
+.puzzle-title {
+  background-color: black;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 .mainspace {
