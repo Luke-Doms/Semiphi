@@ -2,7 +2,7 @@
 
 :root{
   --highlight-color: rgba(89, 0, 191, 1);
-  --primary-color: rgb(21, 31, 46);
+  --primary-color: rgb(0, 0, 0);
   --secondary-color: rgb(11, 22, 34);
   --text-color: rgb(159, 173, 189);
 }
@@ -18,8 +18,8 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  background-color: black;
-  //background-color: var(--primary-color);
+  border-color: #393939;
+  background-color: var(--primary-color);
   color: var(--text-color);
 }
 
@@ -50,7 +50,7 @@ body {
   flex-direction: column;
   align-items: center;
   height: 100%;
-  border: black;
+  border: #393939;
   border-right-style: solid;
   border-right-width: 1px;
   padding-top: 100px;
@@ -95,7 +95,7 @@ body {
 }
 
 .game-surface {
-  margin-top: 50px;
+  margin-top: 35px;
   border-color: black;
   border-style: solid;
   border-width: 1px;
@@ -112,7 +112,7 @@ body {
   flex-direction: column;
   align-items: center;
   height: 100%;
-  border: black;
+  border: ;
   width: 400px;
   border-left-style: solid;
   border-left-width: 1px;
@@ -186,8 +186,12 @@ body {
   width: 100%;
 }
 
+.mainspace * {
+}
+
 .topbar {
   display: flex;
+  background-color: transparent;
   flex-direction: row;
   align-items: center;
   justify-content: flex-end;
@@ -270,6 +274,40 @@ body {
   margin: auto;
   border-radius: 50%;
   width: 300px;
+}
+
+.settings-nav {
+  display: flex; 
+  flex-direction: row;
+  justify-content: center;
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+.settings-nav > div {
+  margin-right: 35px;
+  margin-left: 35px;
+}
+
+.settings-nav span {
+  font-size: 20px;
+}
+
+.settings-menu {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  margin-left: 75px;
+  margin-top: 50px;
+}
+
+.settings-menu > div {
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+.dropdown span {
+  font-size: 30px;
 }
 
 .theme-container {

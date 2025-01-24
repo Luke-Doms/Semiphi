@@ -1,5 +1,7 @@
 import React from 'react'
 import ThemeBox from './ThemeBox';
+import SettingsNav from './SettingsNav.jsx';
+import Dropdown from './Dropdown.jsx';
 
 function Settings() {
   const changeTheme = (theme) => {
@@ -53,9 +55,27 @@ function Settings() {
       text: 'rgb(30, 16, 122)'
     } //BUG: justify space between messing this up, prob need grid here.
   ];
+
+  const sections = [
+      {
+        title: "Account"
+      }, 
+      { 
+        title: "Theme"
+      }, 
+      { 
+        title: "Algorithms"
+      }
+  ]
+
   return (
     <div>
-      <h1>Themes</h1>
+      <SettingsNav/>
+      <div className='settings-menu'>
+          {sections.map((section) => (
+              <Dropdown section={section.title}/>
+              ))}
+      </div>
       <div className='theme-container'>
         {themes.map((theme) => (
           <ThemeBox onClick={() => changeTheme(theme)} theme={theme}/>
