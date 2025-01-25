@@ -5,7 +5,7 @@ export const ThemeContext = createContext();
 export const ThemeProvider = ({ children }) => {
   const themes = {
     dark: {
-      primary: 'rgb(9, 24, 51)',
+      primary: 'rgb(0, 0, 0)',
       highlight: 'rgb(234,0,217)',
       secondary: 'black',
       text: 'rgb(255,255,255)',
@@ -36,6 +36,15 @@ export const ThemeProvider = ({ children }) => {
     document.documentElement.style.setProperty('--primary-color', selectedTheme.primary);
     document.documentElement.style.setProperty('--secondary-color', selectedTheme.secondary);
     document.documentElement.style.setProperty('--text-color', selectedTheme.text);
+
+    fetch('/set-theme', {
+      method: 'POST', 
+      credentials: "include",
+      headers: {
+        'Content-Type': 'application/json'
+        },
+      body: JSON.stringify(theme)
+    });
   }, [theme]);
 
   return (
