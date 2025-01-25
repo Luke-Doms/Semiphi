@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react';
 import ThemeBox from './ThemeBox';
 import SettingsNav from './SettingsNav.jsx';
 import Dropdown from './Dropdown.jsx';
+import Account from './Account.jsx';
+import Algorithms from './Algorithms.jsx'
+import Theme from './Theme.jsx';
 
 function Settings() {
   const changeTheme = (theme) => {
@@ -58,28 +61,53 @@ function Settings() {
 
   const sections = [
       {
-        title: "Account"
+        id: "account",
+        title: "Account",
+        isOpen: true,
+        component: Account
       }, 
       { 
-        title: "Theme"
+        id: "theme",
+        title: "Theme",
+        isOpen: true,
+        component: Theme
       }, 
       { 
-        title: "Algorithms"
+        id: "algorithms",
+        title: "Algorithms",
+        isOpen: true,
+        component: Algorithms
       }
   ]
+
+  const [sectionsState, setSectionsState] = useState(
+    sections.map(section => ({ ...section }))
+  );
+
+  function toggleSection(id) {
+    setSectionsState(prevSections => 
+      prevSections.map(section => 
+        section.id === id ? { ...section, isOpen: !section.isOpen } : section
+      )
+    );
+  }
 
   return (
     <div>
       <SettingsNav/>
       <div className='settings-menu'>
-          {sections.map((section) => (
-              <Dropdown section={section.title}/>
+          {sectionsState.map((section) => (
+              <div key={section.id} className="menu-section-container">
+                  <div onClick={() => toggleSection(section.id)}>
+                      <Dropdown section={section.title}/>
+                  </div>
+                  {section.isOpen && (
+                  <div className="menu-section-body">
+                      {React.createElement(section.component)}
+                  </div>
+                  )}
+              </div>
               ))}
-      </div>
-      <div className='theme-container'>
-        {themes.map((theme) => (
-          <ThemeBox onClick={() => changeTheme(theme)} theme={theme}/>
-        ))}
       </div>
     </div>
   )
