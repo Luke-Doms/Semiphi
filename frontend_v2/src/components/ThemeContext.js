@@ -7,7 +7,7 @@ export const ThemeProvider = ({ children }) => {
     dark: {
       primary: 'rgb(0, 0, 0)',
       highlight: 'rgb(234,0,217)',
-      secondary: 'black',
+      secondary: 'rgb(14, 14, 14)',
       text: 'rgb(255,255,255)',
     },
     light: {

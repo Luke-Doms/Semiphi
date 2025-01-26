@@ -1,17 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@300&display=swap');
 
 :root{
-  --highlight-color: rgba(89, 0, 191, 1);
+  --highlight-color: rgb(234,0,217);
   --primary-color: rgb(0, 0, 0);
-  --secondary-color: rgb(11, 22, 34);
-  --text-color: rgb(159, 173, 189);
-}
-
-[data-theme = light] {
-  --highlight-color: #000000;
-  --primary-color: #000000;
-  --secondary-color: #000000;
-  --text-color: white;
+  --secondary-color: rgb(14, 14, 14);
+  --text-color: rgb(255, 255, 255);
 }
 
 * {
@@ -37,6 +30,9 @@ body {
   margin-left: 100px;
   margin-right: 100px;
   font-size: larger;
+  background-color: var(--secondary-color);
+  border-radius: 15px;
+  padding: 15px;
 }
 
 .background {
@@ -278,12 +274,17 @@ body {
 }
 
 .settings-nav > div {
-  margin-right: 35px;
-  margin-left: 35px;
+  margin-right: 65px;
+  margin-left: 65px;
 }
 
 .settings-nav span {
   font-size: 20px;
+}
+
+.settings-nav span:hover {
+  color: var(--highlight-color);
+  cursor: pointer;
 }
 
 .menu-section-container {
@@ -295,10 +296,10 @@ body {
 
 .menu-section-body {
   padding: 15px;
-  background-color: rgb(14, 14, 14);
+  background-color: var(--secondary-color); 
   margin-left: 25px;
   margin-top: 25px;
-  width: 100%;
+  width: calc(100% - 25px);
   text-align: left;
   border-radius: 15px;
 }
@@ -311,9 +312,10 @@ body {
   display: flex;
   flex-direction: column;
   align-items: start;
-  margin-left: 75px;
+  padding-left: 75px;
   margin-top: 50px;
-  width: 100%;
+  margin-right: 50px;
+  width: 92%;
 }
 
 .settings-menu > div {
@@ -352,6 +354,10 @@ body {
 
 .dropdown span {
   font-size: 30px;
+}
+
+.dropdown span:hover {
+  cursor: pointer;
 }
 
 .switch {
