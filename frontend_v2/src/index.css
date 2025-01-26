@@ -333,6 +333,7 @@ body {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  align-items: center;
 }
 
 .toggle-center {
@@ -350,6 +351,7 @@ body {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  align-items: center;
 }
 
 .dropdown span {
