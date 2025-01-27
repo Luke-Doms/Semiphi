@@ -8,15 +8,13 @@ function Puzzles(props) {
   }, [props.puzzleDimensions]);
 
   return (
-    <div>
+    <div className='puzzleBox'>
       <h1>
         2x2x2
-        <div>
-          <canvas className='game-surface' id="game-surface" width="500rem" height="400rem" background-color='black'>
-            Your browser does not support html5
-          </canvas>
-        </div>
       </h1>
+      <canvas className='game-surface' id="game-surface" width="500rem" height="400rem" background-color='black'>
+        Your browser does not support html5
+      </canvas>
     </div>
   )
 }

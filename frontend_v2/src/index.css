@@ -1,25 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@300&display=swap');
 
 :root{
-  --highlight-color: rgba(89, 0, 191, 1);
-  --primary-color: rgb(21, 31, 46);
-  --secondary-color: rgb(11, 22, 34);
-  --text-color: rgb(159, 173, 189);
-}
-
-[data-theme = light] {
-  --highlight-color: #000000;
-  --primary-color: #000000;
-  --secondary-color: #000000;
-  --text-color: white;
+  --highlight-color: rgb(234,0,217);
+  --primary-color: rgb(0, 0, 0);
+  --secondary-color: rgb(14, 14, 14);
+  --text-color: rgb(255, 255, 255);
 }
 
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  background-color: black;
-  //background-color: var(--primary-color);
+  border-color: #393939;
+  background-color: var(--primary-color);
   color: var(--text-color);
 }
 
@@ -37,6 +30,9 @@ body {
   margin-left: 100px;
   margin-right: 100px;
   font-size: larger;
+  background-color: var(--secondary-color);
+  border-radius: 15px;
+  padding: 15px;
 }
 
 .background {
@@ -50,7 +46,7 @@ body {
   flex-direction: column;
   align-items: center;
   height: 100%;
-  border: black;
+  border: #393939;
   border-right-style: solid;
   border-right-width: 1px;
   padding-top: 100px;
@@ -95,11 +91,7 @@ body {
 }
 
 .game-surface {
-  margin-top: 50px;
-  border-color: black;
-  border-style: solid;
-  border-width: 1px;
-  border-radius: 20px;
+  margin-top: 35px;
 }
 
 @keyframes puzzlenav {
@@ -112,7 +104,7 @@ body {
   flex-direction: column;
   align-items: center;
   height: 100%;
-  border: black;
+  border: ;
   width: 400px;
   border-left-style: solid;
   border-left-width: 1px;
@@ -188,6 +180,7 @@ body {
 
 .topbar {
   display: flex;
+  background-color: transparent;
   flex-direction: row;
   align-items: center;
   justify-content: flex-end;
@@ -270,6 +263,183 @@ body {
   margin: auto;
   border-radius: 50%;
   width: 300px;
+}
+
+.settings-nav {
+  display: flex; 
+  flex-direction: row;
+  justify-content: center;
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+.settings-nav > div {
+  margin-right: 65px;
+  margin-left: 65px;
+}
+
+.settings-nav span {
+  font-size: 20px;
+}
+
+.settings-nav span:hover {
+  color: var(--highlight-color);
+  cursor: pointer;
+}
+
+.menu-section-container {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  width: 100%;
+}
+
+.menu-section-body {
+  padding: 15px;
+  background-color: var(--secondary-color); 
+  margin-left: 25px;
+  margin-top: 25px;
+  width: calc(100% - 25px);
+  text-align: left;
+  border-radius: 15px;
+}
+
+.menu-section-body * {
+  background-color: transparent;
+}
+
+.settings-menu {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  padding-left: 75px;
+  margin-top: 50px;
+  margin-right: 50px;
+  width: 92%;
+}
+
+.settings-menu > div {
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+.color-palette {
+  display: flex;
+  flex-direction: row;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.color-choices {
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  margin-left: 10px;
+  margin-right: 10px;
+  transition: 0.3s;
+}
+
+.color-choices:hover {
+  scale: 115%;
+  cursor: pointer;
+}
+
+.theme-menu {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.bg-toggle {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  align-items: center;
+}
+
+.toggle-center {
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.toggle-center div {
+  margin-top: 15px;
+}
+
+.highlight-selector {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  align-items: center;
+}
+
+.dropdown span {
+  font-size: 30px;
+}
+
+.dropdown span:hover {
+  cursor: pointer;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: var(--highlight-color);
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px var(--highlight-color);
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
 }
 
 .theme-container {

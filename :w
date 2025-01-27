@@ -6,7 +6,7 @@ function Home() {
     <div>
         <div>
           <h1>
-            semiphi
+            CUBIST 
           </h1>
         </div>
         <img className='homeimage' src={twocube} alt="2x2x2 rubiks cube"/>

@@ -160,6 +160,7 @@ export class Scene {
       var gl = this.gl;
       
       gl.enable(gl.DEPTH_TEST);
+      //gl.clearColor(232/255, 241/255, 245/255, 1);
       gl.clearColor(0/255, 0/255, 0/255, 1);
       gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
