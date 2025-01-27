@@ -323,6 +323,27 @@ body {
   margin-bottom: 25px;
 }
 
+.color-palette {
+  display: flex;
+  flex-direction: row;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.color-choices {
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  margin-left: 10px;
+  margin-right: 10px;
+  transition: 0.3s;
+}
+
+.color-choices:hover {
+  scale: 115%;
+  cursor: pointer;
+}
+
 .theme-menu {
   display: flex;
   flex-direction: row;
