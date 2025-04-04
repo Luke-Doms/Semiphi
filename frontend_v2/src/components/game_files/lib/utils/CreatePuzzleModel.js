@@ -3,26 +3,32 @@ import * as glMatrix from 'https://cdn.jsdelivr.net/npm/gl-matrix@3.4.3/esm/inde
 //Name all constants up here .
 const green = {
 	color:[0/255, 155/255, 72/255], 
+	//color:[7/255, 155/255, 14/255],
 	normal: [-1, 0, 0]
 };
 const white = {
 	color:[255/255, 255/255, 255/255], 
+	//color:[0/255, 0/255, 0/255],
 	normal: [0, -1, 0]
 };
 const red = {
 	color:[183/255, 18/255, 52/255], 
+	//color:[255/255, 0/255, 255/255],
 	normal: [0, 0, -1]
 };
 const yellow = {
 	color:[255/255, 213/255, 0/255], 
+	//color:[255/255, 213/255, 0/255],
 	normal: [0, 1, 0]
 };
 const blue = {
 	color:[0/255, 70/255, 173/255], 
+	//color:[0/255, 255/255, 255/255],
 	normal: [1, 0, 0]
 };
 const orange = {
 	color:[255/255, 88/255, 0/255], 
+	//color:[183/255, 18/255, 52/255], 
 	normal: [0, 0, 1]
 };
 function Equal(arr1, arr2) {

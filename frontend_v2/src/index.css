@@ -91,7 +91,41 @@ body {
 }
 
 .game-surface {
-  margin-top: 35px;
+}
+
+.puzzleBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.puzzle-commands {
+  margin-top: 20px;
+  background-color: var(--secondary-color);
+  width: 60%;
+  height: 60px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.puzzle-commands svg {
+  width: 35px;
+  height: 35px;
+  flex-shrink: 0;
+  transform: translateX(-20px);
+  margin-left: 50px;
+  margin-right: 10px;
+  font-size: 40px;
+  background-color: var(--secondary-color);
+}
+
+.puzzle-commands svg:hover {
+  fill: var(--highlight-color);
+  stroke: var(--highlight-color);
+  cursor: pointer;
 }
 
 @keyframes puzzlenav {
@@ -143,7 +177,7 @@ body {
   background-color: black;
   width: 200px;
   height: 200px;
-  border: 1px solid black;
+  border: 1px solid #393939;
   border-radius: 10px;
   margin-bottom: 50px;
   cursor: pointer;
