@@ -128,6 +128,28 @@ body {
   cursor: pointer;
 }
 
+.alg-popup {
+  background-color: var(--secondary-color);
+  width: 600px;
+  height: 300px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 15;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 20px;
+}
+
+.move-tile {
+  background-color: grey;
+  width: 100px;
+  hight: 100px;
+  border-radius: 15px;
+}
+
 @keyframes puzzlenav {
   from {width: 0;}
   to {width: 400px;}
@@ -500,6 +522,7 @@ input:checked + .slider:before {
 }
 
 .login-container {
+  background-color: var(--secondary-color);
   width: 400px;
   height: 300px;
   position: fixed;
