@@ -12,7 +12,7 @@ function PuzzleCommands(props) {
 
   return (
       <div className='puzzle-commands'>
-        <IoRefreshOutline />
+        <IoRefreshOutline onClick={() => (props.triggerReset())}/>
         <PiShuffleSimpleLight/>
         <CiSaveDown2 />
         <PiUploadSimpleLight/>

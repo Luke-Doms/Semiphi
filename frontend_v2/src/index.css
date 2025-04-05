@@ -150,6 +150,70 @@ body {
   border-radius: 15px;
 }
 
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.alg-name {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}
+
+.preview {
+  min-height: 2rem;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  background: #f2f2f2;
+  border-radius: 8px;
+  font-size: 1.2rem;
+}
+
+.placeholder {
+  color: #999;
+}
+
+.move-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.move-buttons button {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.inverse-toggle {
+  margin-bottom: 1rem;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
 @keyframes puzzlenav {
   from {width: 0;}
   to {width: 400px;}
