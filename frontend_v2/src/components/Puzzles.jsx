@@ -6,13 +6,21 @@ import PuzzleCommands from './PuzzleCommands.jsx';
 function Puzzles(props) {
   const [ reset, incrementReset ] = useState(0);
   useEffect(() => {
-  initApp(props.puzzleDimensions.x, props.puzzleDimensions.y, props.puzzleDimensions.z);
-  }, [props.puzzleDimensions, reset]);
+  const saved = localStorage.getItem("puzzles");
+  if (!saved) {
+    return;
+  }
+
+  const puzzles = JSON.parse(saved);
+  const current = puzzles[props.currentPuzzleName];
+  console.log(props.currentPuzzleName, current);
+  initApp(current.dimensions.x, current.dimensions.y, current.dimensions.z);
+  }, [props.currentPuzzleName, reset]);
 
   return (
     <div className='puzzleBox'>
       <h1>
-        2x2x2
+        {props.currentPuzzleName}
       </h1>
       <canvas className='game-surface' id="game-surface" width="500rem" height="400rem" background-color='black'>
         Your browser does not support html5

@@ -35,7 +35,7 @@ function PuzzleNav(props) {
         <h2>Puzzles</h2>
         <nav className='puzzle-navbar'>
             {puzzles.map((puzzle) => ( 
-                <PuzzleTile puzzle={puzzle} onDimensionSelect={props.onDimensionSelect}/>
+                <PuzzleTile puzzle={puzzle} setCurrentPuzzleName={props.setCurrentPuzzleName}/>
             ))}
         </nav>
     </div>

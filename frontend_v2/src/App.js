@@ -5,12 +5,53 @@ import {Route, Routes, useLocation} from "react-router-dom";
 import {useState, useEffect} from 'react';
 
 function App() {
-  const [puzzleDimensions, setPuzzleDimensions] = useState({ x: 3, y:3, z:3 });
+  const puzzleConfigs = {
+    "2x2x2": {
+      name: "2x2x2", 
+      dimensions: { x: 2, y: 2, z: 2 },
+      camera: null, 
+      position: null, 
+      saveCamera: null, 
+      savePosition: null
+    },
+    "2x4x4": {
+      name: "2x4x4", 
+      dimensions: { x: 2, y: 4, z: 4 },
+      camera: null, 
+      position: null,
+      saveCamera: null, 
+      savePosition: null
+    },
+    "3x3x3": {
+      name: "3x3x3", 
+      dimensions: { x: 3, y: 3, z: 3 },
+      camera: null, 
+      position: null,
+      saveCamera: null, 
+      savePosition: null
+    },
+    "4x4x4": {
+      name: "4x4x4", 
+      dimensions: { x: 4, y: 4, z: 4 },
+      camera: null, 
+      position: null, 
+      saveCamera: null, 
+      savePosition: null
+    }
+  }
 
-  const handleDimensionSelect = (dimensions) => {
-    setPuzzleDimensions(dimensions);
-    console.log(dimensions);
-  };
+  if (!localStorage.getItem("puzzles")) {
+    localStorage.setItem("puzzles", JSON.stringify(puzzleConfigs));
+  }
+
+  const [currentPuzzleName, setCurrentPuzzleName] = useState(() => {
+    if (!localStorage.getItem("currentPuzzle")) {
+      localStorage.setItem("currentPuzzle", "3x3x3");
+      return "3x3x3";
+    } else {
+      return localStorage.getItem("currentPuzzle");
+    }
+  });
 
   const location = useLocation();
   const [puzzleNav, setPuzzleNav] = useState(false);
@@ -28,11 +69,11 @@ function App() {
   return (
     <div className='background'>
       <NavBar />
-      <MainSpace puzzleDimensions={puzzleDimensions}/>
+      <MainSpace currentPuzzleName={currentPuzzleName}/>
       {/*<Routes>
         <Route path="/puzzles" element={<PuzzleNav />}/>
       </Routes>*/}
-      {puzzleNav ? <PuzzleNav onDimensionSelect={handleDimensionSelect}/> : null }
+      {puzzleNav ? <PuzzleNav setCurrentPuzzleName={setCurrentPuzzleName}/> : null }
     </div>
   );
 }
