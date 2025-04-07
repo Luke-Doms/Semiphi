@@ -47,17 +47,16 @@ export class Scene {
       const cubieModel = new Float32Array(ObjParser(modelText));
 
       this.puzzleModel = CreatePuzzleModel(this.gl, cubieModel, this.x, this.y, this.z);
-
-      /*if (puzzleParams?.position) {
+      if (puzzleParams?.position) {
         console.log("Restoring position from localStorage");
         for (let i in this.puzzleModel) {
           console.log("test", puzzleParams.position[i]);
-          const savedArray = puzzleParams.position[i].worldMatrix; // This is a plain array of 16 numbers
+          const savedArray = puzzleParams.position[i]; // This is a plain array of 16 numbers
           const restoredMatrix = glMatrix.mat4.clone(new Float32Array(savedArray));
           this.puzzleModel[i].worldMatrix = restoredMatrix;
           console.log(this.puzzleModel[i].worldMatrix);
         }
-      }*/
+      }
 
       const vertexShaderText = await GetShaderText(VShader);
       console.log(vertexShaderText);
@@ -139,7 +138,14 @@ export class Scene {
           const rotationAxis = GetRotationAxis(this.gl, this.faceSelected, event, this.eye.pos, this.projMatrix, this.viewMatrix);
           this.moveQueue.push([rotationAxis, this.faceSelected]);
           //update local storage pos
-          PuzzleStorage.setPosition(name, this.puzzleModel);
+          const matrices = [];
+
+          for (const cubie of this.puzzleModel) {
+            if (cubie && cubie.worldMatrix) {
+              matrices.push(Array.from(cubie.worldMatrix));
+            }
+          }
+          PuzzleStorage.setPosition(name, matrices);
         } else {
           console.log('viewMatrix before save:', this.viewMatrix);
           const cameraSave = {pos: Array.from(this.eye.pos), up: Array.from(this.eye.up)}
