@@ -12,7 +12,7 @@ const FShader = require("./lib/shaders/FragmentShader.glsl");
 const BaseCube = require("./lib/models/BaseCube.obj")
 
 export class Scene {
-  constructor (gl, x, y, z) {
+  constructor (gl, x, y, z, name, PuzzleStorage) {
     this.gl = gl;
     this.x = x;
     this.y = y;
@@ -26,7 +26,16 @@ export class Scene {
 //      this.viewMatrix;
 //      this.projMatrix;
 //      this.look;
-      this.eye = new Camera([3 * this.x, 3 * this.y, 3 * this.z], [0, 0, 1]);
+      const puzzleParams = PuzzleStorage.get(name);
+      console.log(puzzleParams);
+      if (puzzleParams.camera) {
+        const savePos = new Float32Array(puzzleParams.camera.pos);
+        const saveUp = new Float32Array(puzzleParams.camera.up);
+        console.log(savePos);
+        this.eye = new Camera(savePos, saveUp);
+      } else {
+        this.eye = new Camera([3 * this.x, 3 * this.y, 3 * this.z], [0, 0, 1]);
+      }
       this.faceSelected = false;
       this.moveQueue = [];
       this.ANIMATION_RUNNING = false;
@@ -39,6 +48,16 @@ export class Scene {
 
       this.puzzleModel = CreatePuzzleModel(this.gl, cubieModel, this.x, this.y, this.z);
 
+      /*if (puzzleParams?.position) {
+        console.log("Restoring position from localStorage");
+        for (let i in this.puzzleModel) {
+          console.log("test", puzzleParams.position[i]);
+          const savedArray = puzzleParams.position[i].worldMatrix; // This is a plain array of 16 numbers
+          const restoredMatrix = glMatrix.mat4.clone(new Float32Array(savedArray));
+          this.puzzleModel[i].worldMatrix = restoredMatrix;
+          console.log(this.puzzleModel[i].worldMatrix);
+        }
+      }*/
 
       const vertexShaderText = await GetShaderText(VShader);
       console.log(vertexShaderText);
@@ -61,7 +80,16 @@ export class Scene {
       this.projMatrix = glMatrix.mat4.create();
       this.worldMatrix = glMatrix.mat4.create();
 
-      glMatrix.mat4.lookAt(this.viewMatrix, this.eye.pos, [0, 0, 0], this.eye.up);   
+      console.log(puzzleParams.view);
+      console.log(puzzleParams);
+      if (puzzleParams.view) {
+        const array = new Float32Array(puzzleParams.view);
+        console.log(array);
+        glMatrix.mat4.copy(this.viewMatrix, array);
+        console.log(this.viewMatrix);
+      } else {
+        glMatrix.mat4.lookAt(this.viewMatrix, this.eye.pos, [0, 0, 0], this.eye.up);
+      }
       glMatrix.mat4.perspective(
         this.projMatrix,
         glMatrix.glMatrix.toRadian(45),
@@ -110,6 +138,12 @@ export class Scene {
         if (this.faceSelected) {
           const rotationAxis = GetRotationAxis(this.gl, this.faceSelected, event, this.eye.pos, this.projMatrix, this.viewMatrix);
           this.moveQueue.push([rotationAxis, this.faceSelected]);
+          //update local storage pos
+          PuzzleStorage.setPosition(name, this.puzzleModel);
+        } else {
+          console.log('viewMatrix before save:', this.viewMatrix);
+          const cameraSave = {pos: Array.from(this.eye.pos), up: Array.from(this.eye.up)}
+          PuzzleStorage.setCamera(name, Array.from(this.viewMatrix), cameraSave);
         }
         this.faceSelected = false;
       });

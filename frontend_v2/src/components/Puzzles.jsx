@@ -2,6 +2,7 @@ import React from 'react'
 import { useState, useEffect } from 'react';
 import { initApp } from './game_files/App.js';
 import PuzzleCommands from './PuzzleCommands.jsx';
+import PuzzleStorage from './PuzzleStorage.js';
 
 function Puzzles(props) {
   const [ reset, incrementReset ] = useState(0);
@@ -14,7 +15,7 @@ function Puzzles(props) {
   const puzzles = JSON.parse(saved);
   const current = puzzles[props.currentPuzzleName];
   console.log(props.currentPuzzleName, current);
-  initApp(current.dimensions.x, current.dimensions.y, current.dimensions.z);
+  initApp(current.dimensions.x, current.dimensions.y, current.dimensions.z, props.currentPuzzleName, PuzzleStorage);
   }, [props.currentPuzzleName, reset]);
 
   return (

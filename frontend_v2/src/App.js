@@ -10,32 +10,40 @@ function App() {
       name: "2x2x2", 
       dimensions: { x: 2, y: 2, z: 2 },
       camera: null, 
+      view: null,
       position: null, 
       saveCamera: null, 
+      saveView: null,
       savePosition: null
     },
     "2x4x4": {
       name: "2x4x4", 
       dimensions: { x: 2, y: 4, z: 4 },
       camera: null, 
+      view: null,
       position: null,
       saveCamera: null, 
+      saveView: null,
       savePosition: null
     },
     "3x3x3": {
       name: "3x3x3", 
       dimensions: { x: 3, y: 3, z: 3 },
       camera: null, 
+      view: null,
       position: null,
       saveCamera: null, 
+      saveView: null,
       savePosition: null
     },
     "4x4x4": {
       name: "4x4x4", 
       dimensions: { x: 4, y: 4, z: 4 },
       camera: null, 
-      position: null, 
+      view: null, 
+      position: null,
       saveCamera: null, 
+      saveView: null,
       savePosition: null
     }
   }
