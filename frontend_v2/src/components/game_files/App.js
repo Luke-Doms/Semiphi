@@ -10,7 +10,6 @@ export function initApp (x, y, z, name, PuzzleStorage) {
   }
 
   var puzzle = new Scene(gl, x, y, z, name, PuzzleStorage);
-  puzzle.Load().then(() => puzzle.Begin());
 
   return puzzle;
 }

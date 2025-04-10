@@ -39,7 +39,7 @@ export function GetCubiesToRotate(gl, rotationAxis, selectedFace, puzzleModel, d
 	return rotationParams;
 }
 
-export function ApplyRotation(gl, rotationParams, rotationDuration, puzzleModel) {
+export function ApplyRotation(gl, rotationParams, rotationDuration, puzzleModel, PuzzleStorage, name) {
 	var dt = rotationDuration/1000 * 2;
 	if (dt > 1) {
 		dt = 1;
@@ -51,6 +51,14 @@ export function ApplyRotation(gl, rotationParams, rotationDuration, puzzleModel)
 		glMatrix.mat4.multiply(puzzleModel[rotationParams.cubies[i].index].worldMatrix, buffer, rotationParams.cubies[i].worldMatrix);	
 	}
 	if (dt == 1) {
+	        const matrices = [];
+
+	        for (const cubie of puzzleModel) {
+		  if (cubie && cubie.worldMatrix) {
+		    matrices.push(Array.from(cubie.worldMatrix));
+		  }
+	        }
+	        PuzzleStorage.setPosition(name, matrices);
 		return false;
 	}
 	return true;

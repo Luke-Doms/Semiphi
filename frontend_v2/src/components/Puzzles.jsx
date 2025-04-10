@@ -7,16 +7,25 @@ import PuzzleStorage from './PuzzleStorage.js';
 function Puzzles(props) {
   const [ reset, incrementReset ] = useState(0);
   useEffect(() => {
-  const saved = localStorage.getItem("puzzles");
-  if (!saved) {
-    return;
-  }
+    let isMounted = true;
 
-  const puzzles = JSON.parse(saved);
-  const current = puzzles[props.currentPuzzleName];
-  console.log(props.currentPuzzleName, current);
-  initApp(current.dimensions.x, current.dimensions.y, current.dimensions.z, props.currentPuzzleName, PuzzleStorage);
-  }, [props.currentPuzzleName, reset]);
+    const saved = localStorage.getItem("puzzles");
+    const puzzles = JSON.parse(saved);
+    const current = puzzles[props.currentPuzzleName];
+
+    const scene = initApp(current.dimensions.x, current.dimensions.y, current.dimensions.z, props.currentPuzzleName, PuzzleStorage);
+    scene.Load().then(() => {
+      if (isMounted) {
+        scene.Begin();
+      }
+    });
+
+    return () => {
+      isMounted = false;
+      scene?.Unload();
+    }
+  }, [props.currentPuzzleName, reset]
+  );
 
   return (
     <div className='puzzleBox'>
@@ -26,7 +35,7 @@ function Puzzles(props) {
       <canvas className='game-surface' id="game-surface" width="500rem" height="400rem" background-color='black'>
         Your browser does not support html5
       </canvas>
-      <PuzzleCommands triggerReset={() => incrementReset(n => n + 1)}/>
+      <PuzzleCommands currentPuzzleName={props.currentPuzzleName} triggerReset={() => incrementReset(n => n + 1)}/>
     </div>
   )
 }

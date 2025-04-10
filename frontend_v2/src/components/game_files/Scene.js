@@ -12,213 +12,191 @@ const FShader = require("./lib/shaders/FragmentShader.glsl");
 const BaseCube = require("./lib/models/BaseCube.obj")
 
 export class Scene {
+  gl;
+  x;
+  y;
+  z;
+
   constructor (gl, x, y, z, name, PuzzleStorage) {
     this.gl = gl;
     this.x = x;
     this.y = y;
     this.z = z;
+    this.name = name;
+    this.PuzzleStorage = PuzzleStorage;
+    this.OnMouseMove = this.OnMouseMove.bind(this);
+    this.OnMouseDown = this.OnMouseDown.bind(this);
+    this.OnMouseUp = this.OnMouseUp.bind(this);
+  }
 
-    //writing methods in the constructor like this creates a copy for each instance of the class which is memory intensive, 
-    //possible change approach if in final app this becomes too sluggish with multiple puzzles open.
-    this.Load = async () => {
-//      this.program;
-//      this.puzzleModel;
-//      this.viewMatrix;
-//      this.projMatrix;
-//      this.look;
-      const puzzleParams = PuzzleStorage.get(name);
-      console.log(puzzleParams);
-      if (puzzleParams.camera) {
-        const savePos = new Float32Array(puzzleParams.camera.pos);
-        const saveUp = new Float32Array(puzzleParams.camera.up);
-        console.log(savePos);
-        this.eye = new Camera(savePos, saveUp);
-      } else {
-        this.eye = new Camera([3 * this.x, 3 * this.y, 3 * this.z], [0, 0, 1]);
+  async Load() {
+    this.PuzzleStorage.listPuzzles();
+    const puzzleParams = this.PuzzleStorage.get(this.name);
+    if (puzzleParams?.camera) {
+      const savePos = new Float32Array(puzzleParams.camera.pos);
+      const saveUp = new Float32Array(puzzleParams.camera.up);
+      this.eye = new Camera(savePos, saveUp);
+    } else {
+      this.eye = new Camera([3 * this.x, 3 * this.y, 3 * this.z], [0, 0, 1]);
+    }
+    this.faceSelected = false;
+    this.moveQueue = [];
+    this.ANIMATION_RUNNING = false;
+
+    const modelText = await GetShaderText(BaseCube);
+
+    const cubieModel = new Float32Array(ObjParser(modelText));
+
+    this.puzzleModel = CreatePuzzleModel(this.gl, cubieModel, this.x, this.y, this.z);
+    if (puzzleParams?.position) {
+      for (let i in this.puzzleModel) {
+        const savedArray = puzzleParams.position[i]; // This is a plain array of 16 numbers
+        const restoredMatrix = glMatrix.mat4.clone(new Float32Array(savedArray));
+        this.puzzleModel[i].worldMatrix = restoredMatrix;
       }
-      this.faceSelected = false;
-      this.moveQueue = [];
-      this.ANIMATION_RUNNING = false;
-//      this.rotationParams;
-//      this.rotationDuration;
-
-      const modelText = await GetShaderText(BaseCube);
-
-      const cubieModel = new Float32Array(ObjParser(modelText));
-
-      this.puzzleModel = CreatePuzzleModel(this.gl, cubieModel, this.x, this.y, this.z);
-      if (puzzleParams?.position) {
-        console.log("Restoring position from localStorage");
-        for (let i in this.puzzleModel) {
-          console.log("test", puzzleParams.position[i]);
-          const savedArray = puzzleParams.position[i]; // This is a plain array of 16 numbers
-          const restoredMatrix = glMatrix.mat4.clone(new Float32Array(savedArray));
-          this.puzzleModel[i].worldMatrix = restoredMatrix;
-          console.log(this.puzzleModel[i].worldMatrix);
-        }
-      }
-
-      const vertexShaderText = await GetShaderText(VShader);
-      console.log(vertexShaderText);
-      const fragmentShaderText = await GetShaderText(FShader);
-
-      this.program = CreateShaderProgram(this.gl, vertexShaderText, fragmentShaderText);
-
-      this.program.uniforms = {
-        u_Proj: this.gl.getUniformLocation(this.program, 'u_Proj'),
-        u_View: this.gl.getUniformLocation(this.program, 'u_View'),
-        u_World: this.gl.getUniformLocation(this.program, 'u_World'),
-      };
-
-      this.program.attribs = {
-        a_Position: this.gl.getAttribLocation(this.program, 'a_Position'),
-        a_Color: this.gl.getAttribLocation(this.program, 'a_Color'),
-      };
-
-      this.viewMatrix = glMatrix.mat4.create();
-      this.projMatrix = glMatrix.mat4.create();
-      this.worldMatrix = glMatrix.mat4.create();
-
-      console.log(puzzleParams.view);
-      console.log(puzzleParams);
-      if (puzzleParams.view) {
-        const array = new Float32Array(puzzleParams.view);
-        console.log(array);
-        glMatrix.mat4.copy(this.viewMatrix, array);
-        console.log(this.viewMatrix);
-      } else {
-        glMatrix.mat4.lookAt(this.viewMatrix, this.eye.pos, [0, 0, 0], this.eye.up);
-      }
-      glMatrix.mat4.perspective(
-        this.projMatrix,
-        glMatrix.glMatrix.toRadian(45),
-        this.gl.canvas.clientWidth/this.gl.canvas.clientHeight,
-        2,
-        1000.0
-      );
     }
 
-    this.Unload = () => {
-      for (var cubie in this.puzzleModel) {
-        const buffer = this.puzzleModel[cubie].buffer_id;
-        gl.deleteBuffer(buffer);
-      }
+    const vertexShaderText = await GetShaderText(VShader);
+    const fragmentShaderText = await GetShaderText(FShader);
 
-      gl.deleteProgram(this.program);
-      this.stopRenderLoop = true;
+    this.program = CreateShaderProgram(this.gl, vertexShaderText, fragmentShaderText);
+
+    this.program.uniforms = {
+      u_Proj: this.gl.getUniformLocation(this.program, 'u_Proj'),
+      u_View: this.gl.getUniformLocation(this.program, 'u_View'),
+      u_World: this.gl.getUniformLocation(this.program, 'u_World'),
+    };
+
+    this.program.attribs = {
+      a_Position: this.gl.getAttribLocation(this.program, 'a_Position'),
+      a_Color: this.gl.getAttribLocation(this.program, 'a_Color'),
+    };
+
+    this.viewMatrix = glMatrix.mat4.create();
+    this.projMatrix = glMatrix.mat4.create();
+    this.worldMatrix = glMatrix.mat4.create();
+
+    if (puzzleParams?.view) {
+      const array = new Float32Array(puzzleParams.view);
+      glMatrix.mat4.copy(this.viewMatrix, array);
+    } else {
+      glMatrix.mat4.lookAt(this.viewMatrix, this.eye.pos, [0, 0, 0], this.eye.up);
+    }
+    glMatrix.mat4.perspective(
+      this.projMatrix,
+      glMatrix.glMatrix.toRadian(45),
+      this.gl.canvas.clientWidth/this.gl.canvas.clientHeight,
+      2,
+      1000.0
+    );
+  }
+
+  Unload() {
+    console.log(this.OnMouseDown);
+    window.removeEventListener("mousedown", this.OnMouseDown);
+    window.removeEventListener("mouseup", this.OnMouseUp);
+    for (var cubie in this.puzzleModel) {
+      const buffer = this.puzzleModel[cubie].buffer_id;
+      this.gl.deleteBuffer(buffer);
     }
 
-    this.Begin = () => {
+    this.gl.deleteProgram(this.program);
+    this.stopRenderLoop = true;
+  }
 
-      const OnMouseMove = (event) => {
-        if (!this.faceSelected) {
-          this.eye.Move(this.gl, event, this.viewMatrix, this.projMatrix);
-        }
+  OnMouseMove(event) {
+    if (!this.faceSelected) {
+      this.eye.Move(this.gl, event, this.viewMatrix, this.projMatrix);
+    }
+  }
+  
+  OnMouseDown(event) {
+    this.faceSelected = CheckIntersection(this.gl, event, this.puzzleModel, this.eye.pos, this.projMatrix, this.viewMatrix); //boolean value
+    this.eye.initialMouseEvent = event;
+    window.addEventListener("mousemove", this.OnMouseMove);
+  }
+
+  OnMouseUp(event) {
+    console.log('hello');
+    window.removeEventListener("mousemove", this.OnMouseMove);
+    if (this.faceSelected) {
+      const rotationAxis = GetRotationAxis(this.gl, this.faceSelected, event, this.eye.pos, this.projMatrix, this.viewMatrix);
+      this.moveQueue.push([rotationAxis, this.faceSelected]);
+    } else {
+      const cameraSave = {pos: Array.from(this.eye.pos), up: Array.from(this.eye.up)}
+      this.PuzzleStorage.setCamera(this.name, Array.from(this.viewMatrix), cameraSave);
+    }
+    this.faceSelected = false;
+  }
+  
+  
+  Begin() {
+    console.log(this.OnMouseDown);
+    window.addEventListener("mousedown", this.OnMouseDown);
+    window.addEventListener("mouseup", this.OnMouseUp);
+
+    this.stopRenderLoop = false;
+    this.startTime = 0;
+    var previousFrameTime = performance.now();
+    var dt;
+    const loop = (currentFrameTime) => {
+      if (this.stopRenderLoop) {
+        return;
       }
+      dt = currentFrameTime - previousFrameTime;
+      previousFrameTime = currentFrameTime;
 
-      const TestRotation = () => {
-        for (var i in this.puzzleModel) {
-          if (this.puzzleModel[i].center.x > -1 && this.puzzleModel[i].center.x < 1) { //only works for odd number of cubies on x axis
-            const angle = glMatrix.glMatrix.toRadian(90);
-            const axis = [1, 0, 0];
-            glMatrix.mat4.rotate(this.puzzleModel[i].worldMatrix, this.puzzleModel[i].worldMatrix, angle, axis);
-          }
-        }
-      }
+      this.Update(dt);
+      this.Render();
 
-      window.addEventListener("mousedown", (event) => {
-        this.faceSelected = CheckIntersection(this.gl, event, this.puzzleModel, this.eye.pos, this.projMatrix, this.viewMatrix); //boolean value
-        this.eye.initialMouseEvent = event;
-        window.addEventListener("mousemove", OnMouseMove);
-      });
-
-      window.addEventListener("mouseup", (event) => {
-        window.removeEventListener("mousemove", OnMouseMove);
-        if (this.faceSelected) {
-          const rotationAxis = GetRotationAxis(this.gl, this.faceSelected, event, this.eye.pos, this.projMatrix, this.viewMatrix);
-          this.moveQueue.push([rotationAxis, this.faceSelected]);
-          //update local storage pos
-          const matrices = [];
-
-          for (const cubie of this.puzzleModel) {
-            if (cubie && cubie.worldMatrix) {
-              matrices.push(Array.from(cubie.worldMatrix));
-            }
-          }
-          PuzzleStorage.setPosition(name, matrices);
-        } else {
-          console.log('viewMatrix before save:', this.viewMatrix);
-          const cameraSave = {pos: Array.from(this.eye.pos), up: Array.from(this.eye.up)}
-          PuzzleStorage.setCamera(name, Array.from(this.viewMatrix), cameraSave);
-        }
-        this.faceSelected = false;
-      });
-
-      window.addEventListener("keydown", (event) => {
-        if (event.code === "Space") {
-          event.preventDefault();
-          TestRotation();
-        }
-      });
-
-      this.stopRenderLoop = false;
-      this.startTime = 0;
-      var previousFrameTime = performance.now();
-      var dt;
-      const loop = (currentFrameTime) => {
-        if (this.stopRenderLoop) {
-          return;
-        }
-        dt = currentFrameTime - previousFrameTime;
-        previousFrameTime = currentFrameTime;
-
-        this.Update(dt);
-        this.Render();
-
-        requestAnimationFrame(loop);
-      }
       requestAnimationFrame(loop);
     }
+    requestAnimationFrame(loop);
+  }
 
-    this.Update = (dt) => {
-      if (this.eye.update) {
-        glMatrix.mat4.lookAt(this.viewMatrix, this.eye.pos, [0, 0, 0], this.eye.up);
-      }
-      if (!this.ANIMATION_RUNNING && this.moveQueue.length > 0) {
-        this.rotationDuration = 0;
-        const currentMove = this.moveQueue.shift();
-        this.rotationParams = GetCubiesToRotate(this.gl, currentMove[0], currentMove[1], this.puzzleModel, [this.x, this.y, this.z]);
-        this.ANIMATION_RUNNING = true;
-      }
-      if (this.ANIMATION_RUNNING) {
-        this.rotationDuration += dt;
-        this.ANIMATION_RUNNING = ApplyRotation(this.gl, this.rotationParams, this.rotationDuration, this.puzzleModel);
-      }
+  Update(dt) {
+    if (this.eye.update) {
+      glMatrix.mat4.lookAt(this.viewMatrix, this.eye.pos, [0, 0, 0], this.eye.up);
     }
+    if (!this.ANIMATION_RUNNING && this.moveQueue.length > 0) {
+      this.rotationDuration = 0;
+      const currentMove = this.moveQueue.shift();
+      this.rotationParams = GetCubiesToRotate(this.gl, currentMove[0], currentMove[1], this.puzzleModel, [this.x, this.y, this.z]);
+      this.ANIMATION_RUNNING = true;
+    }
+    if (this.ANIMATION_RUNNING) {
+      this.rotationDuration += dt;
+      this.ANIMATION_RUNNING = ApplyRotation(
+        this.gl, 
+        this.rotationParams, 
+        this.rotationDuration, 
+        this.puzzleModel, 
+        this.PuzzleStorage, 
+        this.name);
+    }
+  }
 
-    this.Render = () => {
-      var gl = this.gl;
-      
-      gl.enable(gl.DEPTH_TEST);
-      //gl.clearColor(232/255, 241/255, 245/255, 1);
-      gl.clearColor(0/255, 0/255, 0/255, 1);
-      gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+  Render() {
+    var gl = this.gl;
+    
+    gl.enable(gl.DEPTH_TEST);
+    gl.clearColor(0/255, 0/255, 0/255, 1);
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-      gl.useProgram(this.program);
+    gl.useProgram(this.program);
 
-      gl.uniformMatrix4fv(this.program.uniforms.u_View, gl.false, this.viewMatrix);
-      gl.uniformMatrix4fv(this.program.uniforms.u_Proj, gl.false, this.projMatrix);
+    gl.uniformMatrix4fv(this.program.uniforms.u_View, gl.false, this.viewMatrix);
+    gl.uniformMatrix4fv(this.program.uniforms.u_Proj, gl.false, this.projMatrix);
 
-      for (var i in this.puzzleModel) {
-        gl.uniformMatrix4fv(this.program.uniforms.u_World, gl.false, this.puzzleModel[i].worldMatrix);
-        const cubieBuffer = this.puzzleModel[i].buffer_id;
-        gl.bindBuffer(gl.ARRAY_BUFFER, cubieBuffer);
-        gl.enableVertexAttribArray(this.program.attribs.a_Position);
-        gl.vertexAttribPointer(this.program.attribs.a_Position, 3, gl.FLOAT, false, 11 * Float32Array.BYTES_PER_ELEMENT, 0);
-        gl.enableVertexAttribArray(this.program.attribs.a_Color);
-        gl.vertexAttribPointer(this.program.attribs.a_Color, 3, gl.FLOAT, false, 11 * Float32Array.BYTES_PER_ELEMENT, 3 * Float32Array.BYTES_PER_ELEMENT);
-        gl.drawArrays(gl.TRIANGLES, 0, 36);
-      }
+    for (var i in this.puzzleModel) {
+      gl.uniformMatrix4fv(this.program.uniforms.u_World, gl.false, this.puzzleModel[i].worldMatrix);
+      const cubieBuffer = this.puzzleModel[i].buffer_id;
+      gl.bindBuffer(gl.ARRAY_BUFFER, cubieBuffer);
+      gl.enableVertexAttribArray(this.program.attribs.a_Position);
+      gl.vertexAttribPointer(this.program.attribs.a_Position, 3, gl.FLOAT, false, 11 * Float32Array.BYTES_PER_ELEMENT, 0);
+      gl.enableVertexAttribArray(this.program.attribs.a_Color);
+      gl.vertexAttribPointer(this.program.attribs.a_Color, 3, gl.FLOAT, false, 11 * Float32Array.BYTES_PER_ELEMENT, 3 * Float32Array.BYTES_PER_ELEMENT);
+      gl.drawArrays(gl.TRIANGLES, 0, 36);
     }
   }
 }
