@@ -1,11 +1,12 @@
 import React from 'react'
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { initApp } from './game_files/App.js';
 import PuzzleCommands from './PuzzleCommands.jsx';
 import PuzzleStorage from './PuzzleStorage.js';
 
 function Puzzles(props) {
   const [ reset, incrementReset ] = useState(0);
+  const sceneRef = useRef(null);
   useEffect(() => {
     let isMounted = true;
 
@@ -14,6 +15,8 @@ function Puzzles(props) {
     const current = puzzles[props.currentPuzzleName];
 
     const scene = initApp(current.dimensions.x, current.dimensions.y, current.dimensions.z, props.currentPuzzleName, PuzzleStorage);
+    sceneRef.current = scene;
+
     scene.Load().then(() => {
       if (isMounted) {
         scene.Begin();
@@ -23,9 +26,18 @@ function Puzzles(props) {
     return () => {
       isMounted = false;
       scene?.Unload();
+      sceneRef.current = null;
     }
   }, [props.currentPuzzleName, reset]
   );
+
+  const savePosition = () => {
+    sceneRef.current?.SavePosition(); // now this is accessible
+  };
+  
+  const loadPosition = () => {
+    sceneRef.current?.LoadPosition();
+  }
 
   return (
     <div className='puzzleBox'>
@@ -35,7 +47,12 @@ function Puzzles(props) {
       <canvas className='game-surface' id="game-surface" width="500rem" height="400rem" background-color='black'>
         Your browser does not support html5
       </canvas>
-      <PuzzleCommands currentPuzzleName={props.currentPuzzleName} triggerReset={() => incrementReset(n => n + 1)}/>
+      <PuzzleCommands 
+        onLoad={loadPosition} 
+        onSave={savePosition} 
+        currentPuzzleName={props.currentPuzzleName} 
+        triggerReset={() => incrementReset(n => n + 1)}
+      />
     </div>
   )
 }

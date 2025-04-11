@@ -7,17 +7,28 @@ const PuzzleStorage = {
 
   // Save or update a puzzle by name
   setCamera: (name, view, camera) => {
-    console.log(name, camera, view);
     const puzzles = JSON.parse(localStorage.getItem("puzzles") || "{}");
     puzzles[name].camera = camera;
     puzzles[name].view = view;
     localStorage.setItem("puzzles", JSON.stringify(puzzles));
   },
 
-  setPosition: (name, data) => {
-    console.log(name, data);
+  setSaveCamera: (name, view, camera) => {
     const puzzles = JSON.parse(localStorage.getItem("puzzles") || "{}");
-    puzzles[name].position= data;
+    puzzles[name].saveCamera = camera;
+    puzzles[name].saveView = view;
+    localStorage.setItem("puzzles", JSON.stringify(puzzles));
+  },
+
+  setPosition: (name, data) => {
+    const puzzles = JSON.parse(localStorage.getItem("puzzles") || "{}");
+    puzzles[name].position = data;
+    localStorage.setItem("puzzles", JSON.stringify(puzzles));
+  },
+
+  setSavePosition: (name, data) => {
+    const puzzles = JSON.parse(localStorage.getItem("puzzles") || "{}");
+    puzzles[name].savePosition = data;
     localStorage.setItem("puzzles", JSON.stringify(puzzles));
   },
   // Remove a puzzle by name

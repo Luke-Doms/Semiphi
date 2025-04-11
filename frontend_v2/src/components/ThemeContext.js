@@ -60,10 +60,8 @@ export const ThemeProvider = ({ children }) => {
 
   useEffect(() => {
     const selectedHighlight = highlight_colors[highlight];
-    console.log(highlight);
 
     localStorage.setItem('highlight', highlight);
-    console.log(highlight);
 
     document.documentElement.style.setProperty('--highlight-color', selectedHighlight);
     //some update request

@@ -30,7 +30,6 @@ export class Scene {
   }
 
   async Load() {
-    this.PuzzleStorage.listPuzzles();
     const puzzleParams = this.PuzzleStorage.get(this.name);
     if (puzzleParams?.camera) {
       const savePos = new Float32Array(puzzleParams.camera.pos);
@@ -92,7 +91,6 @@ export class Scene {
   }
 
   Unload() {
-    console.log(this.OnMouseDown);
     window.removeEventListener("mousedown", this.OnMouseDown);
     window.removeEventListener("mouseup", this.OnMouseUp);
     for (var cubie in this.puzzleModel) {
@@ -117,7 +115,6 @@ export class Scene {
   }
 
   OnMouseUp(event) {
-    console.log('hello');
     window.removeEventListener("mousemove", this.OnMouseMove);
     if (this.faceSelected) {
       const rotationAxis = GetRotationAxis(this.gl, this.faceSelected, event, this.eye.pos, this.projMatrix, this.viewMatrix);
@@ -131,7 +128,6 @@ export class Scene {
   
   
   Begin() {
-    console.log(this.OnMouseDown);
     window.addEventListener("mousedown", this.OnMouseDown);
     window.addEventListener("mouseup", this.OnMouseUp);
 
@@ -173,6 +169,41 @@ export class Scene {
         this.puzzleModel, 
         this.PuzzleStorage, 
         this.name);
+    }
+  }
+
+  SavePosition() {
+    const matrices = [];
+
+    for (const cubie of this.puzzleModel) {
+      if (cubie && cubie.worldMatrix) {
+        matrices.push(Array.from(cubie.worldMatrix));
+      }
+    }
+    this.PuzzleStorage.setSavePosition(this.name, matrices);
+
+    const cameraSave = {pos: Array.from(this.eye.pos), up: Array.from(this.eye.up)}
+    this.PuzzleStorage.setSaveCamera(this.name, Array.from(this.viewMatrix), cameraSave);
+  }
+
+  LoadPosition() {
+    const puzzleParams = this.PuzzleStorage.get(this.name);
+    if (puzzleParams?.saveCamera) {
+      const savePos = new Float32Array(puzzleParams.saveCamera.pos);
+      const saveUp = new Float32Array(puzzleParams.saveCamera.up);
+      this.eye.pos = savePos;
+      this.eye.up = saveUp;
+    }
+    if (puzzleParams?.savePosition) {
+      for (let i in this.puzzleModel) {
+        const savedArray = puzzleParams.savePosition[i]; // This is a plain array of 16 numbers
+        const restoredMatrix = glMatrix.mat4.clone(new Float32Array(savedArray));
+        this.puzzleModel[i].worldMatrix = restoredMatrix;
+      }
+    }
+    if (puzzleParams?.saveView) {
+      const array = new Float32Array(puzzleParams.saveView);
+      glMatrix.mat4.copy(this.viewMatrix, array);
     }
   }
 

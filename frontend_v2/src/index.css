@@ -143,13 +143,6 @@ body {
   padding-bottom: 20px;
 }
 
-.move-tile {
-  background-color: grey;
-  width: 100px;
-  hight: 100px;
-  border-radius: 15px;
-}
-
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -319,6 +312,10 @@ body {
   background-color: var(--secondary-color);
 }
 
+.notification-icon svg {
+  font-size: 25px;
+}
+
 .login-icon {
   border-radius: 5px;
   margin-right: 20px;
@@ -330,6 +327,10 @@ body {
 
 .login-icon:hover {
   background-color: var(--secondary-color);
+}
+
+.login-icon svg {
+  font-size: 25px;
 }
 
 .topbar svg {
@@ -367,9 +368,10 @@ body {
 }
 
 .bottombar svg {
+  font-size: 20px;
   width: 1.5em;
   margin-left: 10px;
-  transform: translate(0, -4px);
+  transform: translate(0, -1.5px);
   background-color: transparent;
 }
 

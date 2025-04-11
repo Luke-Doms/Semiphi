@@ -17,10 +17,10 @@ function PuzzleCommands(props) {
 
   return (
       <div className='puzzle-commands'>
-        <IoRefreshOutline onClick={() => reset()}/>
+        <IoRefreshOutline onClick={reset}/>
         <PiShuffleSimpleLight/>
-        <CiSaveDown2 />
-        <PiUploadSimpleLight/>
+        <CiSaveDown2 onClick={props.onSave}/>
+        <PiUploadSimpleLight onClick={props.onLoad}/>
         <IoIosAddCircleOutline onClick={() => setModal(true)}/>
         { modal ? <AlgModal setModal={setModal}/> : null}
       </div>
