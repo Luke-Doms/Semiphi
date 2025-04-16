@@ -24,7 +24,6 @@ function MainSpace(props) {
       credentials: "include",
       method: "GET",
     }).then((res) => {
-      console.log('hello');
       if (res) {
         return res.json();
       }

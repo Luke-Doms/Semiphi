@@ -13,12 +13,13 @@ function PuzzleCommands(props) {
   const reset = () => {
     props.triggerReset();
     PuzzleStorage.reset(props.currentPuzzleName);
+    console.log('test');
   }
 
   return (
       <div className='puzzle-commands'>
         <IoRefreshOutline onClick={reset}/>
-        <PiShuffleSimpleLight/>
+        <PiShuffleSimpleLight onClick={props.onShuffle}/>
         <CiSaveDown2 onClick={props.onSave}/>
         <PiUploadSimpleLight onClick={props.onLoad}/>
         <IoIosAddCircleOutline onClick={() => setModal(true)}/>

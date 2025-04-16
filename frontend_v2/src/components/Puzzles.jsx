@@ -39,6 +39,10 @@ function Puzzles(props) {
     sceneRef.current?.LoadPosition();
   }
 
+  const shuffle = () => {
+    sceneRef.current?.Shuffle();
+  }
+
   return (
     <div className='puzzleBox'>
       <h1>
@@ -48,6 +52,7 @@ function Puzzles(props) {
         Your browser does not support html5
       </canvas>
       <PuzzleCommands 
+        onShuffle={shuffle}
         onLoad={loadPosition} 
         onSave={savePosition} 
         currentPuzzleName={props.currentPuzzleName} 

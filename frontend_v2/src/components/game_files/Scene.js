@@ -7,6 +7,7 @@ import { Camera } from './lib/utils/Camera.js';
 import { CheckIntersection } from './lib/utils/CheckIntersection.js';
 import { GetRotationAxis } from './lib/utils/GetRotationAxis.js';
 import { GetCubiesToRotate, ApplyRotation } from './lib/utils/ApplyRotation.js';
+import { GenerateRandomTwist } from './lib/utils/RandomTwist.js';
 const VShader = require("./lib/shaders/VertexShader.glsl");
 const FShader = require("./lib/shaders/FragmentShader.glsl");
 const BaseCube = require("./lib/models/BaseCube.obj")
@@ -157,6 +158,7 @@ export class Scene {
     if (!this.ANIMATION_RUNNING && this.moveQueue.length > 0) {
       this.rotationDuration = 0;
       const currentMove = this.moveQueue.shift();
+      console.log(currentMove);
       this.rotationParams = GetCubiesToRotate(this.gl, currentMove[0], currentMove[1], this.puzzleModel, [this.x, this.y, this.z]);
       this.ANIMATION_RUNNING = true;
     }
@@ -184,6 +186,13 @@ export class Scene {
 
     const cameraSave = {pos: Array.from(this.eye.pos), up: Array.from(this.eye.up)}
     this.PuzzleStorage.setSaveCamera(this.name, Array.from(this.viewMatrix), cameraSave);
+  }
+
+  Shuffle() {
+    for (var i = 0; i < 26; i++) {
+      this.moveQueue.push(GenerateRandomTwist(this.gl, this.x, this.y, this.z));
+      console.log(this.moveQueue);
+    }
   }
 
   LoadPosition() {
