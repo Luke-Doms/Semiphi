@@ -5,6 +5,7 @@
   --primary-color: rgb(0, 0, 0);
   --secondary-color: rgb(14, 14, 14);
   --text-color: rgb(255, 255, 255);
+  --border-color: rgb(0, 0, 0);
 }
 
 * {
@@ -16,16 +17,14 @@
   color: var(--text-color);
 }
 
-h1 {
-  font-size: 40px;
-  margin-bottom: 40px;
-}
-
 body {
   font-family: Inconsolata;
 }
 
 .landing {
+  border: solid;
+  border-width: 1px;
+  border-color: var(--border-color);
   margin-top: 50px;
   margin-left: 100px;
   margin-right: 100px;
@@ -33,6 +32,7 @@ body {
   background-color: var(--secondary-color);
   border-radius: 15px;
   padding: 15px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .background {
@@ -99,7 +99,19 @@ body {
   align-items: center;
 }
 
+.puzzle-title {
+  margin-bottom: 40px;
+  font-size: 20px;
+}
+
+.puzzle-title span {
+  font-size: 40px;
+}
+
 .puzzle-commands {
+  border: solid;
+  border-width: 1px;
+  border-color: var(--border-color);
   margin-top: 20px;
   background-color: var(--secondary-color);
   width: 60%;
@@ -109,6 +121,7 @@ body {
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .puzzle-commands svg {
@@ -235,7 +248,14 @@ body {
   margin-top: 50px;
 }
 
+.puzzle-nav-title {
+  margin-top: 22px;
+  margin-bottom: 22px;
+}
 
+.puzzle-nav-title span {
+  font-size: 25px;
+}
 
 .puzzle-navbar {
   display: flex;
@@ -296,8 +316,27 @@ body {
   background-color: transparent;
   flex-direction: row;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
   height: 70px;
+}
+
+.topbar span {
+  margin: 20px;
+  font-size: 40px;
+}
+
+.about-title {
+  margin-bottom: 35px;
+}
+
+.about-title span {
+  font-size: 35px;
+}
+
+.topbar-icons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .notification-icon {
@@ -347,11 +386,17 @@ body {
   height: 70px;
 }
 
+.bottom-icons-container {
+  display: flex;
+  flex-direction: row;
+  //transform: translateX(-5%);
+  gap: 10rem;
+}
+
 .bottom-icons {
   display: flex;
   flex-direction: row;
   cursor: pointer;
-  margin-right: 40px;
   border-radius: 5px;
   padding-left: 6px;
   padding-right: 6px;
@@ -417,6 +462,10 @@ body {
 }
 
 .menu-section-body {
+  border: solid;
+  border-width: 1px;
+  border-color: var(--border-color);
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
   padding: 15px;
   background-color: var(--secondary-color); 
   margin-left: 25px;

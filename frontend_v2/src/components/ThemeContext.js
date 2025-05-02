@@ -7,12 +7,16 @@ export const ThemeProvider = ({ children }) => {
     dark: {
       primary: 'rgb(0, 0, 0)',
       secondary: 'rgb(14, 14, 14)',
-      text: 'rgb(255,255,255)',
+      text: 'rgb(255, 255, 255)',
+      border: 'rgb(0, 0, 0)',
     },
     light: {
-      primary: 'rgb(232, 241, 245)',
-      secondary: 'rgb(198, 222, 230)',
+      //primary: 'rgb(232, 241, 245)',
+      primary: 'rgb(250, 249, 245)',
+      //secondary: 'rgb(198, 222, 230)',
+      secondary: 'rgb(255, 255, 255)',
       text: 'black',
+      border: 'rgb(229, 231, 235)',
     },
   };
 
@@ -42,6 +46,7 @@ export const ThemeProvider = ({ children }) => {
     document.documentElement.style.setProperty('--primary-color', selectedTheme.primary);
     document.documentElement.style.setProperty('--secondary-color', selectedTheme.secondary);
     document.documentElement.style.setProperty('--text-color', selectedTheme.text);
+    document.documentElement.style.setProperty('--border-color', selectedTheme.border);
 
     fetch('/set-theme', {
       method: 'POST', 

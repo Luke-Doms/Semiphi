@@ -71,13 +71,16 @@ function MainSpace(props) {
   return (
     <div className='mainspace'>
         <div className='topbar'>
-            <div className='notification-icon'>
-              <IoNotificationsOutline />
-            </div>
-            <div className='login-icon' onClick={() => {handleClick()}}>
-              {user ?
-              <IoLogOutOutline />:
-              <VscAccount />}
+            <span>semiphi</span>
+            <div className='topbar-icons'>
+              <div className='notification-icon'>
+                <IoNotificationsOutline />
+              </div>
+              <div className='login-icon' onClick={() => {handleClick()}}>
+                {user ?
+                <IoLogOutOutline />:
+                <VscAccount />}
+              </div>
             </div>
         </div>
         {puzzles ? <Puzzles currentPuzzleName={props.currentPuzzleName}/> : 
@@ -90,6 +93,7 @@ function MainSpace(props) {
             </Routes>
         }
         <div className='bottombar'>
+          <div className='bottom-icons-container'>
             <div className='bottom-icons' onClick={() => {sendEmail()}}>
               <span>Contact Us</span>
               <IoMailOutline />
@@ -98,6 +102,7 @@ function MainSpace(props) {
               <span>Github</span>
               <VscGithub />
             </div>
+          </div>
         </div>
     </div>
   )

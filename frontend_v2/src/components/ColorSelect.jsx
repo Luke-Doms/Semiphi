@@ -13,7 +13,7 @@ function ColorSelect() {
     },
     {
       id: 'pink', 
-      color: 'pink'
+      color: 'rgb(255, 225, 225)'
     },
     {
       id: 'blue',

@@ -4,10 +4,10 @@ import twocube from '../assets/2x2x2.jpg';
 function Home() {
   return (
     <div>
-        <div>
-          <h1>
-            semiphi
-          </h1>
+        <div className='about-title'>
+          <span>
+            About
+          </span>
         </div>
         <img className='homeimage' src={twocube} alt="2x2x2 rubiks cube"/>
         <div>

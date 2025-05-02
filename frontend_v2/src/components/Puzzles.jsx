@@ -45,9 +45,11 @@ function Puzzles(props) {
 
   return (
     <div className='puzzleBox'>
-      <h1>
-        {props.currentPuzzleName}
-      </h1>
+      <div className='puzzle-title'>
+        <span>
+          {props.currentPuzzleName}
+        </span>
+      </div>
       <canvas className='game-surface' id="game-surface" width="500rem" height="400rem" background-color='black'>
         Your browser does not support html5
       </canvas>

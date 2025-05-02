@@ -8,7 +8,7 @@ const green = {
 };
 const white = {
 	color:[255/255, 255/255, 255/255], 
-	//color:[0/255, 0/255, 0/255],
+	//color:[200/255, 200/255, 200/255],
 	normal: [0, -1, 0]
 };
 const red = {

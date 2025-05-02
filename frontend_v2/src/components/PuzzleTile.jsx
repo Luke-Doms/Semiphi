@@ -9,7 +9,7 @@ function PuzzleTile(props) {
   return (
     <div className='puzzle-tile' onClick={() => {UpdateCurrentPuzzle()}}>
         <img className='puzzleImage' src={props.puzzle.image} alt="rubiks cube"/>
-        <h3 className='puzzle-title'>{props.puzzle.name}</h3>
+        <span className='puzzle-title'>{props.puzzle.name}</span>
     </div>
   )
 }
