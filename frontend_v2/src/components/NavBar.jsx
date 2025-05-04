@@ -1,5 +1,5 @@
 import React from 'react';
-import Logo from '../assets/tempLogo.jpg';
+import Logo from '../assets/Logo.svg';
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from 'react-router-dom';
 

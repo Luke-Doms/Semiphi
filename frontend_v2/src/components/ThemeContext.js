@@ -6,9 +6,10 @@ export const ThemeProvider = ({ children }) => {
   const themes = {
     dark: {
       primary: 'rgb(0, 0, 0)',
-      secondary: 'rgb(14, 14, 14)',
+      //secondary: 'rgb(14, 14, 14)',
+      secondary: 'rgb(20, 20, 18)',
       text: 'rgb(255, 255, 255)',
-      border: 'rgb(0, 0, 0)',
+      border: 'rgba(222, 220, 209, 0.15)',
     },
     light: {
       //primary: 'rgb(232, 241, 245)',

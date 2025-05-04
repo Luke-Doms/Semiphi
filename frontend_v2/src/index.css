@@ -360,7 +360,7 @@ body {
   margin-right: 20px;
   padding: 5px;
   cursor: pointer;
-  background-color: var(--highlight-color);
+  //background-color: var(--highlight-color);
   transition: background-color .2s;
 }
 
@@ -370,6 +370,7 @@ body {
 
 .login-icon svg {
   font-size: 25px;
+  color: white;
 }
 
 .topbar svg {
