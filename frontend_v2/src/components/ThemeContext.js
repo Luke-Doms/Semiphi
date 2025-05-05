@@ -10,6 +10,7 @@ export const ThemeProvider = ({ children }) => {
       secondary: 'rgb(20, 20, 18)',
       text: 'rgb(255, 255, 255)',
       border: 'rgba(222, 220, 209, 0.15)',
+      button: 'rgb(50, 50, 50)',
     },
     light: {
       //primary: 'rgb(232, 241, 245)',
@@ -18,6 +19,7 @@ export const ThemeProvider = ({ children }) => {
       secondary: 'rgb(255, 255, 255)',
       text: 'black',
       border: 'rgb(229, 231, 235)',
+      button: 'rgb(220, 220, 220)',
     },
   };
 
@@ -48,6 +50,7 @@ export const ThemeProvider = ({ children }) => {
     document.documentElement.style.setProperty('--secondary-color', selectedTheme.secondary);
     document.documentElement.style.setProperty('--text-color', selectedTheme.text);
     document.documentElement.style.setProperty('--border-color', selectedTheme.border);
+    document.documentElement.style.setProperty('--button-color', selectedTheme.button);
 
     fetch('/set-theme', {
       method: 'POST', 

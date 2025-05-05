@@ -6,6 +6,7 @@
   --secondary-color: rgb(14, 14, 14);
   --text-color: rgb(255, 255, 255);
   --border-color: rgb(0, 0, 0);
+  --button-color: rgb(50, 50, 50);
 }
 
 * {
@@ -348,7 +349,8 @@ body {
 }
 
 .notification-icon:hover {
-  background-color: var(--secondary-color);
+  background-color: var(--button-color);
+  //background-color: var(--secondary-color);
 }
 
 .notification-icon svg {
@@ -365,7 +367,9 @@ body {
 }
 
 .login-icon:hover {
-  background-color: var(--secondary-color);
+  background-color: color-mix(in srgb, var(--highlight-color) 60%, transparent);
+  //background-color: rgb(255, 225, 225);
+  //background-color: var(--secondary-color);
 }
 
 .login-icon svg {
@@ -399,14 +403,15 @@ body {
   flex-direction: row;
   cursor: pointer;
   border-radius: 5px;
-  padding-left: 6px;
+  padding-left: 11px;
   padding-right: 6px;
   padding-top: 7px;
+  padding-bottom: 4px;
   transition: background-color .2s;
 }
 
 .bottom-icons:hover {
-  background-color: var(--secondary-color);
+  background-color: var(--button-color);
 }
 
 .bottom-icons span {
