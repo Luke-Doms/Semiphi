@@ -12,8 +12,8 @@ function LoginForm() {
     <div>
         <Modal />
         <div className='login-container'>
-            <div>
-                <h2>Login</h2>
+            <div className='login-header'>
+                <span>Login</span>
             </div>
             <form method='POST' action='/login' className='login-form'>
                 <input type='text' placeholder='username' name='uname'></input>

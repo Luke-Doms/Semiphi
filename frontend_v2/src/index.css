@@ -652,7 +652,10 @@ input:checked + .slider:before {
 }
 
 .login-container {
-  background-color: var(--secondary-color);
+  border: solid;
+  border-width: 1px;
+  border-color: var(--border-color);
+  background-color: var(--primary-color);
   width: 400px;
   height: 300px;
   position: fixed;
@@ -666,8 +669,16 @@ input:checked + .slider:before {
   padding-bottom: 20px;
 }
 
-.login-container h2 {
+.login-container span {
+  background-color: transparent;
+}
+
+.login-header {
   margin: 20px;
+}
+
+.login-header span {
+  font-size: 30px;
 }
 
 .login-container div {
@@ -675,6 +686,7 @@ input:checked + .slider:before {
 }
 
 .login-form {
+  background-color: transparent;
   flex: 5;
   width: 80%;
   margin-right: auto;
@@ -691,7 +703,7 @@ input:checked + .slider:before {
   border-style: solid;
   border-width: 1px;
   color: var(--text-color);
-  background-color: var(--secondary-color);
+  background-color: var(--primary-color);
   text-indent: 10px;
 }
 
@@ -702,7 +714,8 @@ input:checked + .slider:before {
 }
 
 .login-form input[type='submit']:hover {
-  background-color: black;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  background-color: var(--button-color);
 }
 
 .login-link {
