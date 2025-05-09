@@ -24,7 +24,7 @@ export default function AlgModal({ onClose }) {
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <h2>🧩 Enter Algorithm</h2>
+        <span className="alg-popup-header">Enter Algorithm</span>
 
         {/* Name Field */}
         <input
@@ -61,7 +61,7 @@ export default function AlgModal({ onClose }) {
               checked={inverse}
               onChange={(e) => setInverse(e.target.checked)}
             />
-            Inverse (′)
+            <span>Inverse (′)</span>
           </label>
         </div>
 
