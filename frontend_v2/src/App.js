@@ -77,11 +77,13 @@ function App() {
   return (
     <div className='background'>
       <NavBar />
-      <MainSpace currentPuzzleName={currentPuzzleName}/>
-      {/*<Routes>
-        <Route path="/puzzles" element={<PuzzleNav />}/>
-      </Routes>*/}
-      {puzzleNav ? <PuzzleNav setCurrentPuzzleName={setCurrentPuzzleName}/> : null }
+      <div className='page-content'>
+        <MainSpace currentPuzzleName={currentPuzzleName}/>
+        {/*<Routes>
+          <Route path="/puzzles" element={<PuzzleNav />}/>
+        </Routes>*/}
+        {puzzleNav ? <PuzzleNav setCurrentPuzzleName={setCurrentPuzzleName}/> : null }
+      </div>
     </div>
   );
 }

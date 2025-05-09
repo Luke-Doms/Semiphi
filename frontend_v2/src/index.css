@@ -42,7 +42,16 @@ body {
   height: 100vh;
 }
 
+.page-content {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  width: 100%;
+  padding-left: 206.3px;
+}
+
 .nav-container {
+  position: fixed;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -223,7 +232,7 @@ body {
 
 @keyframes puzzlenav {
   from {width: 0;}
-  to {width: 400px;}
+  to {width: 342px;}
 }
 
 .puzzle-nav-container {
@@ -231,8 +240,7 @@ body {
   flex-direction: column;
   align-items: center;
   height: 100%;
-  border: ;
-  width: 400px;
+  width: 342px;
   border-left-style: solid;
   border-left-width: 1px;
   margin-left: auto;
@@ -467,6 +475,53 @@ body {
 .settings-nav span:hover {
   color: var(--highlight-color);
   cursor: pointer;
+}
+
+.algorithm-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.algorithms-menu {
+  display: flex;
+  flex-direction: column;
+}
+
+.algorithms-menu > span {
+  font-size: 30px;
+  margin-left: 40px;
+}
+
+.algorithms-card {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border: solid;
+  border-width: 1px;
+  border-color: var(--border-color);
+  border-radius: 20px;
+  height: 50px;
+  width: 80%;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.algorithm-info {
+}
+
+.algorithm-info span {
+  font-size: 25px;
+  margin-right: 10px;
+}
+
+.algorithm-icons svg {
+  margin-left: 10px;
+  font-size: 25px;
 }
 
 .menu-section-container {
