@@ -43,6 +43,7 @@ function Puzzles(props) {
     sceneRef.current?.Shuffle();
   }
 
+//quick fix for canvas
   return (
     <div className='puzzleBox'>
       <div className='puzzle-title'>
@@ -50,7 +51,7 @@ function Puzzles(props) {
           {props.currentPuzzleName}
         </span>
       </div>
-      <canvas className='game-surface' id="game-surface" width="500rem" height="400rem" background-color='black'>
+      <canvas className='game-surface' id="game-surface" width={5000} height={4000} background-color='black'>
         Your browser does not support html5
       </canvas>
       <PuzzleCommands 
