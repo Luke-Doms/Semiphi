@@ -8,6 +8,7 @@ function Algorithms() {
             <div className='algorithm-list'>
               <AlgorithmCard />
               <AlgorithmCard />
+              <AlgorithmCard />
             </div>
             <span>2x4x4</span>
             <span>3x3x3</span>
