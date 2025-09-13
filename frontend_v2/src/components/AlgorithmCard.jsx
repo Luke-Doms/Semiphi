@@ -1,8 +1,12 @@
 import React from 'react';
 import { FiEdit } from "react-icons/fi";
 import { MdDeleteOutline } from "react-icons/md";
+import AlgModal from "./AlgModal.jsx";
+import { useState } from "react";
 
 function AlgorithmCard() {
+  const [ isModalOpen, setIsModalOpen ] = useState(false);
+  console.log(isModalOpen);
   return (
         <div className='algorithms-card'>
           <div className='algorithm-info'>
@@ -10,8 +14,9 @@ function AlgorithmCard() {
             <span>sequence</span>
           </div>
           <div className='algorithm-icons'>
-            <FiEdit />
+            <FiEdit onClick={() => setIsModalOpen(true)}/>
             <MdDeleteOutline />
+            {isModalOpen && <AlgModal setModal={setIsModalOpen} />}
           </div>
         </div>
   );

@@ -180,7 +180,7 @@ body {
 }
 
 .modal-content {
-  background: var(--primary-color);
+  background: var(--primary-color) !important;
   padding: 2rem;
   border: solid;
   border-width: 1px;

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const MOVES = ["R", "L", "U", "D", "F", "B"];
+const MOVES = ["R", "L", "U", "D", "F", "B", "X"];
 
 export default function AlgModal({ onClose }) {
   const [moves, setMoves] = useState([]);
@@ -8,8 +8,17 @@ export default function AlgModal({ onClose }) {
   const [name, setName] = useState("");
 
   const addMove = (move: string) => {
-    const notation = inverse ? `${move}'` : move;
-    setMoves([...moves, notation]);
+    console.log(moves);
+    if (move == "X") {
+      if (moves[-1] == "'") {
+        setMoves(moves.slice(0, -2));
+      } else {
+        setMoves(moves.slice(0, -1));
+      }
+    } else {
+      const notation = inverse ? `${move}'` : move;
+      setMoves([...moves, notation]);
+    }
   };
 
   const handleSubmit = () => {
