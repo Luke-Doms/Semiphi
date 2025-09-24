@@ -527,6 +527,61 @@ body {
   cursor: pointer;
 }
 
+.account-menu {
+}
+
+.password-update-menu, .username-update-menu {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.password-update-menu span {
+  font-size: 20px;
+}
+
+.username-update-menu span {
+  font-size: 20px;
+}
+
+.update-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  flex-grow: 2;
+}
+
+.update-inputs input {
+  border-style: solid;
+  border-width: 1px;
+  border-color: var(--border-color);
+  border-radius: 10px;
+  height: 35px;
+}
+
+.update-form {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 1rem;
+  margin-top: 10px;
+}
+
+.update-form input[type='submit'] {
+  flex-grow: 1;
+  border-style: solid;
+  border-width: 1px;
+  border-color: var(--border-color);
+  border-radius: 10px;
+  height: 35px;
+}
+
+.update-form input[type='submit']:hover {
+  cursor: pointer;
+  background-color: color-mix(in srgb, var(--highlight-color) 60%, transparent);
+}
+
 .algorithm-list {
   display: flex;
   flex-direction: column;
