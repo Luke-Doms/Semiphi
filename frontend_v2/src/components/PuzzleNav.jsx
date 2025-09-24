@@ -1,34 +1,38 @@
 import React from 'react'
 import PuzzleTile from './PuzzleTile'
-import twoCube from '../assets/2x2x2p.jpeg';
-import threeCube from '../assets/3x3x3.jpeg';
-import fourCube from '../assets/4x4x4.jpeg';
-import fourByTwoCube from '../assets/2x4x4.jpeg';
+import dTwoCube from '../assets/D2x2x2.jpeg';
+import dThreeCube from '../assets/D3x3x3.jpeg';
+import dFourCube from '../assets/D4x4x4.jpeg';
+import dFourByTwoCube from '../assets/D2x4x4.jpeg';
+import lTwoCube from '../assets/L2x2x2.jpeg';
+import lThreeCube from '../assets/L3x3x3.jpeg';
+import lFourCube from '../assets/L4x4x4.jpeg';
+import lFourByTwoCube from '../assets/L2x4x4.jpeg';
 
 
 function PuzzleNav(props) {
   const puzzles = [{
     id: 1,
     dimensions: {x: 2, y: 2, z: 2},
-    image: twoCube, 
+    images: {dark: dTwoCube, light: lTwoCube},
     name: "2×2×2"
     }, 
     {
     id: 2,
     dimensions: {x: 2, y: 4, z: 4},
-    image: fourByTwoCube, 
+    images: {dark: dFourByTwoCube, light: lFourByTwoCube},
     name: "2×4×4"
     }, 
     {
     id: 3,
     dimensions: {x: 3, y: 3, z: 3},
-    image: threeCube,
+    images: {dark: dThreeCube, light: lThreeCube},
     name: "3×3×3"
     }, 
     {
     id: 4,
     dimensions: {x: 4, y: 4, z: 4},
-    image: fourCube, 
+    images: {dark: dFourCube, light: lFourCube},
     name: "4×4×4"
     } 
   ];
