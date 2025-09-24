@@ -553,11 +553,13 @@ body {
 }
 
 .update-inputs input {
+  font-size: 15px;
   border-style: solid;
   border-width: 1px;
   border-color: var(--border-color);
   border-radius: 10px;
   height: 35px;
+  padding-left: .5rem;
 }
 
 .update-form {
