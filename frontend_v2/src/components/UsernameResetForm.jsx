@@ -29,11 +29,11 @@ function UsernameResetForm() {
       <form className='update-form' onSubmit={handleSubmit}>
         <div className='update-inputs'>
           <label>Current password</label>
-          <input type='password' value={password} onChange={(e) => setUsername(e.target.value)}></input>
+          <input type='password' value={password} onChange={(event) => setPassword(event.target.value)}></input>
         </div>
         <div className='update-inputs'>
           <label>New username</label>
-          <input type='text' value={username} onChange={(e) => setPassword(e.target.value)}></input>
+          <input type='text' value={username} onChange={(event) => setUsername(event.target.value)}></input>
         </div>
         <input type='submit' value='Update'></input>
       </form>
