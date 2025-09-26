@@ -4,11 +4,26 @@ const genPassword = require('../lib/utils.js').genPassword;
 const connection = require('../config/database.js');
 const path = require('path');
 const isAuth = require('./authMiddleware.js').isAuth;
+const validPassword = require('../lib/utils.js').validPassword;
 
 const User = connection.models.User;
 
 
-router.post('/login', passport.authenticate('local', { failureRedirect: '/login-failure', successRedirect: '/'}))
+//router.post('/login', passport.authenticate('local', { failureRedirect: '/login-failure', successRedirect: '/'}))
+
+router.post('/login', (req, res, next) => {
+  passport.authenticate('local', (err, user, info) => {
+    if (err) return next(err);
+    if (!user) return res.status(401).json({ success: false, message: 'Invalid credentials' });
+
+    req.logIn(user, (err) => {
+      if (err) return next(err);
+      return res.json({ 
+        success: true, 
+        });
+    });
+  })(req, res, next);
+});
 
 router.post('/register', (req, res, next) => {
   const saltHash = genPassword(req.body.pw);
@@ -29,6 +44,79 @@ router.post('/register', (req, res, next) => {
 
   res.redirect('/login');
 })
+
+router.post('/reset-username', isAuth, async (req, res) => {
+  try {
+    const { newUsername, password } = req.body;
+
+    if (!newUsername || !password) {
+      return res.status(400).json({ success: false, message: 'Missing fields' });
+    }
+
+    // `req.user` is set by passport when logged in
+    const user = await User.findById(req.user._id);
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+
+    // Validate password against stored hash + salt
+    const isValid = validPassword(password, user.hash, user.salt);
+    if (!isValid) {
+      return res.status(401).json({ success: false, message: 'Invalid password' });
+    }
+
+    // Check that new username isn’t taken
+    const existingUser = await User.findOne({ username: newUsername });
+    if (existingUser) {
+      return res.status(409).json({ success: false, message: 'Username already exists' });
+    }
+
+    // Update and save
+    user.username = newUsername;
+    await user.save();
+
+    return res.json({ success: true, message: 'Username updated', username: newUsername });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+});
+
+router.post('/reset-password', isAuth, async (req, res) => {
+  try {
+    const { currentPassword, newPassword } = req.body;
+
+    if (!currentPassword || !newPassword) {
+      return res.status(400).json({ success: false, message: 'Missing fields' });
+    }
+
+    // `req.user` is set by passport when logged in
+    const user = await User.findById(req.user._id);
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+
+    // Validate password against stored hash + salt
+    const isValid = validPassword(currentPassword, user.hash, user.salt);
+    if (!isValid) {
+      return res.status(401).json({ success: false, message: 'Invalid password' });
+    }
+
+    // Update and save
+    const newInfo = genPassword(newPassword);
+    user.hash = newInfo.hash;
+    user.salt = newInfo.salt;
+    await user.save();
+
+    return res.json({ success: true, message: 'Password updated'});
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+});
+
+router.post('/update-email', (req, res) => {
+});
 
 router.get('/get-user', (req, res) => {
   if (req.user) {

@@ -9,7 +9,7 @@ function PasswordResetForm() {
     event.preventDefault();
 
     try {
-      const res = await fetch("/reset-username", {
+      const res = await fetch("/reset-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ currentPassword, newPassword })

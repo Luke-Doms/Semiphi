@@ -2,7 +2,7 @@ import { React } from 'react';
 import { useState } from 'react';
 
 function UsernameResetForm() {
-  const [ username, setUsername ] = useState("");
+  const [ newUsername, setNewUsername ] = useState("");
   const [ password, setPassword ] = useState("");
 
   const handleSubmit = async (event) => {
@@ -12,7 +12,7 @@ function UsernameResetForm() {
       const res = await fetch("/reset-username", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password })
+        body: JSON.stringify({ newUsername, password })
       });
 
       const data = await res.json();
@@ -33,7 +33,7 @@ function UsernameResetForm() {
         </div>
         <div className='update-inputs'>
           <label>New username</label>
-          <input type='text' value={username} onChange={(event) => setUsername(event.target.value)}></input>
+          <input type='text' value={newUsername} onChange={(event) => setNewUsername(event.target.value)}></input>
         </div>
         <input type='submit' value='Update'></input>
       </form>

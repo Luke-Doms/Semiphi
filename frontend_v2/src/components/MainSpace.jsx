@@ -40,7 +40,7 @@ function MainSpace(props) {
     .catch((err) => {
       console.warn("get-user request failed:", err.message);
     });
-  }, []);
+  }, [location.pathname]);
 
   useEffect(() => {
     if (location.pathname == '/Puzzles') {
