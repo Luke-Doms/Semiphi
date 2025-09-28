@@ -21,13 +21,21 @@ export default function AlgModal({ onClose }) {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const algorithm = {
       name,
       moves,
     };
-    console.log("Algorithm submitted:", algorithm);
-    onClose(); // or keep it open if you want
+    try {
+      const res = await fetch('/upload-alg', {
+        method: 'POST',
+        headers: { 'Content-Type' : 'application/json' },
+        body: JSON.stringify(algorithm), 
+        credentials: 'include'
+      });
+    } catch (error) {
+      console.log("API response:");
+    }
   };
 
   return (
@@ -76,8 +84,8 @@ export default function AlgModal({ onClose }) {
 
         {/* Action Buttons */}
         <div className="action-buttons">
-          <button onClick={handleSubmit}>Submit</button>
           <button onClick={onClose}>Cancel</button>
+          <button onClick={handleSubmit}>Submit</button>
         </div>
       </div>
     </div>
