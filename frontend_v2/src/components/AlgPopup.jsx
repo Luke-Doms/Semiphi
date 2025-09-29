@@ -26,13 +26,17 @@ export default function AlgModal({ onClose }) {
       name,
       moves,
     };
+
     try {
-      const res = await fetch('/upload-alg', {
+      const res = await fetch('/create-alg', {
         method: 'POST',
         headers: { 'Content-Type' : 'application/json' },
         body: JSON.stringify(algorithm), 
         credentials: 'include'
       });
+
+      const data = await res.json();
+      console.log('API response:', data);
     } catch (error) {
       console.log("API response:");
     }

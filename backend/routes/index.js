@@ -127,6 +127,23 @@ router.get('/get-user', (req, res) => {
   };
 })
 
+router.post('/create-alg', isAuth, async (req, res) => {
+  try {
+    const { name, moves } = req.body;
+    const user = await User.findById(req.user._id);
+    user.sequences.push({
+      name: name, 
+      seq: moves 
+    });
+    
+    await user.save();
+    return res.json({ success: true, message: 'sequence added'});
+  } catch (error) {
+    console.log('API response:', error);
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+})
+
 router.post('/set-theme', (req, res) => {
   console.log(req.body);
   req.session.theme = req.body;
