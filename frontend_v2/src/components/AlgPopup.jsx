@@ -108,7 +108,6 @@ export default function AlgModal({ dimensions }) {
 
         {/* Action Buttons */}
         <div className="action-buttons">
-          <button>Cancel</button>
           <button onClick={handleSubmit}>Submit</button>
         </div>
       </div>

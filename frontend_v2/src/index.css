@@ -180,6 +180,8 @@ body {
 }
 
 .modal-content {
+  display: flex;
+  flex-direction: column;
   background: var(--primary-color) !important;
   padding: 2rem;
   border: solid;
@@ -190,6 +192,7 @@ body {
   max-width: 450px;
   text-align: center;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  align-items: center;
 }
 
 .alg-popup-header {
@@ -202,6 +205,10 @@ body {
   border-color: var(--border-color);
   border-radius: 10px;
   margin-top: 20px;
+}
+
+.modal-content input[type='text'] {
+  width: 100%;
 }
 
 .alg-name {
@@ -222,6 +229,7 @@ body {
   background-color: var(--secondary-color);
   border-radius: 8px;
   font-size: 1.2rem;
+  width: 100%;
 }
 
 .preview span {
@@ -246,7 +254,16 @@ body {
   gap: 0.5rem;
 }
 
-.move-buttons button {
+.inverse-toggle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.move-buttons button, .inverse-toggle button {
+  flex: 0 0 auto;
   padding: 0.5rem 1rem;
   font-size: 1rem;
   cursor: pointer;
@@ -256,34 +273,36 @@ body {
   border-radius: 15px;
 }
 
-.inverse-toggle {
-  margin-bottom: 1rem;
-}
-
 .inverse-toggle span {
   margin-left: 10px;
 }
 
 .action-buttons {
   display: flex;
-  justify-content: space-between;
-  gap: 1rem;
+  justify-content: center;
+  width: 100%;
+  margin-top: 20px;
 }
 
 .action-buttons button {
+  background-color: color-mix(in srgb, var(--highlight-color) 60%, transparent);
+  width: 100%;
+  min-height: 2rem;
   border: solid;
   border-width: 1px;
-  border-color: var(--border-color);
-  border-radius: 5px;
+  border-color: transparent;
+  border-radius: 10px;
   padding-top: 5px;
   padding-bottom: 5px;
   padding-left: 5px;
   padding-right: 5px;
+  transition: transform 0.3s ease;
 }
 
 .action-buttons button:hover {
   cursor: pointer;
-  background-color: color-mix(in srgb, var(--highlight-color) 60%, transparent);
+  background-color: var(--highlight-color);
+  transform: translateY(-5px);
 }
 
 @keyframes puzzlenav {
