@@ -8,22 +8,21 @@ import { useState } from "react";
 import AlgModal from "./AlgModal.jsx";
 import PuzzleStorage from './PuzzleStorage.js';
 
-function PuzzleCommands(props) {
+function PuzzleCommands({ onShuffle, onLoad, onSave, puzzleName, triggerReset, dimensions }) {
   const [ modal, setModal ] = useState(false);
   const reset = () => {
-    props.triggerReset();
-    PuzzleStorage.reset(props.currentPuzzleName);
-    console.log('test');
+    triggerReset();
+    PuzzleStorage.reset(puzzleName);
   }
 
   return (
       <div className='puzzle-commands'>
         <IoRefreshOutline onClick={reset}/>
-        <PiShuffleSimpleLight onClick={props.onShuffle}/>
-        <CiSaveDown2 onClick={props.onSave}/>
-        <PiUploadSimpleLight onClick={props.onLoad}/>
+        <PiShuffleSimpleLight onClick={onShuffle}/>
+        <CiSaveDown2 onClick={onSave}/>
+        <PiUploadSimpleLight onClick={onLoad}/>
         <IoIosAddCircleOutline onClick={() => setModal(true)}/>
-        { modal ? <AlgModal dimensions={props.dimensions} setModal={setModal}/> : null}
+        { modal ? <AlgModal puzzleName={puzzleName} dimensions={dimensions} setModal={setModal}/> : null}
       </div>
   )
 }

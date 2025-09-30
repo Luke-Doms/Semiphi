@@ -4,18 +4,18 @@ import { initApp } from './game_files/App.js';
 import PuzzleCommands from './PuzzleCommands.jsx';
 import PuzzleStorage from './PuzzleStorage.js';
 
-function Puzzles(props) {
+function Puzzles({ currentPuzzleName }) {
   const [ reset, incrementReset ] = useState(0);
   const sceneRef = useRef(null);
   const saved = localStorage.getItem("puzzles");
   const puzzles = JSON.parse(saved);
-  const current = puzzles[props.currentPuzzleName];
+  const current = puzzles[currentPuzzleName];
 
   useEffect(() => {
     let isMounted = true;
 
 
-    const scene = initApp(current.dimensions.x, current.dimensions.y, current.dimensions.z, props.currentPuzzleName, PuzzleStorage);
+    const scene = initApp(current.dimensions.x, current.dimensions.y, current.dimensions.z, currentPuzzleName, PuzzleStorage);
     sceneRef.current = scene;
 
     scene.Load().then(() => {
@@ -29,7 +29,7 @@ function Puzzles(props) {
       scene?.Unload();
       sceneRef.current = null;
     }
-  }, [props.currentPuzzleName, reset]
+  }, [currentPuzzleName, reset]
   );
 
   const savePosition = () => {
@@ -43,14 +43,13 @@ function Puzzles(props) {
   const shuffle = () => {
     sceneRef.current?.Shuffle();
   }
-  console.log(current.dimensions);
 
 //quick fix for canvas
   return (
     <div className='puzzleBox'>
       <div className='puzzle-title'>
         <span>
-          {props.currentPuzzleName}
+          {currentPuzzleName}
         </span>
       </div>
       <canvas className='game-surface' id="game-surface" width={5000} height={4000} background-color='black'>
@@ -60,7 +59,7 @@ function Puzzles(props) {
         onShuffle={shuffle}
         onLoad={loadPosition} 
         onSave={savePosition} 
-        currentPuzzleName={props.currentPuzzleName} 
+        puzzleName={currentPuzzleName} 
         triggerReset={() => incrementReset(n => n + 1)}
         dimensions={current.dimensions}
       />

@@ -13,7 +13,7 @@ import { IoLogOutOutline } from "react-icons/io5";
 import { IoMailOutline } from "react-icons/io5";
 import { VscGithub } from "react-icons/vsc";
 
-function MainSpace(props) {
+function MainSpace({ currentPuzzleName }) {
   const navigate = useNavigate();
   const location = useLocation();
   const [puzzles, setPuzzles] = useState(false);
@@ -83,7 +83,7 @@ function MainSpace(props) {
               </div>
             </div>
         </div>
-        {puzzles ? <Puzzles currentPuzzleName={props.currentPuzzleName}/> : 
+        {puzzles ? <Puzzles currentPuzzleName={currentPuzzleName}/> : 
               <Routes>
                 <Route path="/" element={<Home />}/>
                 <Route path="/settings" element={<Settings />}/>

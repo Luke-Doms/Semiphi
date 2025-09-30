@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function AlgModal({ dimensions }) {
+export default function AlgModal({ puzzleName, dimensions }) {
   const move_options = {
     R: [],
     L: [],
@@ -11,7 +11,7 @@ export default function AlgModal({ dimensions }) {
   }
   const [moves, setMoves] = useState([]);
   const [inverse, setInverse] = useState(false);
-  const [name, setName] = useState("");
+  const [algName, setAlgName] = useState("");
 
   const addMove = (move: string) => {
     if (move == "X") {
@@ -37,7 +37,8 @@ export default function AlgModal({ dimensions }) {
 
   const handleSubmit = async () => {
     const algorithm = {
-      name,
+      puzzleName,
+      algName,
       moves,
     };
     try {
@@ -64,8 +65,8 @@ export default function AlgModal({ dimensions }) {
         <input
           type="text"
           placeholder="Algorithm name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          value={algName}
+          onChange={(e) => setAlgName(e.target.value)}
           className="alg-name"
         />
 

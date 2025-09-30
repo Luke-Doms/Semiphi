@@ -129,10 +129,16 @@ router.get('/get-user', (req, res) => {
 
 router.post('/create-alg', isAuth, async (req, res) => {
   try {
-    const { name, moves } = req.body;
+    const { puzzleName, algName, moves } = req.body;
     const user = await User.findById(req.user._id);
-    user.sequences.push({
-      name: name, 
+    const key = puzzleName.replace(/×/g, 'x');
+
+    if (!user.sequences[key]) {
+      user.sequences[key] = [];
+    }
+
+    user.sequences[key].push({
+      name: algName, 
       seq: moves 
     });
     
