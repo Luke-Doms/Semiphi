@@ -23,7 +23,7 @@ function PuzzleCommands(props) {
         <CiSaveDown2 onClick={props.onSave}/>
         <PiUploadSimpleLight onClick={props.onLoad}/>
         <IoIosAddCircleOutline onClick={() => setModal(true)}/>
-        { modal ? <AlgModal setModal={setModal}/> : null}
+        { modal ? <AlgModal dimensions={props.dimensions} setModal={setModal}/> : null}
       </div>
   )
 }

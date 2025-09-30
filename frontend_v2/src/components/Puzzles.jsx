@@ -7,12 +7,13 @@ import PuzzleStorage from './PuzzleStorage.js';
 function Puzzles(props) {
   const [ reset, incrementReset ] = useState(0);
   const sceneRef = useRef(null);
+  const saved = localStorage.getItem("puzzles");
+  const puzzles = JSON.parse(saved);
+  const current = puzzles[props.currentPuzzleName];
+
   useEffect(() => {
     let isMounted = true;
 
-    const saved = localStorage.getItem("puzzles");
-    const puzzles = JSON.parse(saved);
-    const current = puzzles[props.currentPuzzleName];
 
     const scene = initApp(current.dimensions.x, current.dimensions.y, current.dimensions.z, props.currentPuzzleName, PuzzleStorage);
     sceneRef.current = scene;
@@ -42,6 +43,7 @@ function Puzzles(props) {
   const shuffle = () => {
     sceneRef.current?.Shuffle();
   }
+  console.log(current.dimensions);
 
 //quick fix for canvas
   return (
@@ -60,6 +62,7 @@ function Puzzles(props) {
         onSave={savePosition} 
         currentPuzzleName={props.currentPuzzleName} 
         triggerReset={() => incrementReset(n => n + 1)}
+        dimensions={current.dimensions}
       />
     </div>
   )
