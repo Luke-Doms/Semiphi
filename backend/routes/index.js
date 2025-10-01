@@ -150,6 +150,11 @@ router.post('/create-alg', isAuth, async (req, res) => {
   }
 })
 
+router.get('/get-algs', isAuth, async (req, res) => {
+  const user = await User.findById(req.user._id);
+  return res.json({ sequences : user.sequences });
+})
+
 router.post('/set-theme', (req, res) => {
   console.log(req.body);
   req.session.theme = req.body;
