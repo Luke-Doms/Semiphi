@@ -155,6 +155,23 @@ router.get('/get-algs', isAuth, async (req, res) => {
   return res.json({ sequences : user.sequences });
 })
 
+router.post('/delete-alg', isAuth, async (req, res) => {
+  const { puzzleKey, name } = req.body;
+  console.log(puzzleKey, name);
+  try {
+    const key = puzzleKey.replace(/×/g, 'x');
+    const user = await User.findById(req.user._id);
+    await User.updateOne(
+      { _id: req.user._id },
+      { $pull: { [`sequences.${key}`]: { name } } }
+    );
+    return res.json({ success: true, message: 'sequence deleted' });
+  } catch (error) {
+    console.log('API response:', error);
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+})
+
 router.post('/set-theme', (req, res) => {
   console.log(req.body);
   req.session.theme = req.body;

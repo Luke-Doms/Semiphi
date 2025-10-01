@@ -6,7 +6,8 @@ function Algorithms() {
   const [ algs, setAlgs ] = useState({});
 
   const nameFormat = (key) => {
-    const puzzle = key.replace(/×/g, 'x');
+    console.log(key);
+    const puzzle = key.replace(/x/g, '×');
     return puzzle;
   }
 
@@ -24,18 +25,15 @@ function Algorithms() {
     getAlgs();
   }, []);
 
-  useEffect(() => {
-    console.log("these algs", algs);
-  }, [algs]);
-
   return (
         <div className='algorithms-menu'>
-          {Object.entries(algs.sequences).map(([key, value]) => (
-            <div key={key}>
-              <span>{nameFormat(key)}</span>
+          {algs.sequences &&
+            Object.entries(algs.sequences).map(([puzzleKey, value]) => (
+            <div key={puzzleKey}>
+              <span>{nameFormat(puzzleKey)}</span>
                 {Array.isArray(value) && value.length > 0 ? (
                   value.map((alg, index) => (
-                    <AlgorithmCard key={index} alg={alg} />
+                    <AlgorithmCard key={`${puzzleKey}-${index}`} puzzleKey={puzzleKey} name={alg.name} sequence={alg.seq} />
                   ))
                 ) : (
                   <p>No algorithms yet</p>
