@@ -7,6 +7,12 @@ import { useState } from "react";
 function AlgorithmCard({ puzzle, name, sequence, removeAlg }) {
   const [ isModalOpen, setIsModalOpen ] = useState(false);
 
+  const dimensions = {
+    x: puzzle[0],
+    y: puzzle[2],
+    z: puzzle[4]
+  }
+
   return (
         <div className='algorithms-card'>
           <div className='algorithm-info'>
@@ -16,7 +22,7 @@ function AlgorithmCard({ puzzle, name, sequence, removeAlg }) {
           <div className='algorithm-icons'>
             <FiEdit onClick={() => setIsModalOpen(true)}/>
             <MdDeleteOutline onClick={() => removeAlg(puzzle, name)}/>
-            {isModalOpen && <AlgModal setModal={setIsModalOpen} />}
+            {isModalOpen && <AlgModal mode={"edit"} algName={name} puzzleName={puzzle} dimensions={dimensions} setModal={setIsModalOpen} />}
           </div>
         </div>
   );

@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-export default function AlgModal({ puzzleName, dimensions }) {
+export default function AlgModal({ mode, oldAlgName, puzzleName, dimensions }) {
+  console.log(mode);
   const move_options = {
     R: [],
     L: [],
@@ -34,6 +35,18 @@ export default function AlgModal({ puzzleName, dimensions }) {
     (move_options.U).push(k == 0 ? 'U' : `${k+1}U`);
     (move_options.D).push(k == 0 ? 'D' : `${k+1}D`);
   }
+
+  useEffect(() => {
+    if (mode == "edit") {
+      fetch('/get-alg', {
+        content: JSON.stringify(oldAlgName),
+        method: 'GET',
+        headers: { 'Content-Type' : 'application/json' },
+        credentials: 'include'
+      })
+      .then(res => res.json());
+    }
+  }, []);
 
   const handleSubmit = async () => {
     const algorithm = {
