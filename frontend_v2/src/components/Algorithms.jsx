@@ -6,9 +6,21 @@ function Algorithms() {
   const [ algs, setAlgs ] = useState({});
 
   const nameFormat = (key) => {
-    console.log(key);
     const puzzle = key.replace(/x/g, '×');
     return puzzle;
+  }
+
+  const removeAlg = (puzzle, algName) => {
+    setAlgs((prev) => ({
+      ...prev,
+      sequences: {
+        ...prev.sequences,
+        [puzzle]: prev.sequences[puzzle].filter(
+          (item) => item.name !== algName
+        ),
+      },
+    }));
+    console.log(algs);
   }
 
   useEffect(() => {
@@ -33,7 +45,7 @@ function Algorithms() {
               <span>{nameFormat(puzzleKey)}</span>
                 {Array.isArray(value) && value.length > 0 ? (
                   value.map((alg, index) => (
-                    <AlgorithmCard key={`${puzzleKey}-${index}`} puzzleKey={puzzleKey} name={alg.name} sequence={alg.seq} />
+                    <AlgorithmCard key={`${puzzleKey}-${index}`} puzzleKey={puzzleKey} name={alg.name} sequence={alg.seq} removeAlg={removeAlg}/>
                   ))
                 ) : (
                   <p>No algorithms yet</p>
