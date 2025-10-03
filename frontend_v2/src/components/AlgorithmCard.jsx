@@ -22,7 +22,7 @@ function AlgorithmCard({ puzzle, name, sequence, removeAlg }) {
           <div className='algorithm-icons'>
             <FiEdit onClick={() => setIsModalOpen(true)}/>
             <MdDeleteOutline onClick={() => removeAlg(puzzle, name)}/>
-            {isModalOpen && <AlgModal mode={"edit"} algName={name} puzzleName={puzzle} dimensions={dimensions} setModal={setIsModalOpen} />}
+            {isModalOpen && <AlgModal mode={"edit"} algName={name} sequence={sequence} puzzleName={puzzle} dimensions={dimensions} setModal={setIsModalOpen} />}
           </div>
         </div>
   );

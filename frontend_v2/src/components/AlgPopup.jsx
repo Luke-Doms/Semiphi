@@ -1,7 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
-export default function AlgModal({ mode, oldAlgName, puzzleName, dimensions }) {
-  console.log(mode);
+export default function AlgModal({ mode, oldAlgName, oldSequence, puzzleName, dimensions }) {
   const move_options = {
     R: [],
     L: [],
@@ -10,9 +9,9 @@ export default function AlgModal({ mode, oldAlgName, puzzleName, dimensions }) {
     F: [],
     B: [],
   }
-  const [moves, setMoves] = useState([]);
+  const [moves, setMoves] = useState(oldSequence);
   const [inverse, setInverse] = useState(false);
-  const [algName, setAlgName] = useState("");
+  const [algName, setAlgName] = useState(oldAlgName);
 
   const addMove = (move: string) => {
     if (move == "X") {
@@ -36,36 +35,45 @@ export default function AlgModal({ mode, oldAlgName, puzzleName, dimensions }) {
     (move_options.D).push(k == 0 ? 'D' : `${k+1}D`);
   }
 
-  useEffect(() => {
-    if (mode == "edit") {
-      fetch('/get-alg', {
-        content: JSON.stringify(oldAlgName),
-        method: 'GET',
-        headers: { 'Content-Type' : 'application/json' },
-        credentials: 'include'
-      })
-      .then(res => res.json());
-    }
-  }, []);
-
   const handleSubmit = async () => {
-    const algorithm = {
-      puzzleName,
-      algName,
-      moves,
-    };
-    try {
-      const res = await fetch('/create-alg', {
-        method: 'POST',
-        headers: { 'Content-Type' : 'application/json' },
-        body: JSON.stringify(algorithm), 
-        credentials: 'include'
-      });
+    if (mode == 'create') {
+      const algorithm = {
+        puzzleName,
+        algName,
+        moves,
+      };
+      try {
+        const res = await fetch('/create-alg', {
+          method: 'POST',
+          headers: { 'Content-Type' : 'application/json' },
+          body: JSON.stringify(algorithm), 
+          credentials: 'include'
+        });
 
-      const data = await res.json();
-      console.log('API response:', data);
-    } catch (error) {
-      console.log("API response:");
+        const data = await res.json();
+        console.log('API response:', data);
+      } catch (error) {
+        console.log("API response:");
+      }
+    } if (mode == 'edit') {
+      const algorithm = {
+        puzzleName, 
+        oldAlgName, 
+        algName, 
+        moves
+      };
+      try {
+        const res = await fetch('/update-alg', {
+          method: 'POST',
+          body: JSON.stringify(algorithm),
+          headers: { 'Content-Type' : 'application/json' },
+          credentials: 'include'
+        });
+        const data = await res.json();
+        console.log(data.success);
+      } catch (error) {
+        console.log('API response:', error);
+      }
     }
   };
 

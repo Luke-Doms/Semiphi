@@ -155,6 +155,33 @@ router.get('/get-algs', isAuth, async (req, res) => {
   return res.json({ sequences : user.sequences });
 })
 
+router.post('/update-alg', isAuth, async (req, res) => {
+  const { puzzleName, oldAlgName, algName, moves } = req.body;
+  try {
+    const key = puzzleName.replace(/×/g, 'x');
+    const user = await User.findById(req.user._id);
+    const index = user.sequences[puzzleName].findIndex(i => i.name === oldAlgName);
+
+    if (index === -1) {
+      return res.status(404).json({ success: false, message: "Algorithm not found" });
+    }
+
+    await User.updateOne(
+      { _id: req.user._id },
+      { 
+        $set: { 
+          [`sequences.${puzzleName}.${index}.name`]: algName,
+          [`sequences.${puzzleName}.${index}.seq`]: moves
+        }
+      }
+    );
+    return res.json({ success: true, message: 'sequence updated' });
+  } catch (error) {
+    console.log('API response:', error);
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+})
+
 router.post('/delete-alg', isAuth, async (req, res) => {
   const { puzzle, algName } = req.body;
   console.log(puzzle, algName);

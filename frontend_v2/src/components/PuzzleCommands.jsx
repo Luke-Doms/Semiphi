@@ -22,7 +22,7 @@ function PuzzleCommands({ onShuffle, onLoad, onSave, puzzleName, triggerReset, d
         <CiSaveDown2 onClick={onSave}/>
         <PiUploadSimpleLight onClick={onLoad}/>
         <IoIosAddCircleOutline onClick={() => setModal(true)}/>
-        { modal ? <AlgModal mode={"create"} algName={null} puzzleName={puzzleName} dimensions={dimensions} setModal={setModal}/> : null}
+        { modal ? <AlgModal mode={"create"} algName={null} sequence={[]} puzzleName={puzzleName} dimensions={dimensions} setModal={setModal}/> : null}
       </div>
   )
 }

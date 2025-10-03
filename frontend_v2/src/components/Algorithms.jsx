@@ -12,6 +12,7 @@ function Algorithms() {
 
   const removeAlg = async (puzzle, algName) => {
     const removedItem = algs.sequences[puzzle].find( i => i.name === algName);
+    console.log(removedItem);
 
     setAlgs(prev => ({
       ...prev,
