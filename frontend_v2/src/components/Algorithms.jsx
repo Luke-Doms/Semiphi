@@ -10,8 +10,10 @@ function Algorithms() {
     return puzzle;
   }
 
-  const removeAlg = (puzzle, algName) => {
-    setAlgs((prev) => ({
+  const removeAlg = async (puzzle, algName) => {
+    const removedItem = algs.sequences[puzzle].find( i => i.name === algName);
+
+    setAlgs(prev => ({
       ...prev,
       sequences: {
         ...prev.sequences,
@@ -20,7 +22,27 @@ function Algorithms() {
         ),
       },
     }));
-    console.log(algs);
+
+    try {
+      console.log(puzzle, algName);
+      const res = await fetch('/delete-alg', {
+        method: 'POST', 
+        headers: { 'Content-type' : 'application/json' },
+        body: JSON.stringify({ puzzle, algName }),
+        credentials: 'include'
+      });
+      const data = await res.json();
+      console.log(data);
+    } catch (error) {
+      console.log('error');
+      setAlgs((prev) => ({
+        ...prev, 
+        sequences: { 
+          ...prev.sequences, 
+          [puzzle] : [...prev.sequences[puzzle], removedItem] 
+        },
+      }));
+    }
   }
 
   useEffect(() => {
@@ -40,12 +62,12 @@ function Algorithms() {
   return (
         <div className='algorithms-menu'>
           {algs.sequences &&
-            Object.entries(algs.sequences).map(([puzzleKey, value]) => (
-            <div key={puzzleKey}>
-              <span>{nameFormat(puzzleKey)}</span>
+            Object.entries(algs.sequences).map(([puzzle, value]) => (
+            <div key={puzzle}>
+              <span>{nameFormat(puzzle)}</span>
                 {Array.isArray(value) && value.length > 0 ? (
                   value.map((alg, index) => (
-                    <AlgorithmCard key={`${puzzleKey}-${index}`} puzzleKey={puzzleKey} name={alg.name} sequence={alg.seq} removeAlg={removeAlg}/>
+                    <AlgorithmCard key={`${puzzle}-${index}`} puzzle={puzzle} name={alg.name} sequence={alg.seq} removeAlg={removeAlg}/>
                   ))
                 ) : (
                   <p>No algorithms yet</p>

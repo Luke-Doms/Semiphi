@@ -156,14 +156,14 @@ router.get('/get-algs', isAuth, async (req, res) => {
 })
 
 router.post('/delete-alg', isAuth, async (req, res) => {
-  const { puzzleKey, name } = req.body;
-  console.log(puzzleKey, name);
+  const { puzzle, algName } = req.body;
+  console.log(puzzle, algName);
   try {
-    const key = puzzleKey.replace(/×/g, 'x');
+    const key = puzzle.replace(/×/g, 'x');
     const user = await User.findById(req.user._id);
     await User.updateOne(
       { _id: req.user._id },
-      { $pull: { [`sequences.${key}`]: { name } } }
+      { $pull: { [`sequences.${key}`]: { name : algName } } }
     );
     return res.json({ success: true, message: 'sequence deleted' });
   } catch (error) {
