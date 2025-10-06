@@ -840,7 +840,7 @@ input:checked + .slider:before {
   cursor: pointer;
 }
 
-.login-container {
+.login-container, .notification-container {
   border: solid;
   border-width: 1px;
   border-color: var(--border-color);
