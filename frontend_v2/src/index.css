@@ -622,7 +622,7 @@ body {
   flex-direction: column;
 }
 
-.algorithms-menu > span {
+.algorithms-menu span {
   font-size: 30px;
   margin-left: 40px;
 }
