@@ -15,17 +15,17 @@ function AlgorithmCard({ puzzle, name, sequence, removeAlg }) {
 
   return (
         <div className='algorithms-card'>
-          <div className='name-container'>
-            <h1>Name</h1>
-            <span>{name}</span>
+          <div className='alg-card-field'>
+            <span className='field-label'>Name</span>
+            <span className='field-value name'>{name}</span>
           </div>
-          <div className='algorithm-container'>
-            <h1>Algorithm</h1>
-            <span>{sequence}</span>
+          <div className='alg-card-field'>
+            <span className='field-label'>Algorithm</span>
+            <span className='field-value'>{sequence}</span>
           </div>
           <div className='algorithm-buttons'>
-            <FiEdit onClick={() => setIsModalOpen(true)}/>
-            <MdDeleteOutline onClick={() => removeAlg(puzzle, name)}/>
+            <button className='alg-card-button' onClick={() => setIsModalOpen(true)}><span>Edit</span></button>
+            <button className='alg-card-button' onClick={() => removeAlg(puzzle, name)}><span>Delete</span></button>
             {isModalOpen && <AlgModal mode={"edit"} algName={name} sequence={sequence} puzzleName={puzzle} dimensions={dimensions} setModal={setIsModalOpen} />}
           </div>
         </div>

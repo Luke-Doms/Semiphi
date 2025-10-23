@@ -47,7 +47,6 @@ body {
   display: flex;
   flex-direction: row;
   height: 100vh;
-  //min-height: 100vh;
   width: 100%;
   padding-left: 206.3px;
 }
@@ -631,40 +630,60 @@ body {
 .algorithms-card {
   display: flex;
   flex-direction: column;
-  align-items: start;
+  align-items: center;
   gap: 1rem;
   border-bottom: solid;
   border-width: 1px;
   border-color: var(--border-color);
-  height: 50px;
-  width: 80%;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding-bottom: 20px;
   margin-top: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
-.name-container, .algorithm-container {
+.alg-card-field {
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: start;
 }
 
-.name-container h1, .algorithm-container h1 {
-  font-size: 10px;
+.field-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 6px;
 }
 
-.name-container span {
+.field-value {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 300;
+  line-height: 1.5;
+}
+
+.field-value.name {
   font-size: 25px;
 }
 
-.algorithm-container {
-  font-size: 20px;
+.algorithm-buttons {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  gap: 1rem;
 }
 
-.algorithm-buttons svg {
-  margin-left: 10px;
-  font-size: 25px;
+.alg-card-button {
+  font-size: 15px;
+  width: 100%;
+  border: solid;
+  border-color: var(--border-color);
+  border-radius: 10px;
+  border-width: 1px;
+  padding: 10px;
 }
 
 .menu-section-container {
