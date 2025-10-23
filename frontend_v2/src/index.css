@@ -40,13 +40,14 @@ body {
 .background {
   display: flex;
   flex-direction: row;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 .page-content {
   display: flex;
   flex-direction: row;
   height: 100vh;
+  //min-height: 100vh;
   width: 100%;
   padding-left: 206.3px;
 }
@@ -622,38 +623,46 @@ body {
   flex-direction: column;
 }
 
-.algorithms-menu span {
+.alg-menu-type span {
   font-size: 30px;
   margin-left: 40px;
 }
 
 .algorithms-card {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  border: solid;
+  flex-direction: column;
+  align-items: start;
+  gap: 1rem;
+  border-bottom: solid;
   border-width: 1px;
   border-color: var(--border-color);
-  border-radius: 20px;
   height: 50px;
   width: 80%;
   padding-left: 20px;
   padding-right: 20px;
   margin-top: 10px;
   margin-bottom: 10px;
-  //box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.algorithm-info {
+.name-container, .algorithm-container {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
 }
 
-.algorithm-info span {
+.name-container h1, .algorithm-container h1 {
+  font-size: 10px;
+}
+
+.name-container span {
   font-size: 25px;
-  margin-right: 10px;
 }
 
-.algorithm-icons svg {
+.algorithm-container {
+  font-size: 20px;
+}
+
+.algorithm-buttons svg {
   margin-left: 10px;
   font-size: 25px;
 }

@@ -15,11 +15,15 @@ function AlgorithmCard({ puzzle, name, sequence, removeAlg }) {
 
   return (
         <div className='algorithms-card'>
-          <div className='algorithm-info'>
+          <div className='name-container'>
+            <h1>Name</h1>
             <span>{name}</span>
+          </div>
+          <div className='algorithm-container'>
+            <h1>Algorithm</h1>
             <span>{sequence}</span>
           </div>
-          <div className='algorithm-icons'>
+          <div className='algorithm-buttons'>
             <FiEdit onClick={() => setIsModalOpen(true)}/>
             <MdDeleteOutline onClick={() => removeAlg(puzzle, name)}/>
             {isModalOpen && <AlgModal mode={"edit"} algName={name} sequence={sequence} puzzleName={puzzle} dimensions={dimensions} setModal={setIsModalOpen} />}

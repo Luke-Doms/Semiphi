@@ -65,7 +65,7 @@ function Algorithms() {
           {algs.sequences &&
             Object.entries(algs.sequences).map(([puzzle, value]) => (
             <div key={puzzle}>
-              <span>{nameFormat(puzzle)}</span>
+              <span className='alg-menu-type'>{nameFormat(puzzle)}</span>
                 {Array.isArray(value) && value.length > 0 ? (
                   value.map((alg, index) => (
                     <AlgorithmCard key={`${puzzle}-${index}`} puzzle={puzzle} name={alg.name} sequence={alg.seq} removeAlg={removeAlg}/>
