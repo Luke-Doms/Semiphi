@@ -64,15 +64,17 @@ function Algorithms() {
         <div className='algorithms-menu'>
           {algs.sequences &&
             Object.entries(algs.sequences).map(([puzzle, value]) => (
-            <div key={puzzle}>
+            <div className='alg-submenu' key={puzzle}>
               <span className='alg-menu-type'>{nameFormat(puzzle)}</span>
-                {Array.isArray(value) && value.length > 0 ? (
-                  value.map((alg, index) => (
-                    <AlgorithmCard key={`${puzzle}-${index}`} puzzle={puzzle} name={alg.name} sequence={alg.seq} removeAlg={removeAlg}/>
-                  ))
-                ) : (
-                  <p>No algorithms yet</p>
-                )}
+                <div className='algs'>
+                  {Array.isArray(value) && value.length > 0 ? (
+                    value.map((alg, index) => (
+                      <AlgorithmCard key={`${puzzle}-${index}`} puzzle={puzzle} name={alg.name} sequence={alg.seq} removeAlg={removeAlg}/>
+                    ))
+                  ) : (
+                    <p className='no-alg-message'>No algorithms yet</p>
+                  )}
+                </div>
             </div>
           ))}
         </div>
