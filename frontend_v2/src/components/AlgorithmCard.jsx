@@ -24,8 +24,8 @@ function AlgorithmCard({ puzzle, name, sequence, removeAlg }) {
             <span className='field-value'>{sequence}</span>
           </div>
           <div className='algorithm-buttons'>
-            <button className='alg-card-button' onClick={() => setIsModalOpen(true)}><span>Edit</span></button>
-            <button className='alg-card-button' onClick={() => removeAlg(puzzle, name)}><span>Delete</span></button>
+            <button className='alg-card-edit' onClick={() => setIsModalOpen(true)}><span>Edit</span></button>
+            <button className='alg-card-delete' onClick={() => removeAlg(puzzle, name)}><span>Delete</span></button>
             {isModalOpen && <AlgModal mode={"edit"} algName={name} sequence={sequence} puzzleName={puzzle} dimensions={dimensions} setModal={setIsModalOpen} />}
           </div>
         </div>

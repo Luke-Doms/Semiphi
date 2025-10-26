@@ -660,9 +660,11 @@ body {
   margin-bottom: 20px;
   margin-left: 20px;
   margin-right: 20px;
+  transition: padding-left 0.1s ease-in-out;
 }
 
-.alggorithms-card span {
+.algorithms-card:hover {
+  padding-left: 7px;
 }
 
 .alg-card-field {
@@ -699,7 +701,7 @@ body {
   gap: 1rem;
 }
 
-.alg-card-button {
+.alg-card-edit, .alg-card-delete{
   font-size: 15px;
   width: 100%;
   border: solid;
@@ -710,8 +712,14 @@ body {
   transition: transform 0.1s ease-in-out;
 }
 
-.alg-card-button:hover {
+.alg-card-edit:hover {
   transform: translateY(-3px);
+  background-color: var(--button-color);
+}
+
+.alg-card-delete:hover {
+  transform: translateY(-3px);
+  background-color: rgba(255, 0, 0, .7);
 }
 
 .menu-section-container {
