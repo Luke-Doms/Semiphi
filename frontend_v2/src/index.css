@@ -662,6 +662,9 @@ body {
   margin-right: 20px;
 }
 
+.alggorithms-card span {
+}
+
 .alg-card-field {
   width: 100%;
   display: flex;
@@ -670,16 +673,16 @@ body {
 }
 
 .field-label {
-  font-size: 11px;
+  font-size: 14px;
   text-transform: uppercase;
   letter-spacing: 1px;
-  color: rgba(255, 255, 255, 0.4);
+  color: grey;
   margin-bottom: 6px;
 }
 
 .field-value {
   font-size: 16px;
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--text-color);
   font-weight: 300;
   line-height: 1.5;
 }
