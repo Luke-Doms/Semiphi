@@ -48,7 +48,7 @@ function NavBar() {
         <nav className='main-navbar'>
           <div className='link-wrapper'>
             <div style={location.pathname == '/' ? {width:5} : {width:0}} className='selector'></div>
-            <Link className='testing' style={location.pathname == '/' ? {color:'var(--highlight-color)'} : null } to='/'>Home</Link>
+            <Link className='testing' style={location.pathname == '/' ? {color:'var(--highlight-color)'} : null } to='/'>About</Link>
           </div >
           <div className='link-wrapper'>
             <div style={location.pathname == '/Puzzles' ? {width:5} : {width:0}} className='selector'></div>
