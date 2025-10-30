@@ -2,63 +2,50 @@ import React, { useState } from 'react';
 import SettingsNav from './SettingsNav.jsx';
 import Dropdown from './Dropdown.jsx';
 import Account from './Account.jsx';
-import Algorithms from './Algorithms.jsx'
+import Algorithms from './Algorithms.jsx';
 import Theme from './Theme.jsx';
+import { IoIosArrowForward } from "react-icons/io";
 
-function Settings() {
+function MenuSection({ title, Component }) {
+  const [isOpen, setIsOpen] = useState(true);
+  const [rotated, setRotated] = useState(true);
 
-  const sections = [
-      {
-        id: "account",
-        title: "Account",
-        isOpen: true,
-        component: Account
-      }, 
-      { 
-        id: "theme",
-        title: "Theme",
-        isOpen: true,
-        component: Theme
-      }, 
-      { 
-        id: "algorithms",
-        title: "Algorithms",
-        isOpen: true,
-        component: Algorithms
-      }
-  ]
+  const toggleSection = () => {
+    setIsOpen(prev => !prev);
+    setRotated(prev => !prev);
+  };
 
-  const [sectionsState, setSectionsState] = useState(
-    sections.map(section => ({ ...section }))
+  return (
+    <div className="menu-section-container">
+      <div className="settings-menu-heading" onClick={toggleSection}>
+        <Dropdown section={title} />
+        <IoIosArrowForward className={`settings-icon ${rotated ? 'rotated' : ''}`} />
+      </div>
+
+      {isOpen && (
+        <div className="menu-section-body">
+          <Component />
+        </div>
+      )}
+    </div>
   );
+}
 
-  function toggleSection(id) {
-    setSectionsState(prevSections => 
-      prevSections.map(section => 
-        section.id === id ? { ...section, isOpen: !section.isOpen } : section
-      )
-    );
-  }
+export default function Settings() {
+  const sections = [
+    { id: "account", title: "Account", component: Account },
+    { id: "theme", title: "Theme", component: Theme },
+    { id: "algorithms", title: "Algorithms", component: Algorithms },
+  ];
 
   return (
     <div>
-      <SettingsNav/>
-      <div className='settings-menu'>
-          {sectionsState.map((section) => (
-              <div key={section.id} className="menu-section-container">
-                  <div onClick={() => toggleSection(section.id)}>
-                      <Dropdown section={section.title}/>
-                  </div>
-                  {section.isOpen && (
-                  <div className="menu-section-body">
-                      {React.createElement(section.component)}
-                  </div>
-                  )}
-              </div>
-              ))}
+      <SettingsNav />
+      <div className="settings-menu">
+        {sections.map(({ id, title, component: Component }) => (
+          <MenuSection key={id} title={title} Component={Component} />
+        ))}
       </div>
     </div>
-  )
+  );
 }
-
-export default Settings

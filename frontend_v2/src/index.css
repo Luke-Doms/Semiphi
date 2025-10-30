@@ -555,6 +555,21 @@ body {
   cursor: pointer;
 }
 
+.settings-menu-heading {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 27px;
+}
+
+.settings-icon {
+  transition: transform 0.3s ease;
+}
+
+.settings-icon.rotated {
+  transform: rotate(90deg);
+}
+
 .account-menu {
 }
 
