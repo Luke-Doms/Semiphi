@@ -1,7 +1,13 @@
-import React from 'react';
-import twocube from '../assets/2x2x2.jpg';
+import React, { useContext } from 'react'
+import lightTwoCube from '../assets/L2x2x2.jpeg';
+import darkTwoCube from '../assets/D2x2x2.jpeg';
+import { ThemeContext } from './ThemeContext.js'
+
 
 function Home() {
+  const { theme, setTheme, highlight, setHighlight } = useContext(ThemeContext);
+  const imageSrc = theme === "dark" ? darkTwoCube : lightTwoCube;
+
   return (
     <div>
         <div className='about-title'>
@@ -9,7 +15,7 @@ function Home() {
             About
           </span>
         </div>
-        <img className='homeimage' src={twocube} alt="2x2x2 rubiks cube"/>
+        <img className='homeimage' src={imageSrc} alt="2x2x2 rubiks cube"/>
         <div>
             <p className='landing'>
                 Welcome to semiphi, a web application designed with the intent of bringing all variety of rubiks-style puzzles to
