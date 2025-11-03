@@ -17,7 +17,7 @@ function MenuSection({ title, Component }) {
 
   return (
     <div className="menu-section-container">
-      <div className="settings-menu-heading" onClick={toggleSection}>
+      <div id={title} className="settings-menu-heading" onClick={toggleSection}>
         <Dropdown section={title} />
         <IoIosArrowForward className={`settings-icon ${rotated ? 'rotated' : ''}`} />
       </div>

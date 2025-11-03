@@ -18,7 +18,7 @@ function SettingsNav() {
      <nav className="settings-nav">
           {sections.map((section) => ( 
               <div>
-                  <span>{section.title}</span>
+                  <a href={`#${section.title}`}>{section.title}</a>
               </div>
           ))}
      </nav>

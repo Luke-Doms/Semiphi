@@ -17,6 +17,7 @@
   border-color: var(--border-color);
   background-color: var(--primary-color);
   color: var(--text-color);
+  scroll-behavior: smooth;
 }
 
 body {
@@ -546,11 +547,12 @@ body {
   margin-left: 65px;
 }
 
-.settings-nav span {
+.settings-nav a {
+  text-decoration: none;
   font-size: 20px;
 }
 
-.settings-nav span:hover {
+.settings-nav a:hover {
   color: var(--highlight-color);
   cursor: pointer;
 }
