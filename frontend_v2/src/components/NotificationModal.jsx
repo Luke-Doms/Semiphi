@@ -3,9 +3,12 @@ import { createPortal } from 'react-dom';
 import NotificationForm from './NotificationForm.jsx';
 
 const NotificationModal = ({ setModal }) => {
-  console.log('testing modal');
+  function test() {
+    console.log('testing on click modal');
+    setModal(false);
+  }
   return createPortal(
-    <div onClick={() => setModal(false)} className='modal'>
+    <div onClick={() => test()} className='modal'>
       <NotificationForm />
     </div>,
     document.body
