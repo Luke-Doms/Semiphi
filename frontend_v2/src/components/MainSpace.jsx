@@ -12,12 +12,14 @@ import { VscAccount } from "react-icons/vsc";
 import { IoLogOutOutline } from "react-icons/io5";
 import { IoMailOutline } from "react-icons/io5";
 import { VscGithub } from "react-icons/vsc";
+import NotificationModal from "./NotificationModal.jsx";
 
 function MainSpace({ currentPuzzleName }) {
   const navigate = useNavigate();
   const location = useLocation();
   const [puzzles, setPuzzles] = useState(false);
   const [user, setUser] = useState();
+  const [ notificationModal, setNotificationModal] = useState(false);
 
   useEffect(() => {
     fetch('/get-user', {
@@ -74,7 +76,8 @@ function MainSpace({ currentPuzzleName }) {
             <span>semiphi</span>
             <div className='topbar-icons'>
               <div className='notification-icon'>
-                <IoNotificationsOutline />
+                <IoNotificationsOutline onClick={() => setNotificationModal(true)} />
+                {notificationModal ? <NotificationModal setModal={setNotificationModal}/> : null}
               </div>
               <div className='login-icon' onClick={() => {handleClick()}}>
                 {user ?

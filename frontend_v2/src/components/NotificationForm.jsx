@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Modal from './Modal.jsx';
 import { useNavigate } from 'react-router-dom';
 
-function LoginForm() {
+function NotificationForm() {
   const [ email, setEmail ] = useState('');
   const navigate = useNavigate();
 
@@ -33,19 +33,18 @@ function LoginForm() {
   }
 
   return (
-    <div>
-        <Modal />
-        <div className='notification-container'>
-            <div className='notification-header'>
-                <span>Notification</span>
+        <div className='modal-overlay'>
+            <div className='modal-content'>
+                <div className='notification-header'>
+                    <span>Notification</span>
+                </div>
+                <form onSubmit={handleSubmit} className='notification-form'>
+                    <input type='text' placeholder='email' name='email' value={email} onChange={(event) => setEmail(event.target.value)}></input>
+                    <input type='submit' value='Sign In'></input>
+                </form>
             </div>
-            <form onSubmit={handleSubmit} className='notification-form'>
-                <input type='text' placeholder='email' name='email' value={email} onChange={(event) => setEmail(event.target.value)}></input>
-                <input type='submit' value='Sign In'></input>
-            </form>
         </div>
-    </div>
   )
 }
 
-export default LoginForm
+export default NotificationForm
