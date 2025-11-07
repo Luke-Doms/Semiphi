@@ -18,6 +18,7 @@ function MainSpace({ currentPuzzleName }) {
   const navigate = useNavigate();
   const location = useLocation();
   const [puzzles, setPuzzles] = useState(false);
+  const [isExiting, setIsExiting] = useState(false);
   const [user, setUser] = useState();
   const [ notificationModal, setNotificationModal] = useState(false);
 
@@ -45,12 +46,19 @@ function MainSpace({ currentPuzzleName }) {
   }, [location.pathname]);
 
   useEffect(() => {
-    if (location.pathname == '/Puzzles') {
+    if (location.pathname === '/Puzzles') {
+      setIsExiting(false);
       setPuzzles(true);
-    } else {
-      setTimeout(() => {setPuzzles(false)}, 300);
+    } else if (puzzles) {
+      setIsExiting(true);
+      const timer = setTimeout(() => {
+        setPuzzles(false);
+        setIsExiting(false);
+      }, 350); // match your CSS animation duration
+
+      return () => clearTimeout(timer);
     }
-  }, [location.pathname])
+  }, [location.pathname]);
 
   const handleClick = () => {
     if (user) {
