@@ -944,6 +944,7 @@ input:checked + .slider:before {
   border-radius: 15px;
   display: flex;
   flex-direction: column;
+  align-items: center;
   padding-bottom: 20px;
 }
 

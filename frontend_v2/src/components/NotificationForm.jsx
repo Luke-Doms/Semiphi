@@ -34,11 +34,11 @@ function NotificationForm() {
 
   return (
         <div className='modal-overlay'>
-            <div onClick={(e) => e.stopPropagation()} className='modal-content'>
-                <div>
+            <div onClick={(e) => e.stopPropagation()} className='login-container'>
+                <div className='login-header'>
                     <span>Notification</span>
                 </div>
-                <form onSubmit={handleSubmit}>
+                <form className='login-form' onSubmit={handleSubmit}>
                     <input type='text' placeholder='email' name='email' value={email} onChange={(event) => setEmail(event.target.value)}></input>
                     <input type='submit' value='Sign In'></input>
                 </form>
