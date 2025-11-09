@@ -18,6 +18,7 @@
   background-color: var(--primary-color);
   color: var(--text-color);
   scroll-behavior: smooth;
+  z-index: 3;
 }
 
 body {
@@ -62,6 +63,7 @@ body {
   border-right-style: solid;
   border-right-width: 1px;
   padding-top: 100px;
+  z-index: 4;
 }
 
 .main-navbar {
@@ -103,15 +105,22 @@ body {
 }
 
 .game-surface {
-  width: 500px;
-  height: 400px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;     /* full viewport width */
+  height: 100vh;    /* full viewport height */
+  z-index: 1;      /* pushes it behind everything else */
+  display: block;   /* ensures no weird inline gaps */
 }
 
 .puzzleBox {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
   flex: 1;
+  margin-bottom: 75px;
 }
 
 .puzzle-title {
@@ -400,7 +409,9 @@ body {
 }
 
 .mainspace {
+  z-index: 2;
   display: flex;
+  background-color: transparent;
   flex-direction: column;
   text-align: center;
   width: 100%;
