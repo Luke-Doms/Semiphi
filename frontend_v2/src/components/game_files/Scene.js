@@ -37,7 +37,7 @@ export class Scene {
       const saveUp = new Float32Array(puzzleParams.camera.up);
       this.eye = new Camera(savePos, saveUp);
     } else {
-      this.eye = new Camera([3 * this.x, 3 * this.y, 3 * this.z], [0, 0, 1]);
+      this.eye = new Camera([5 * this.x, 5 * this.y, 5 * this.z], [0, 0, 1]);
     }
     this.faceSelected = false;
     this.moveQueue = [];

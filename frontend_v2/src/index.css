@@ -108,8 +108,10 @@ body {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;     /* full viewport width */
-  height: 100vh;    /* full viewport height */
+  //width: 100vw;     /* full viewport width */
+  width: calc(100vw - 62px);
+  //height: 100vh;    /* full viewport height */
+  height: calc(100vh - 100px);
   z-index: 1;      /* pushes it behind everything else */
   display: block;   /* ensures no weird inline gaps */
 }
@@ -425,6 +427,7 @@ body {
   align-items: center;
   justify-content: space-between;
   height: 70px;
+  z-index: 4;
 }
 
 .topbar span {
