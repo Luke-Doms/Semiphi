@@ -92,8 +92,8 @@ export class Scene {
   }
 
   Unload() {
-    window.removeEventListener("mousedown", this.OnMouseDown);
-    window.removeEventListener("mouseup", this.OnMouseUp);
+    this.gl.canvas.removeEventListener("mousedown", this.OnMouseDown);
+    this.gl.canvas.removeEventListener("mouseup", this.OnMouseUp);
     for (var cubie in this.puzzleModel) {
       const buffer = this.puzzleModel[cubie].buffer_id;
       this.gl.deleteBuffer(buffer);
@@ -112,11 +112,11 @@ export class Scene {
   OnMouseDown(event) {
     this.faceSelected = CheckIntersection(this.gl, event, this.puzzleModel, this.eye.pos, this.projMatrix, this.viewMatrix); //boolean value
     this.eye.initialMouseEvent = event;
-    window.addEventListener("mousemove", this.OnMouseMove);
+    this.gl.canvas.addEventListener("mousemove", this.OnMouseMove);
   }
 
   OnMouseUp(event) {
-    window.removeEventListener("mousemove", this.OnMouseMove);
+    this.gl.canvas.removeEventListener("mousemove", this.OnMouseMove);
     if (this.faceSelected) {
       const rotationAxis = GetRotationAxis(this.gl, this.faceSelected, event, this.eye.pos, this.projMatrix, this.viewMatrix);
       this.moveQueue.push([rotationAxis, this.faceSelected]);
@@ -129,8 +129,8 @@ export class Scene {
   
   
   Begin() {
-    window.addEventListener("mousedown", this.OnMouseDown);
-    window.addEventListener("mouseup", this.OnMouseUp);
+    this.gl.canvas.addEventListener("mousedown", this.OnMouseDown);
+    this.gl.canvas.addEventListener("mouseup", this.OnMouseUp);
 
     this.stopRenderLoop = false;
     this.startTime = 0;
