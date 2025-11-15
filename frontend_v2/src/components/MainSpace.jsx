@@ -5,7 +5,7 @@ import Settings from './Settings';
 import Modal from './Modal';
 import {Route, Routes, Link, useNavigate, useLocation} from "react-router-dom";
 import {useState, useEffect} from 'react';
-import LoginForm from './LoginForm';
+import LoginModal from './LoginModal'
 import RegisterForm from './RegisterForm';
 import { IoNotificationsOutline } from "react-icons/io5";
 import { VscAccount } from "react-icons/vsc";
@@ -20,7 +20,7 @@ function MainSpace({ currentPuzzleName }) {
   const [puzzles, setPuzzles] = useState(false);
   const [isExiting, setIsExiting] = useState(false);
   const [user, setUser] = useState(null);
-  const [ notificationModal, setNotificationModal] = useState(false);
+  const [ modal, setModal] = useState(false);
 
   const refreshUser = () => {
     fetch('/get-user', {
@@ -91,8 +91,8 @@ function MainSpace({ currentPuzzleName }) {
             <span>semiphi</span>
             <div className='topbar-icons'>
               <div className='notification-icon'>
-                <IoNotificationsOutline onClick={() => setNotificationModal(true)} />
-                {notificationModal ? <NotificationModal setModal={setNotificationModal}/> : null}
+                <IoNotificationsOutline onClick={() => setModal(true)} />
+                {modal ? <NotificationModal setModal={setModal}/> : null}
               </div>
               <div className='login-icon' onClick={() => {handleClick()}}>
                 {user ?
@@ -104,7 +104,7 @@ function MainSpace({ currentPuzzleName }) {
         <Routes>
           <Route path="/" element={<Home />}/>
           <Route path="/settings" element={<Settings />}/>
-          <Route path="/login" element={<LoginForm onLoginSuccess={refreshUser} />} />
+          <Route path="/login" element={<LoginModal setModal={setModal} onLoginSuccess={refreshUser} />} />
           <Route path="/register" element={<RegisterForm />} />
           <Route path="/Puzzles" element={<Puzzles currentPuzzleName={currentPuzzleName}/>} />
         </Routes>
