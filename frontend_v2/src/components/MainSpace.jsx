@@ -19,31 +19,38 @@ function MainSpace({ currentPuzzleName }) {
   const location = useLocation();
   const [puzzles, setPuzzles] = useState(false);
   const [isExiting, setIsExiting] = useState(false);
-  const [user, setUser] = useState();
+  const [user, setUser] = useState(null);
   const [ notificationModal, setNotificationModal] = useState(false);
 
-  useEffect(() => {
+  const refreshUser = () => {
     fetch('/get-user', {
       credentials: "include",
       method: "GET",
     }).then((res) => {
-      if (res) {
-        return res.json();
-      }
+      if (!res.ok) return null;
+      return res.json();
     }).then((json) => {
-      console.log(json);
+      if (!json || !json.username) {
+        setUser(null);
+        return;
+      }
       if (json.theme) {
         document.documentElement.style.setProperty('--highlight-color', json.theme.highlight);
         document.documentElement.style.setProperty('--primary-color', json.theme.primary);
         document.documentElement.style.setProperty('--secondary-color', json.theme.secondary);
         document.documentElement.style.setProperty('--text-color', json.theme.text);
       }
-      setUser(json);
+      setUser(json.username);
     })
     .catch((err) => {
       console.warn("get-user request failed:", err.message);
+      setUser(null);
     });
-  }, [location.pathname]);
+  };
+
+  useEffect(() => {
+    refreshUser();
+  }, []);
 
   useEffect(() => {
     if (location.pathname === '/Puzzles') {
@@ -54,7 +61,7 @@ function MainSpace({ currentPuzzleName }) {
       const timer = setTimeout(() => {
         setPuzzles(false);
         setIsExiting(false);
-      }, 350); // match your CSS animation duration
+      }, 300); // match your CSS animation duration
 
       return () => clearTimeout(timer);
     }
@@ -94,15 +101,13 @@ function MainSpace({ currentPuzzleName }) {
               </div>
             </div>
         </div>
-        {puzzles ? <Puzzles currentPuzzleName={currentPuzzleName}/> : 
-              <Routes>
-                <Route path="/" element={<Home />}/>
-                <Route path="/settings" element={<Settings />}/>
-                <Route path="/login" element={<LoginForm />} />
-                <Route path="/register" element={<RegisterForm />} />
-                <Route path="/Puzzles" element={null} />
-            </Routes>
-        }
+        <Routes>
+          <Route path="/" element={<Home />}/>
+          <Route path="/settings" element={<Settings />}/>
+          <Route path="/login" element={<LoginForm onLoginSuccess={refreshUser} />} />
+          <Route path="/register" element={<RegisterForm />} />
+          <Route path="/Puzzles" element={<Puzzles currentPuzzleName={currentPuzzleName}/>} />
+        </Routes>
         <div className='bottombar'>
           <div className='bottom-icons-container'>
             <div className='bottom-icons' onClick={() => {sendEmail()}}>

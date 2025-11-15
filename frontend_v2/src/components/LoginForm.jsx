@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Modal from './Modal.jsx';
 import { useNavigate } from 'react-router-dom';
 
-function LoginForm() {
+function LoginForm({ onLoginSuccess }) {
   const [ uname, setUname] = useState('');
   const [ pw, setPw] = useState('');
   const navigate = useNavigate();
@@ -14,7 +14,6 @@ function LoginForm() {
 
   const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log('test');
 
         try {
             const res = await fetch('/login', {
@@ -28,6 +27,7 @@ function LoginForm() {
             console.log("API response: ", data);
             if (data.success) {
                 console.log('login success');
+                onLoginSuccess();
                 navigate('/');
             } else {
                 console.log('login failure');

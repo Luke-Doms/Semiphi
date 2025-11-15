@@ -12,7 +12,6 @@ function Algorithms() {
 
   const removeAlg = async (puzzle, algName) => {
     const removedItem = algs.sequences[puzzle].find( i => i.name === algName);
-    console.log(removedItem);
 
     setAlgs(prev => ({
       ...prev,
@@ -25,7 +24,6 @@ function Algorithms() {
     }));
 
     try {
-      console.log(puzzle, algName);
       const res = await fetch('/delete-alg', {
         method: 'POST', 
         headers: { 'Content-type' : 'application/json' },
@@ -33,7 +31,6 @@ function Algorithms() {
         credentials: 'include'
       });
       const data = await res.json();
-      console.log(data);
     } catch (error) {
       console.log('error');
       setAlgs((prev) => ({
@@ -48,13 +45,19 @@ function Algorithms() {
 
   useEffect(() => {
     const getAlgs = async () => {
-      const res = await fetch('/get-algs', {
-        method: 'GET',
-        headers: { 'Content-Type' : 'application/json' },
-        credentials: 'include'
-      });
-      const data = await res.json();
-      setAlgs(data);
+      try {
+        const res = await fetch('/get-algs', {
+          method: 'GET',
+          headers: { 'Content-Type' : 'application/json' },
+          credentials: 'include'
+        });
+        const data = await res.json();
+        if (data.sequences) {
+          setAlgs(data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
     }
     
     getAlgs();
