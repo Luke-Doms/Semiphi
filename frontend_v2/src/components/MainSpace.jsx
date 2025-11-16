@@ -6,7 +6,7 @@ import Modal from './Modal';
 import {Route, Routes, Link, useNavigate, useLocation} from "react-router-dom";
 import {useState, useEffect} from 'react';
 import LoginModal from './LoginModal'
-import RegisterForm from './RegisterForm';
+import RegisterModal from './RegisterModal.jsx';
 import { IoNotificationsOutline } from "react-icons/io5";
 import { VscAccount } from "react-icons/vsc";
 import { IoLogOutOutline } from "react-icons/io5";
@@ -105,7 +105,7 @@ function MainSpace({ currentPuzzleName }) {
           <Route path="/" element={<Home />}/>
           <Route path="/settings" element={<Settings />}/>
           <Route path="/login" element={<LoginModal setModal={setModal} onLoginSuccess={refreshUser} />} />
-          <Route path="/register" element={<RegisterForm />} />
+          <Route path="/register" element={<RegisterModal setModal={setModal} onRegisterSuccess={refreshUser}/>} />
           <Route path="/Puzzles" element={<Puzzles currentPuzzleName={currentPuzzleName}/>} />
         </Routes>
         <div className='bottombar'>
