@@ -139,6 +139,7 @@ body {
   border-width: 1px;
   border-color: var(--border-color);
   margin-top: 20px;
+  min-width: fit-content;
   background-color: var(--secondary-color);
   width: 60%;
   height: 60px;
