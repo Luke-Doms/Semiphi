@@ -1,6 +1,5 @@
 import React from 'react';
 import { useState } from 'react';
-import Modal from './Modal.jsx';
 import { useNavigate } from 'react-router-dom';
 
 function LoginForm({ onLoginSuccess }) {
@@ -40,7 +39,6 @@ function LoginForm({ onLoginSuccess }) {
 
   return (
     <div>
-        <Modal />
         <div className='login-container'>
             <div className='login-header'>
                 <span>Login</span>

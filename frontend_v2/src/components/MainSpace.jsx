@@ -21,6 +21,7 @@ function MainSpace({ currentPuzzleName }) {
   const [isExiting, setIsExiting] = useState(false);
   const [user, setUser] = useState(null);
   const [ modal, setModal] = useState(false);
+  const state = location.state;
 
   const refreshUser = () => {
     fetch('/get-user', {
@@ -77,7 +78,7 @@ function MainSpace({ currentPuzzleName }) {
         navigate('/');
       });
     } else {
-      navigate('/login');
+      navigate('/login', { state: { background: location } });
     }
   }
 
@@ -101,13 +102,19 @@ function MainSpace({ currentPuzzleName }) {
               </div>
             </div>
         </div>
-        <Routes>
+        <Routes location={state?.background || location}>
           <Route path="/" element={<Home />}/>
           <Route path="/settings" element={<Settings />}/>
-          <Route path="/login" element={<LoginModal setModal={setModal} onLoginSuccess={refreshUser} />} />
-          <Route path="/register" element={<RegisterModal setModal={setModal} onRegisterSuccess={refreshUser}/>} />
           <Route path="/Puzzles" element={<Puzzles currentPuzzleName={currentPuzzleName}/>} />
         </Routes>
+
+        {state?.background && (
+          <Routes>
+            <Route path="/login" element={<LoginModal setModal={setModal} onLoginSuccess={refreshUser} />} />
+            <Route path="/register" element={<RegisterModal setModal={setModal} onRegisterSuccess={refreshUser}/>} />
+          </Routes>
+        )}
+
         <div className='bottombar'>
           <div className='bottom-icons-container'>
             <div className='bottom-icons' onClick={() => {sendEmail()}}>

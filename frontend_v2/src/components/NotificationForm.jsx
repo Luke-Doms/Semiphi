@@ -1,6 +1,5 @@
 import React from 'react';
 import { useState } from 'react';
-import Modal from './Modal.jsx';
 import { useNavigate } from 'react-router-dom';
 
 function NotificationForm() {

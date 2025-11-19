@@ -1,10 +1,8 @@
 import React from 'react'
-import Modal from './Modal.jsx';
 
 function RegisterForm({ onRegisterSuccess }) {
   return (
     <div>
-        <Modal />
         <div className='login-container'>
             <div>
                 <span>Register</span>
