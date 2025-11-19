@@ -68,7 +68,7 @@ function MainSpace({ currentPuzzleName }) {
     }
   }, [location.pathname]);
 
-  const handleClick = () => {
+  const handleLogin = () => {
     if (user) {
       setUser(null);
       fetch('/logout', {
@@ -82,6 +82,10 @@ function MainSpace({ currentPuzzleName }) {
     }
   }
 
+  const handleNotifications = () => {
+    navigate('/notifications', { state: { background: location} });
+  }
+
   function sendEmail() {
     window.location = "mailto:luke.doms2@gmail.com";
   }
@@ -91,11 +95,10 @@ function MainSpace({ currentPuzzleName }) {
         <div className='topbar'>
             <span>semiphi</span>
             <div className='topbar-icons'>
-              <div className='notification-icon'>
-                <IoNotificationsOutline onClick={() => setModal(true)} />
-                {modal ? <NotificationModal setModal={setModal}/> : null}
+              <div className='notification-icon' onClick={() => handleNotifications()}>
+                <IoNotificationsOutline />
               </div>
-              <div className='login-icon' onClick={() => {handleClick()}}>
+              <div className='login-icon' onClick={() => {handleLogin()}}>
                 {user ?
                 <IoLogOutOutline />:
                 <VscAccount />}
@@ -110,8 +113,9 @@ function MainSpace({ currentPuzzleName }) {
 
         {state?.background && (
           <Routes>
-            <Route path="/login" element={<LoginModal setModal={setModal} onLoginSuccess={refreshUser} />} />
-            <Route path="/register" element={<RegisterModal setModal={setModal} onRegisterSuccess={refreshUser}/>} />
+            <Route path="/login" element={<LoginModal onLoginSuccess={refreshUser} />} />
+            <Route path="/register" element={<RegisterModal onRegisterSuccess={refreshUser}/>} />
+            <Route path="/notifications" element={<NotificationModal />} />
           </Routes>
         )}
 

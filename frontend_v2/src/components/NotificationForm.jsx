@@ -32,16 +32,14 @@ function NotificationForm() {
   }
 
   return (
-        <div className='modal-overlay'>
-            <div onClick={(e) => e.stopPropagation()} className='login-container'>
-                <div className='login-header'>
-                    <span>Notification</span>
-                </div>
-                <form className='login-form' onSubmit={handleSubmit}>
-                    <input type='text' placeholder='email' name='email' value={email} onChange={(event) => setEmail(event.target.value)}></input>
-                    <input type='submit' value='Sign In'></input>
-                </form>
+        <div onClick={(e) => e.stopPropagation()} className='login-container'>
+            <div className='login-header'>
+                <span>Notification</span>
             </div>
+            <form className='login-form' onSubmit={handleSubmit}>
+                <input type='text' placeholder='email' name='email' value={email} onChange={(event) => setEmail(event.target.value)}></input>
+                <input type='submit' value='Sign In'></input>
+            </form>
         </div>
   )
 }
