@@ -1,16 +1,21 @@
 import React from 'react'
+import { useState } from 'react'
 
 function RegisterForm({ onRegisterSuccess }) {
+  const [ error, setError ] = useState(false);
+
   return (
     <div className='login-container' onClick={e => e.stopPropagation()}>
-        <div>
-            <span>Register</span>
+        <div className={`login-inner ${error ? 'shake' : ''}`}>
+            <div className='login-header'>
+                <span>Register</span>
+            </div>
+            <form method='POST' action='/register' className='login-form'>
+                <input type='text' placeholder='username' name='uname'></input>
+                <input type='password' placeholder='password' name='pw'></input>
+                <input type='submit' value='Sign Up'></input>
+            </form>
         </div>
-        <form method='POST' action='/register' className='login-form'>
-            <input type='text' placeholder='username' name='uname'></input>
-            <input type='password' placeholder='password' name='pw'></input>
-            <input type='submit' value='Sign Up'></input>
-        </form>
     </div>
   )
 }

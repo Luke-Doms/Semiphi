@@ -25,6 +25,19 @@ body {
   font-family: Inconsolata;
 }
 
+@keyframes shake {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(-8px); }
+  40% { transform: translateX(8px); }
+  60% { transform: translateX(-8px); }
+  80% { transform: translateX(8px); }
+  100% { transform: translateX(0); }
+}
+
+.shake {
+  animation: shake 0.3s ease;
+}
+
 .landing {
   border: solid;
   border-width: 1px;
@@ -945,17 +958,19 @@ input:checked + .slider:before {
 }
 
 .login-container, .notification-container {
-  border: solid;
-  border-width: 1px;
-  border-color: var(--border-color);
-  background-color: var(--primary-color);
-  width: 400px;
-  height: 300px;
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 15;
+  background: transparent;
+}
+
+.login-inner, .notification-inner {
+  border: 1px solid var(--border-color);
+  background-color: var(--primary-color);
+  width: 400px;
+  height: 300px;
   border-radius: 15px;
   display: flex;
   flex-direction: column;
@@ -975,10 +990,6 @@ input:checked + .slider:before {
   font-size: 30px;
 }
 
-.login-container div {
-  background-color: transparent;
-}
-
 .login-form {
   background-color: transparent;
   flex: 5;
@@ -989,7 +1000,7 @@ input:checked + .slider:before {
   flex-direction: column;
 }
 
-.login-container input {
+.login-container input, .notification-container input {
   height: 30px;
   width: 100%;
   margin-bottom: 20px;

@@ -5,6 +5,7 @@ import { useNavigate, useLocation, Link } from 'react-router-dom';
 function LoginForm({ onLoginSuccess }) {
   const [ uname, setUname] = useState('');
   const [ pw, setPw] = useState('');
+  const [ error, setError ] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -31,7 +32,8 @@ function LoginForm({ onLoginSuccess }) {
                 navigate(-1);
             } else {
                 console.log('login failure');
-                navigate('/login');
+                setError(true);
+                setTimeout(() => setError(false), 300);
             }
         } catch(error) {
             console.log(error);
@@ -40,22 +42,24 @@ function LoginForm({ onLoginSuccess }) {
 
   return (
     <div className='login-container' onClick={e => e.stopPropagation()}>
-        <div className='login-header'>
-            <span>Login</span>
+        <div className={`login-inner ${error ? 'shake' : ''}`}>
+            <div className='login-header'>
+                <span>Login</span>
+            </div>
+            <form onSubmit={handleSubmit} className='login-form'>
+                <input type='text' placeholder='username' name='uname' value={uname} onChange={(event) => setUname(event.target.value)}></input>
+                <input type='password' placeholder='password' name='pw' value={pw} onChange={(event) => setPw(event.target.value)}></input>
+                <span>Dont have an account? </span>
+                <Link
+                  to="/register"
+                  state={{ background: location.state?.background || location }}
+                  className='login-link'
+                >
+                  click here
+                </Link>
+                <input type='submit' value='Sign In'></input>
+            </form>
         </div>
-        <form onSubmit={handleSubmit} className='login-form'>
-            <input type='text' placeholder='username' name='uname' value={uname} onChange={(event) => setUname(event.target.value)}></input>
-            <input type='password' placeholder='password' name='pw' value={pw} onChange={(event) => setPw(event.target.value)}></input>
-            <span>Dont have an account? </span>
-            <Link
-              to="/register"
-              state={{ background: location.state?.background || location }}
-              className='login-link'
-            >
-              click here
-            </Link>
-            <input type='submit' value='Sign In'></input>
-        </form>
     </div>
   )
 }

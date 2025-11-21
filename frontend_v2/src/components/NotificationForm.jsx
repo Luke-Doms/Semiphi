@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 function NotificationForm() {
   const [ email, setEmail ] = useState('');
+  const [ error, setError ] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
@@ -25,6 +26,8 @@ function NotificationForm() {
                 navigate('/');
             } else {
                 console.log('failure');
+                setError(true);
+                setTimeout(() => setError(false), 300);
             }
         } catch(error) {
             console.log(error);
@@ -32,14 +35,16 @@ function NotificationForm() {
   }
 
   return (
-        <div onClick={(e) => e.stopPropagation()} className='login-container'>
-            <div className='login-header'>
-                <span>Notification</span>
+        <div onClick={(e) => e.stopPropagation()} className='notification-container'>
+            <div className={`notification-inner ${error ? 'shake' : ''}`}>
+                <div className='login-header'>
+                    <span>Notifications</span>
+                </div>
+                <form className='login-form' onSubmit={handleSubmit}>
+                    <input type='text' placeholder='email' name='email' value={email} onChange={(event) => setEmail(event.target.value)}></input>
+                    <input type='submit' value='Sign In'></input>
+                </form>
             </div>
-            <form className='login-form' onSubmit={handleSubmit}>
-                <input type='text' placeholder='email' name='email' value={email} onChange={(event) => setEmail(event.target.value)}></input>
-                <input type='submit' value='Sign In'></input>
-            </form>
         </div>
   )
 }
