@@ -5,8 +5,8 @@ function RegisterForm({ onRegisterSuccess }) {
   const [ error, setError ] = useState(false);
 
   return (
-    <div className='login-container' onClick={e => e.stopPropagation()}>
-        <div className={`login-inner ${error ? 'shake' : ''}`}>
+    <div className='register-container' onClick={e => e.stopPropagation()}>
+        <div className={`register-inner ${error ? 'shake' : ''}`}>
             <div className='login-header'>
                 <span>Register</span>
             </div>

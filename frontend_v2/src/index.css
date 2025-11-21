@@ -957,7 +957,7 @@ input:checked + .slider:before {
   cursor: pointer;
 }
 
-.login-container, .notification-container {
+.login-container, .notification-container, .register-container {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -966,7 +966,7 @@ input:checked + .slider:before {
   background: transparent;
 }
 
-.login-inner, .notification-inner {
+.login-inner, .notification-inner, .register-inner {
   border: 1px solid var(--border-color);
   background-color: var(--primary-color);
   width: 400px;
@@ -1000,7 +1000,7 @@ input:checked + .slider:before {
   flex-direction: column;
 }
 
-.login-container input, .notification-container input {
+.login-container input, .register-container input, .notification-container input {
   height: 30px;
   width: 100%;
   margin-bottom: 20px;
