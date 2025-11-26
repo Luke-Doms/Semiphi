@@ -199,6 +199,15 @@ router.post('/delete-alg', isAuth, async (req, res) => {
   }
 })
 
+router.post('/notification', isAuth, async (req, res) => {
+  try {
+    console.log('testing notifications route');
+  } catch (error) {
+    console.log('API response:', error);
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+})
+
 router.post('/set-theme', (req, res) => {
   console.log(req.body);
   req.session.theme = req.body;
@@ -238,6 +247,7 @@ router.delete('/2x2x2/time/:id', async (req, res) => {
   const del = await User.findByIdAndUpdate(req.user.id, {$pull: {times: {_id: req.params.id}}});
   res.json(del);
 })
+
 
 
 /*router.get('/', function(req, res) {
