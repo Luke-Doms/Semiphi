@@ -42,6 +42,7 @@ function NotificationForm() {
                 </div>
                 <form className='login-form' onSubmit={handleSubmit}>
                     <input type='text' placeholder='email' name='email' value={email} onChange={(event) => setEmail(event.target.value)}></input>
+                    <span>To recieve notifications about semiphi, add your email here.</span>
                     <input type='submit' value='Sign In'></input>
                 </form>
             </div>

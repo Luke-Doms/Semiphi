@@ -447,6 +447,7 @@ body {
 .topbar span {
   margin: 20px;
   font-size: 40px;
+  cursor: pointer;
 }
 
 .about-title {

@@ -93,7 +93,7 @@ function MainSpace({ currentPuzzleName }) {
   return (
     <div className='mainspace'>
         <div className='topbar'>
-            <span>semiphi</span>
+            <span onClick={()=>navigate('/')}>semiphi</span>
             <div className='topbar-icons'>
               <div className='notification-icon' onClick={() => handleNotifications()}>
                 <IoNotificationsOutline />
