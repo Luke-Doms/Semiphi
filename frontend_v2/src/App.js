@@ -64,16 +64,22 @@ function App() {
   const location = useLocation();
   const [puzzleNav, setPuzzleNav] = useState(false);
   useEffect(() => {
-    if (location.pathname == '/Puzzles') {
-    setPuzzleNav(true);
+    const background = location.state?.background;
+
+    const isPuzzlePage =
+      location.pathname === "/Puzzles" ||
+      background?.pathname === "/Puzzles";
+
+    if (isPuzzlePage) {
+      setPuzzleNav(true);
     } else {
       if (document.getElementById('puzzleNav')) {
-        document.getElementById('puzzleNav').style.width=0;
-        setTimeout(() => {setPuzzleNav(false)}, 500);
+        document.getElementById('puzzleNav').style.width = 0;
+        setTimeout(() => setPuzzleNav(false), 500);
       }
     }
-  }, [location.pathname]);
-  
+  }, [location.pathname, location.state]);
+
   return (
     <div className='background'>
       <NavBar />
