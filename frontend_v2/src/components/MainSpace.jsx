@@ -41,7 +41,7 @@ function MainSpace({ currentPuzzleName }) {
       const timer = setTimeout(() => {
         setPuzzles(false);
         setIsExiting(false);
-      }, 300); // match your CSS animation duration
+      }, 300);
 
       return () => clearTimeout(timer);
     }

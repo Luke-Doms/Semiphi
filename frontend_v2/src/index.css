@@ -958,6 +958,10 @@ input:checked + .slider:before {
   cursor: pointer;
 }
 
+.login-link {
+  cursor: pointer;
+}
+
 .login-container, .notification-container, .register-container {
   position: fixed;
   top: 50%;
