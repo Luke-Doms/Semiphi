@@ -1,9 +1,11 @@
-import React from 'react';
+import { React, useContext } from 'react';
 import AlgorithmCard from './AlgorithmCard.jsx';
 import { useState, useEffect } from 'react';
+import { AuthContext } from './AuthContext.jsx';
 
 function Algorithms() {
   const [ algs, setAlgs ] = useState({});
+  const { user } = useContext(AuthContext);
 
   const nameFormat = (key) => {
     const puzzle = key.replace(/x/g, '×');
@@ -65,7 +67,8 @@ function Algorithms() {
 
   return (
         <div className='algorithms-menu'>
-          {algs.sequences &&
+          { user ? (
+          algs.sequences &&
             Object.entries(algs.sequences).map(([puzzle, value]) => (
             <div className='alg-submenu' key={puzzle}>
               <span className='alg-menu-type'>{nameFormat(puzzle)}</span>
@@ -79,7 +82,9 @@ function Algorithms() {
                   )}
                 </div>
             </div>
-          ))}
+          ))
+          ) : ( <span> empty :( </span> )
+          }
         </div>
   );
 }

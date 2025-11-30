@@ -3,7 +3,7 @@ import React from 'react';
 const LoginPrompt = () => {
   return (
     <div className=''>
-      Test
+      <span>Login to access acount settings</span>
     </div>
   )
 }
