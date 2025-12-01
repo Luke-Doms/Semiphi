@@ -18,8 +18,7 @@ function Home() {
         <img className='homeimage' src={imageSrc} alt="2x2x2 rubiks cube"/>
         <div>
             <p className='landing'>
-                Welcome to semiphi, a web application designed with the intent of bringing all variety of rubiks-style puzzles to
-                to your fingers. 
+              Semiphi brings a variety of twisty puzzles to the browser, with tools that let you build and save your own algorithms. It’s designed for people who enjoy exploring puzzles creatively rather than racing through memorized solutions. The name itself is a nod to the group theoretic concepts underlying the mathemtaics of twisty puzzles. 
             </p>
         </div>
     </div>

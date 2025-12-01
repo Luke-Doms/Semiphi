@@ -3,11 +3,11 @@ import React from 'react'
 function SettingsNav() {
 
   const sections = [
-      {
-        title: "Account"
-      }, 
       { 
         title: "Theme"
+      }, 
+      {
+        title: "Account"
       }, 
       { 
         title: "Algorithms"

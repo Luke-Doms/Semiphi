@@ -33,8 +33,8 @@ function MenuSection({ title, Component }) {
 
 export default function Settings() {
   const sections = [
-    { id: "account", title: "Account", component: Account },
     { id: "theme", title: "Theme", component: Theme },
+    { id: "account", title: "Account", component: Account },
     { id: "algorithms", title: "Algorithms", component: Algorithms },
   ];
 
