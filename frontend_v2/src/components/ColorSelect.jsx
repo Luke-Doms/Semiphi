@@ -36,13 +36,17 @@ function ColorSelect() {
   }
 
   return (
-        <div className='color-palette'>
-          {highlight_colors.map((color) => (
-            <div onClick={() => selectColor(color.id)} className='color-choices' style={{backgroundColor: color.color}}>
-            </div>
-          ))}
-        </div>
-  );
+      <div className='color-palette'>
+        {highlight_colors.map((color) => (
+          <div
+            key={color.id}
+            onClick={() => selectColor(color.id)}
+            className={`color-choices ${highlight === color.id ? 'selected' : ''}`}
+            style={{ backgroundColor: color.color }}
+          />
+        ))}
+      </div>
+    );
 }
 
 export default ColorSelect
