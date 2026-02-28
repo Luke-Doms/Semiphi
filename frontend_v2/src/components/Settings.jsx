@@ -1,51 +1,41 @@
-import React, { useState } from 'react';
-import SettingsNav from './SettingsNav.jsx';
-import Dropdown from './Dropdown.jsx';
+import { useState } from 'react';
+import Theme from './Theme.jsx';
 import Account from './Account.jsx';
 import Algorithms from './Algorithms.jsx';
-import Theme from './Theme.jsx';
-import { IoIosArrowForward } from "react-icons/io";
 
-function MenuSection({ title, Component }) {
-  const [isOpen, setIsOpen] = useState(true);
-  const [rotated, setRotated] = useState(true);
+const TABS = ['Theme', 'Account', 'Algorithms'];
 
-  const toggleSection = () => {
-    setIsOpen(prev => !prev);
-    setRotated(prev => !prev);
-  };
+function Settings() {
+  const [tab, setTab] = useState('Theme');
 
   return (
-    <div className="menu-section-container">
-      <div id={title} className="settings-menu-heading" onClick={toggleSection}>
-        <Dropdown section={title} />
-        <IoIosArrowForward className={`settings-icon ${rotated ? 'rotated' : ''}`} />
-      </div>
+    <div className="settings-page">
+      <div className="settings-inner">
 
-      {isOpen && (
-        <div className="menu-section-body">
-          <Component />
+        <div className="settings-header">
+          <span className="settings-title">Settings</span>
+          <span className="settings-subtitle">Manage your preferences</span>
         </div>
-      )}
-    </div>
-  );
-}
 
-export default function Settings() {
-  const sections = [
-    { id: "theme", title: "Theme", component: Theme },
-    { id: "account", title: "Account", component: Account },
-    { id: "algorithms", title: "Algorithms", component: Algorithms },
-  ];
+        <div className="settings-tabs">
+          {TABS.map(t => (
+            <button
+              key={t}
+              className={`settings-tab ${tab === t ? 'active' : ''}`}
+              onClick={() => setTab(t)}
+            >
+              {t}
+            </button>
+          ))}
+        </div>
 
-  return (
-    <div>
-      <SettingsNav />
-      <div className="settings-menu">
-        {sections.map(({ id, title, component: Component }) => (
-          <MenuSection key={id} title={title} Component={Component} />
-        ))}
+        {tab === 'Theme'      && <Theme />}
+        {tab === 'Account'    && <Account />}
+        {tab === 'Algorithms' && <Algorithms />}
+
       </div>
     </div>
   );
 }
+
+export default Settings;
