@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&display=swap');
 
 :root{
   --highlight-color: rgb(234,0,217);
@@ -7,6 +8,18 @@
   --text-color: rgb(255, 255, 255);
   --border-color: rgb(0, 0, 0);
   --button-color: rgb(50, 50, 50);
+  --bg: #0d0d0d;
+  --card: #111;
+  --card-inner: #0d0d0d;
+  --border: #1e1e1e;
+  --border-hover: #333;
+  --label: #444;
+  --sublabel: #555;
+  --text: #ccc;
+  --text-dim: #666;
+  --font: 'DM Mono', monospace;
+  --red: #c0392b;
+  --red-hover: #e74c3c;
 }
 
 * {
@@ -565,7 +578,6 @@ body {
 
 .settings-page {
   min-height: 100vh;
-  background: var(--bg);
   font-family: var(--font);
   display: flex;
   justify-content: center;

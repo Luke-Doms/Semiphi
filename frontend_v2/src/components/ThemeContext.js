@@ -6,6 +6,7 @@ export const ThemeProvider = ({ children }) => {
   const themes = {
     dark: {
       primary: 'rgb(0, 0, 0)',
+      //primary: '#0d0d0d',
       //secondary: 'rgb(14, 14, 14)',
       secondary: 'rgb(20, 20, 18)',
       text: 'rgb(255, 255, 255)',
