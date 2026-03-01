@@ -657,12 +657,14 @@ body {
 .account-field-group {
   display: flex;
   flex-direction: column;
+  background: var(--card);
   gap: 10px;
 }
 
 .account-field-group-label {
   font-size: 10px;
   letter-spacing: 0.1em;
+  background: var(--card);
   text-transform: uppercase;
   color: var(--sublabel);
   font-family: var(--font);
@@ -670,6 +672,7 @@ body {
 
 .account-field-inputs {
   display: flex;
+  background: var(--card);
   gap: 8px;
   align-items: center;
   flex-wrap: wrap;
@@ -700,8 +703,17 @@ body {
 .field-row {
   display: flex;
   align-items: center;
+  background: var(--card);
   justify-content: space-between;
   gap: 16px;
+}
+
+.field-row div {
+  background: var(--card);
+}
+
+.field-row span {
+  background: var(--card);
 }
 
 .field-row-label {
@@ -981,6 +993,14 @@ body {
   gap: 10px;
 }
 
+.algorithms-card div {
+  background: var(--card-inner);
+}
+
+.algorithms-card span {
+  background: var(--card-inner);
+}
+
 .alg-card-header {
   display: flex;
   justify-content: space-between;
@@ -1148,6 +1168,7 @@ body {
 
 .color-palette {
   display: flex;
+  background: var(--card);
   gap: 8px;
   align-items: center;
 }
@@ -1222,12 +1243,14 @@ body {
 
 .highlight-selector {
   display: flex;
+  background: var(--card);
   flex-direction: column;
   gap: 10px;
 }
 
 .highlight-selector span {
   font-size: 10px;
+  background: var(--card);
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: #555;
@@ -1235,18 +1258,25 @@ body {
 
 .bg-toggle {
   border-top: 1px solid #1e1e1e;
+  background: var(--card);
   padding-top: 20px;
 }
 
 .toggle-center {
   display: flex;
+  background: var(--card);
   align-items: center;
   justify-content: space-between;
+}
+
+.toggle-center div {
+  background: var(--card);
 }
 
 .toggle-center span {
   font-size: 10px;
   letter-spacing: 0.12em;
+  background: var(--card);
   text-transform: uppercase;
   color: #555;
 }
@@ -1322,6 +1352,7 @@ input:checked + .slider:before {
 
 .switch {
   position: relative;
+  background: var(--card);
   display: inline-block;
   width: 36px;
   height: 20px;
