@@ -8,8 +8,9 @@
   --text-color: rgb(255, 255, 255);
   --border-color: #1e1e1e;
   --button-color: rgb(50, 50, 50);
-
+  --text-input: #0a0a0a;
   --card-color: #111;
+  --settings-tab: #1e1e1e;
   /*add new*/
   
   --label: #444;
@@ -638,7 +639,7 @@ body {
 }
 
 .settings-tab.active {
-  background: #1e1e1e;
+  background: var(--settings-tab);
   color: var(--text);
 }
 
@@ -733,7 +734,7 @@ body {
 
 /* Shared input */
 .settings-input {
-  background: #0a0a0a;
+  background: var(--text-input);
   border: 1px solid var(--border-color);
   border-radius: 6px;
   padding: 7px 10px;
@@ -1071,7 +1072,7 @@ body {
 }
 
 .alg-card-edit:hover {
-  background: #1e1e1e;
+  background: var(--settings-tab);
   border-color: #333;
 }
 

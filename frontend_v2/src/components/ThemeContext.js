@@ -15,6 +15,8 @@ export const ThemeProvider = ({ children }) => {
       border: '#1e1e1e',
       button: 'rgb(50, 50, 50)',
       card: '#111',
+      input: '#0a0a0a',
+      settings: '#1e1e1e',
     },
     light: {
       //primary: 'rgb(232, 241, 245)',
@@ -25,6 +27,8 @@ export const ThemeProvider = ({ children }) => {
       border: 'rgb(229, 231, 235)',
       button: 'rgb(220, 220, 220)',
       card: 'rgb(255, 255, 255)',
+      input: '#fcfcfc',
+      settings: '#f5f5f5',
     },
   };
 
@@ -57,6 +61,8 @@ export const ThemeProvider = ({ children }) => {
     document.documentElement.style.setProperty('--border-color', selectedTheme.border);
     document.documentElement.style.setProperty('--button-color', selectedTheme.button);
     document.documentElement.style.setProperty('--card-color', selectedTheme.card);
+    document.documentElement.style.setProperty('--text-input', selectedTheme.input);
+    document.documentElement.style.setProperty('--settings-tab', selectedTheme.settings);
 
     fetch('/set-theme', {
       method: 'POST', 
