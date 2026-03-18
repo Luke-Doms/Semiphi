@@ -10,13 +10,15 @@ export const ThemeProvider = ({ children }) => {
       //secondary: 'rgb(14, 14, 14)',
       //secondary: 'rgb(20, 20, 18)',
       secondary: '#0d0d0d',
-      text: 'rgb(255, 255, 255)',
+      //text: 'rgb(255, 255, 255)',
+      text: '#ccc',
       //border: 'rgba(222, 220, 209, 0.15)',
       border: '#1e1e1e',
       button: 'rgb(50, 50, 50)',
       card: '#111',
       input: '#0a0a0a',
       settings: '#1e1e1e',
+      red: '#e74c3c',
     },
     light: {
       //primary: 'rgb(232, 241, 245)',
@@ -29,6 +31,7 @@ export const ThemeProvider = ({ children }) => {
       card: 'rgb(255, 255, 255)',
       input: '#fcfcfc',
       settings: '#f5f5f5',
+      red: '#ffd3d3',
     },
   };
 
@@ -63,6 +66,7 @@ export const ThemeProvider = ({ children }) => {
     document.documentElement.style.setProperty('--card-color', selectedTheme.card);
     document.documentElement.style.setProperty('--text-input', selectedTheme.input);
     document.documentElement.style.setProperty('--settings-tab', selectedTheme.settings);
+    document.documentElement.style.setProperty('--red-hover', selectedTheme.red);
 
     fetch('/set-theme', {
       method: 'POST', 

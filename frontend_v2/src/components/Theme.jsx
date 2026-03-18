@@ -4,6 +4,8 @@ import ColorSelect from './ColorSelect.jsx';
 
 function Theme() {
   return (
+      <div className="settings-section">
+        <span className="section-title">Theme Selection</span>
         <div className='theme-menu'>
             <div className='highlight-selector'> 
               <span>Highlight color:</span>
@@ -18,6 +20,7 @@ function Theme() {
               </div>
             </div>
         </div>
+      </div>
   );
 }
 
