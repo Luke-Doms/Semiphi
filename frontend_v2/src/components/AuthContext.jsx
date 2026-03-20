@@ -7,7 +7,8 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   const refreshUser = () => {
-    return fetch('/get-user', {
+    console.log('testing');
+    fetch('/get-user', {
       credentials: "include",
       method: "GET",
     })
@@ -19,13 +20,15 @@ export function AuthProvider({ children }) {
         }
 
         if (json.theme) {
+          //not sure about this
           document.documentElement.style.setProperty('--highlight-color', json.theme.highlight);
           document.documentElement.style.setProperty('--primary-color', json.theme.primary);
           document.documentElement.style.setProperty('--secondary-color', json.theme.secondary);
           document.documentElement.style.setProperty('--text-color', json.theme.text);
         }
 
-        setUser(json.username);
+        setUser({ username: json.username, email: json.email });
+        console.log(json);
       })
       .catch(() => setUser(null))
       .finally(() => setLoading(false));

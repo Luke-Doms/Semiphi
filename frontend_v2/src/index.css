@@ -835,6 +835,7 @@ body {
   border-color: #444;
 }
 
+/* FROM HERE */
 
 .account-field-group {
   display: flex;
@@ -1015,6 +1016,8 @@ body {
   align-items: center;
   width: 100%;
 }
+
+/* TO AROUND HERE CAN CUT SOME */
 
 /*
 .algorithms-menu {

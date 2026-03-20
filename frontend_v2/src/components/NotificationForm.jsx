@@ -12,7 +12,7 @@ function NotificationForm() {
         console.log('test');
 
         try {
-            const res = await fetch('/notification-signup', {
+            const res = await fetch('/update-email', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({ email }), 

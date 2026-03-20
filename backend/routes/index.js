@@ -115,14 +115,41 @@ router.post('/reset-password', isAuth, async (req, res) => {
   }
 });
 
-router.post('/update-email', (req, res) => {
+router.post('/update-email', isAuth, async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    if (!email || !password) {
+      return res.status(400).json({ success: false, message: 'Email required' });
+    }
+    const isValid = validPassword(password, user.hash, user.salt);
+    if (!isValid) {
+      return res.status(401).json({ success: false, message: 'Invalid password' });
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(
+      req.user._id,
+      { email },
+      { new: true },
+    );
+
+    res.json({
+      success: true,
+      email: updatedUser.email,
+    });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
 });
 
 router.get('/get-user', (req, res) => {
   if (req.user) {
     res.json({ 
       'username' : req.user.username, 
-      'theme' : req.session.theme
+      'theme' : req.session.theme,
+      'email' : req.user.email,
     });
   };
 })
@@ -193,15 +220,6 @@ router.post('/delete-alg', isAuth, async (req, res) => {
       { $pull: { [`sequences.${key}`]: { name : algName } } }
     );
     return res.json({ success: true, message: 'sequence deleted' });
-  } catch (error) {
-    console.log('API response:', error);
-    res.status(500).json({ success: false, message: 'Server error' });
-  }
-})
-
-router.post('/notification', isAuth, async (req, res) => {
-  try {
-    console.log('testing notifications route');
   } catch (error) {
     console.log('API response:', error);
     res.status(500).json({ success: false, message: 'Server error' });
