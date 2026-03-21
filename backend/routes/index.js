@@ -47,9 +47,9 @@ router.post('/register', (req, res, next) => {
 
 router.post('/reset-username', isAuth, async (req, res) => {
   try {
-    const { newUsername, password } = req.body;
+    const { newUsername, userCurrentPw } = req.body;
 
-    if (!newUsername || !password) {
+    if (!newUsername || !userCurrentPw ) {
       return res.status(400).json({ success: false, message: 'Missing fields' });
     }
 
@@ -60,7 +60,7 @@ router.post('/reset-username', isAuth, async (req, res) => {
     }
 
     // Validate password against stored hash + salt
-    const isValid = validPassword(password, user.hash, user.salt);
+    const isValid = validPassword(userCurrentPw, user.hash, user.salt);
     if (!isValid) {
       return res.status(401).json({ success: false, message: 'Invalid password' });
     }
@@ -84,9 +84,9 @@ router.post('/reset-username', isAuth, async (req, res) => {
 
 router.post('/reset-password', isAuth, async (req, res) => {
   try {
-    const { currentPassword, newPassword } = req.body;
+    const { currentPw, newPw} = req.body;
 
-    if (!currentPassword || !newPassword) {
+    if (!currentPw || !newPw) {
       return res.status(400).json({ success: false, message: 'Missing fields' });
     }
 
@@ -97,13 +97,13 @@ router.post('/reset-password', isAuth, async (req, res) => {
     }
 
     // Validate password against stored hash + salt
-    const isValid = validPassword(currentPassword, user.hash, user.salt);
+    const isValid = validPassword(currentPw, user.hash, user.salt);
     if (!isValid) {
       return res.status(401).json({ success: false, message: 'Invalid password' });
     }
 
     // Update and save
-    const newInfo = genPassword(newPassword);
+    const newInfo = genPassword(newPw);
     user.hash = newInfo.hash;
     user.salt = newInfo.salt;
     await user.save();
@@ -116,20 +116,22 @@ router.post('/reset-password', isAuth, async (req, res) => {
 });
 
 router.post('/update-email', isAuth, async (req, res) => {
-  const { email, password } = req.body;
+  const { newEmail, emailCurrentPw } = req.body;
 
   try {
-    if (!email || !password) {
+    if (!newEmail || !emailCurrentPw) {
       return res.status(400).json({ success: false, message: 'Email required' });
     }
-    const isValid = validPassword(password, user.hash, user.salt);
+
+    const user = await User.findById(req.user._id);
+    const isValid = validPassword(emailCurrentPw, user.hash, user.salt);
     if (!isValid) {
       return res.status(401).json({ success: false, message: 'Invalid password' });
     }
 
     const updatedUser = await User.findByIdAndUpdate(
       req.user._id,
-      { email },
+      { email: newEmail },
       { new: true },
     );
 

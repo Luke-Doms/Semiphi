@@ -35,7 +35,7 @@ function AccountRow({ label, isOpen, currentValue, onToggle, onSave, onCancel, c
             <button className='accordian-cancel' onClick={onCancel}>
             Cancel
             </button>
-            <button className='accordian-save'>
+            <button className='accordian-save' onClick={onSave}>
             Save
             </button>
           </div>
@@ -73,7 +73,6 @@ function Account() {
 
   const handleUsernameSubmit = async () => {
     try {
-      console.log(newUsername, userCurrentPw);
       const res = await fetch("/reset-username", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -95,10 +94,15 @@ function Account() {
   const handleEmailSubmit = async () => {
     try {
       console.log(newEmail, confirmEmail, emailCurrentPw);
+      if (newEmail !== confirmEmail) {
+        setSaved('email-mismatch'); // or a separate error state
+        return;
+      }
+
       const res = await fetch("/update-email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ newEmail, emailCurrentPw})
+        body: JSON.stringify({ newEmail, emailCurrentPw })
       });
 
       const data = await res.json();
@@ -116,10 +120,15 @@ function Account() {
   const handlePasswordSubmit = async () => {
     try {
       console.log(currentPw, newPw, confirmPw);
+      if (newPw !== confirmPw) {
+        setSaved('password-mismatch'); // or a separate error state
+        return;
+      }
+
       const res = await fetch("/reset-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ newPw, currentPw })
+        body: JSON.stringify({ currentPw, newPw })
       });
 
       const data = await res.json();
@@ -174,7 +183,7 @@ function Account() {
               </div>
               <div className='accordian-input'>
                 <FieldLabel>Current password</FieldLabel>
-                <Input value={userCurrentPw} onChange={e => setUserCurrentPw(e.target.value)} placeholder='Enter current password'/>
+                <Input type="password" value={userCurrentPw} onChange={e => setUserCurrentPw(e.target.value)} placeholder='Enter current password'/>
               </div>
             </AccountRow>
           </div>
@@ -197,7 +206,7 @@ function Account() {
               </div>
               <div className='accordian-input'>
                 <FieldLabel>Current password</FieldLabel>
-                <Input value={emailCurrentPw} onChange={e => setEmailCurrentPw(e.target.value)} placeholder='Enter current password'/>
+                <Input type="password" value={emailCurrentPw} onChange={e => setEmailCurrentPw(e.target.value)} placeholder='Enter current password'/>
               </div>
             </AccountRow>
           </div>
@@ -212,15 +221,15 @@ function Account() {
             >
               <div className='accordian-input'>
                 <FieldLabel>New password</FieldLabel>
-                <Input value={newPw} onChange={e => setNewPw(e.target.value)} placeholder='Enter new password'/>
+                <Input type="password" value={newPw} onChange={e => setNewPw(e.target.value)} placeholder='Enter new password'/>
               </div>
               <div className='accordian-input'>
                 <FieldLabel>Confirm new password</FieldLabel>
-                <Input value={confirmPw} onChange={e => setConfirmPw(e.target.value)} placeholder='Re-enter new password'/>
+                <Input type="password" value={confirmPw} onChange={e => setConfirmPw(e.target.value)} placeholder='Re-enter new password'/>
               </div>
               <div className='accordian-input'>
                 <FieldLabel>Current password</FieldLabel>
-                <Input value={currentPw} onChange={e => setCurrentPw(e.target.value)} placeholder='Enter current password'/>
+                <Input type="password" value={currentPw} onChange={e => setCurrentPw(e.target.value)} placeholder='Enter current password'/>
               </div>
             </AccountRow>
           </div>
