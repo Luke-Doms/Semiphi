@@ -1,79 +1,61 @@
 import { useState } from "react";
 
-export default function AlgModal({ mode, oldAlgName, oldSequence, puzzleName, dimensions }) {
-  const move_options = {
-    R: [],
-    L: [],
-    U: [],
-    D: [],
-    F: [],
-    B: [],
-  }
-  const [moves, setMoves] = useState(oldSequence);
+export default function AlgModal({ mode, oldAlgName, oldSequence, puzzleName, dimensions, setModal }) {
+  const move_options = { R: [], L: [], U: [], D: [], F: [], B: [] };
+  const [moves, setMoves] = useState(oldSequence ?? []);
   const [inverse, setInverse] = useState(false);
   const [algName, setAlgName] = useState(oldAlgName);
+  const [nameError, setNameError] = useState(false);
 
-  const addMove = (move: string) => {
-    if (move == "X") {
-        setMoves(moves.slice(0, -1));
+  const addMove = (move) => {
+    if (move === "X") {
+      setMoves(moves.slice(0, -1));
     } else {
       const notation = inverse ? `${move}'` : move;
       setMoves([...moves, notation]);
     }
   };
 
-  for (var i=0; i<Math.floor(dimensions.x/2); i++) {
-    (move_options.F).push(i == 0 ? 'F' : `${i+1}F`);
-    (move_options.B).push(i == 0 ? 'B' : `${i+1}B`);
+  for (var i = 0; i < Math.floor(dimensions.x / 2); i++) {
+    move_options.F.push(i === 0 ? 'F' : `${i + 1}F`);
+    move_options.B.push(i === 0 ? 'B' : `${i + 1}B`);
   }
-  for (var j=0; j<Math.floor(dimensions.y/2); j++) {
-    (move_options.R).push(j == 0 ? 'R' : `${j+1}R`);
-    (move_options.L).push(j == 0 ? 'L' : `${j+1}L`);
+  for (var j = 0; j < Math.floor(dimensions.y / 2); j++) {
+    move_options.R.push(j === 0 ? 'R' : `${j + 1}R`);
+    move_options.L.push(j === 0 ? 'L' : `${j + 1}L`);
   }
-  for (var k=0; k<Math.floor(dimensions.z/2); k++) {
-    (move_options.U).push(k == 0 ? 'U' : `${k+1}U`);
-    (move_options.D).push(k == 0 ? 'D' : `${k+1}D`);
+  for (var k = 0; k < Math.floor(dimensions.z / 2); k++) {
+    move_options.U.push(k === 0 ? 'U' : `${k + 1}U`);
+    move_options.D.push(k === 0 ? 'D' : `${k + 1}D`);
   }
 
   const handleSubmit = async () => {
-    if (mode == 'create') {
-      const algorithm = {
-        puzzleName,
-        algName,
-        moves,
-      };
-      try {
-        const res = await fetch('/create-alg', {
-          method: 'POST',
-          headers: { 'Content-Type' : 'application/json' },
-          body: JSON.stringify(algorithm), 
-          credentials: 'include'
-        });
+    if (!algName || algName.trim() === '') {
+      setNameError(true);
+      setTimeout(() => setNameError(false), 300);
+      return;
+    }
+    if (moves.length === 0) return;
 
-        const data = await res.json();
-        console.log('API response:', data);
-      } catch (error) {
-        console.log("API response:");
+    const endpoint = mode === 'create' ? '/create-alg' : '/update-alg';
+    const algorithm = mode === 'create'
+      ? { puzzleName, algName, moves }
+      : { puzzleName, oldAlgName, algName, moves };
+
+    try {
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(algorithm),
+        credentials: 'include'
+      });
+      if (res.ok) {
+        console.log('helloooo');
+        setModal(false);
+        window.location.reload();
       }
-    } if (mode == 'edit') {
-      const algorithm = {
-        puzzleName, 
-        oldAlgName, 
-        algName, 
-        moves
-      };
-      try {
-        const res = await fetch('/update-alg', {
-          method: 'POST',
-          body: JSON.stringify(algorithm),
-          headers: { 'Content-Type' : 'application/json' },
-          credentials: 'include'
-        });
-        const data = await res.json();
-        console.log(data.success);
-      } catch (error) {
-        console.log('API response:', error);
-      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -81,17 +63,13 @@ export default function AlgModal({ mode, oldAlgName, oldSequence, puzzleName, di
     <div className="modal-overlay">
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <span className="alg-popup-header">Enter Algorithm</span>
-
-        {/* Name Field */}
         <input
           type="text"
           placeholder="Algorithm name"
           value={algName}
-          onChange={(e) => setAlgName(e.target.value)}
-          className="alg-name"
+          onChange={(e) => { setAlgName(e.target.value); setNameError(false); }}
+          className={`alg-name ${nameError ? 'shake' : ''}`}
         />
-
-        {/* Move Preview */}
         <div className="preview">
           {moves.length === 0 ? (
             <span className="placeholder">No moves yet</span>
@@ -99,11 +77,9 @@ export default function AlgModal({ mode, oldAlgName, oldSequence, puzzleName, di
             moves.join(" ")
           )}
         </div>
-
-        {/* Move Buttons */}
         <div className="move-buttons">
           {Object.keys(move_options).map((key) => (
-            <div className="move-buttons-column">
+            <div className="move-buttons-column" key={key}>
               {move_options[key].map((move) => (
                 <button key={move} onClick={() => addMove(move)}>
                   {move}
@@ -112,11 +88,9 @@ export default function AlgModal({ mode, oldAlgName, oldSequence, puzzleName, di
             </div>
           ))}
         </div>
-
-        {/* Inverse Toggle */}
         <div className="inverse-toggle">
           <button onClick={() => addMove('X')}>
-            X
+            Delete
           </button>
           <label>
             <input
@@ -127,8 +101,6 @@ export default function AlgModal({ mode, oldAlgName, oldSequence, puzzleName, di
             <span>Inverse (′)</span>
           </label>
         </div>
-
-        {/* Action Buttons */}
         <div className="action-buttons">
           <button onClick={handleSubmit}>Submit</button>
         </div>

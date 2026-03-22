@@ -25,25 +25,36 @@ router.post('/login', (req, res, next) => {
   })(req, res, next);
 });
 
-router.post('/register', (req, res, next) => {
-  const saltHash = genPassword(req.body.pw);
+router.post('/register', async (req, res, next) => {
+  const { uname, pw } = req.body;
 
-  const salt = saltHash.salt;
-  const hash = saltHash.hash;
+  if (!uname || uname.length <= 2) {
+    return res.status(400).json({ success: false, message: 'Username must be longer than 2 characters' });
+  }
 
-  const newUser = new User({
-    username: req.body.uname,
-    hash: hash,
-    salt: salt,
-  })
+  if (!pw || pw.length < 8) {
+    return res.status(400).json({ success: false, message: 'Password must be at least 8 characters' });
+  }
 
-  newUser.save()
-    .then((user) => {
-      console.log(user);
+  try {
+    const existingUser = await User.findOne({ username: uname });
+    if (existingUser) {
+      return res.status(400).json({ success: false, message: 'Username already taken' });
+    }
+
+    const saltHash = genPassword(pw);
+    const newUser = new User({
+      username: uname,
+      hash: saltHash.hash,
+      salt: saltHash.salt,
     });
-
-  res.redirect('/login');
-})
+    await newUser.save();
+    res.json({ success: true });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+});
 
 router.post('/reset-username', isAuth, async (req, res) => {
   try {
@@ -84,7 +95,7 @@ router.post('/reset-username', isAuth, async (req, res) => {
 
 router.post('/reset-password', isAuth, async (req, res) => {
   try {
-    const { currentPw, newPw} = req.body;
+    const { currentPw, newPw } = req.body;
 
     if (!currentPw || !newPw) {
       return res.status(400).json({ success: false, message: 'Missing fields' });

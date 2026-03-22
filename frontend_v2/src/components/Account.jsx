@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useState, useContext, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { AuthContext } from './AuthContext.jsx';
 
 const MOCK_USER = { username: 'cuber42', email: 'cuber42@example.com' };
 
@@ -54,6 +56,8 @@ function FieldLabel({ children }){
 }
 
 function Account() {
+  const { user, logout, refreshUser } = useContext(AuthContext);
+  console.log(user);
   const [saved, setSaved] = useState("");
     // Username state
   const [newUsername, setNewUsername] = useState("");
@@ -70,6 +74,15 @@ function Account() {
   const [confirmPw, setConfirmPw] = useState("");
 
   const [openRow, setOpenRow] = useState(null);
+
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (!user) {
+      navigate('/login', { state: { background: location } });
+    }
+  }, []);
 
   const handleUsernameSubmit = async () => {
     try {
@@ -162,6 +175,16 @@ function Account() {
     setTimeout(() => setSaved(p => ({ ...p, [key]: false })), 1500);
   };
 
+  if (!user) {
+    return (
+      <div className='settings-section'>
+        <span className="section-title">Credentials</span>
+        <p onClick={() => navigate('/login', { state: { background: location } })} className='login-prompt'>
+          Login to edit
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className='settings-section'>
@@ -172,7 +195,7 @@ function Account() {
             <AccountRow
               label='username'
               isOpen={openRow === 'username'}
-              currentValue='beebus'
+              currentValue={user.username}
               onToggle={() => toggle('username')}
               onSave={handleUsernameSubmit}
               onCancel={handleCancel}
@@ -191,7 +214,7 @@ function Account() {
             <AccountRow 
               label='email'
               isOpen={openRow === 'email'}
-              currentValue='test@beebus.com'
+              currentValue={user.email}
               onToggle={() => toggle('email')}
               onSave={handleEmailSubmit}
               onCancel={handleCancel}

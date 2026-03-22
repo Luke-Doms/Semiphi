@@ -261,7 +261,7 @@ body {
 }
 
 .alg-name::placeholder {
-  color: color-mix(in srgb, var(--highlight-color) 60%, transparent);
+  color: var(--text-color);
 }
 
 .preview {
@@ -345,7 +345,7 @@ body {
 .action-buttons button:hover {
   cursor: pointer;
   background-color: var(--highlight-color);
-  transform: translateY(-5px);
+  transform: translateY(-3px);
 }
 
 @keyframes puzzlenav {

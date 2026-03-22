@@ -21,7 +21,7 @@ function AlgorithmCard({ puzzle, name, sequence, removeAlg }) {
           </div>
           <div className='alg-card-field'>
             <span className='field-label'>Algorithm</span>
-            <span className='field-value'>{sequence}</span>
+            <span className='field-value'>{sequence.join(' ')}</span>
           </div>
           <div className='algorithm-buttons'>
             <button className='alg-card-edit' onClick={() => setIsModalOpen(true)}><span>Edit</span></button>

@@ -76,11 +76,33 @@ function MainSpace({ currentPuzzleName }) {
           <Route path="/Puzzles" element={<Puzzles currentPuzzleName={currentPuzzleName}/>} />
         </Routes>
 
-        {state?.background && (
+        
+        {/*state?.background && (
           <Routes>
             <Route path="/login" element={<LoginModal onLoginSuccess={refreshUser} />} />
             <Route path="/register" element={<RegisterModal onRegisterSuccess={refreshUser}/>} />
             <Route path="/notifications" element={<NotificationModal />} />
+          </Routes>
+        )*/}
+        {state?.background && (
+          <Routes>
+            <Route path="/login" element={
+              <LoginModal
+                onLoginSuccess={refreshUser}
+                onClose={() => navigate(state.background)}
+                onSwitchToRegister={() => navigate('/register', { state: { background: state.background } })}
+              />}
+            />
+            <Route path="/register" element={
+              <RegisterModal
+                onRegisterSuccess={refreshUser}
+                onClose={() => navigate(state.background)}
+                onSwitchToLogin={() => navigate('/login', { state: { background: state.background } })}
+              />}
+            />
+            <Route path="/notifications" element={
+              <NotificationModal onClose={() => navigate(state.background)} />}
+            />
           </Routes>
         )}
 
