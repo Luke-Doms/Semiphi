@@ -27,21 +27,24 @@ app.get('/robots.txt', function (req, res) {
     res.send("User-agent: *\nDisallow: /");
 });
 
+app.set('trust proxy', 1);
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
 app.use(session({
-	secret: process.env.SECRET,
-	resave: false,
-	saveUninitialized: false,
-	cookie: {
-	  maxAge: 1000 * 60 * 60 * 24
-	},
-	store: MongoStore.create({
-	  client: connection.getClient(),
-	  collectionName: 'sessions'
-	})
-  }));
+  secret: process.env.SECRET,
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24,
+    secure: true,       // required for HTTPS
+    sameSite: 'lax'
+  },
+  store: MongoStore.create({
+    client: connection.getClient(),
+    collectionName: 'sessions'
+  })
+}));
 
 require('./config/passport.js');
 
