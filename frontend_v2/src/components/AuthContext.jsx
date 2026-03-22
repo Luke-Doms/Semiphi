@@ -14,6 +14,7 @@ export function AuthProvider({ children }) {
     })
       .then((res) => res.ok ? res.json() : null)
       .then((json) => {
+        console.log(json);
         if (!json?.username) {
           setUser(null);
           return;
@@ -28,7 +29,7 @@ export function AuthProvider({ children }) {
         }
 
         setUser({ username: json.username, email: json.email });
-        console.log(json);
+        console.log(user);
       })
       .catch(() => setUser(null))
       .finally(() => setLoading(false));

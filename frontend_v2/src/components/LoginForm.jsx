@@ -17,6 +17,7 @@ function LoginForm({ onClose, onSwitch, onLoginSuccess }) {
       });
       const data = await res.json();
       if (data.success) {
+        console.log(data);
         onLoginSuccess();
         onClose();
       } else {

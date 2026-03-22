@@ -37,7 +37,7 @@ app.use(session({
   saveUninitialized: false,
   cookie: {
     maxAge: 1000 * 60 * 60 * 24,
-    secure: true,       // required for HTTPS
+    secure: process.env.NODE_ENV === 'production',
     sameSite: 'lax'
   },
 	store: MongoStore.create({
