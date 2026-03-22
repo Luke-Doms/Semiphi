@@ -40,10 +40,10 @@ app.use(session({
     secure: true,       // required for HTTPS
     sameSite: 'lax'
   },
-  store: MongoStore.create({
-    client: connection.getClient(),
-    collectionName: 'sessions'
-  })
+	store: MongoStore.create({
+	    mongoUrl: process.env.DB_URL,
+	    collectionName: 'sessions'
+	  })
 }));
 
 require('./config/passport.js');
