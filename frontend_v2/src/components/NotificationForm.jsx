@@ -37,13 +37,13 @@ function NotificationForm() {
   return (
         <div onClick={(e) => e.stopPropagation()} className='notification-container'>
             <div className={`notification-inner ${error ? 'shake' : ''}`}>
-                <div className='login-header'>
+                <div className='notification-header'>
                     <span>Notifications</span>
                 </div>
-                <form className='login-form' onSubmit={handleSubmit}>
-                    <input type='text' placeholder='email' name='email' value={email} onChange={(event) => setEmail(event.target.value)}></input>
-                    <span>To recieve notifications about semiphi, add your email here.</span>
-                    <input type='submit' value='Sign In'></input>
+                <form className='notification-form' onSubmit={handleSubmit}>
+                    <input className='notification-input' type='text' placeholder='email' name='email' value={email} onChange={(event) => setEmail(event.target.value)}></input>
+                    <span className='notification-switch-text'>To recieve notifications about semiphi, add your email here.</span>
+                    <input className='notification-submit' type='submit' value='Sign In'></input>
                 </form>
             </div>
         </div>

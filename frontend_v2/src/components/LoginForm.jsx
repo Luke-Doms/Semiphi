@@ -36,10 +36,10 @@ function LoginForm({ onClose, onSwitch, onLoginSuccess }) {
           <span>Login</span>
         </div>
         <form onSubmit={handleSubmit} className='login-form'>
-          <input type='text' placeholder='username' name='uname' value={uname} onChange={e => setUname(e.target.value)} />
-          <input type='password' placeholder='password' name='pw' value={pw} onChange={e => setPw(e.target.value)} />
-          <span>Don't have an account? <span onClick={onSwitch} className='login-link'>click here</span></span>
-          <input type='submit' value='Sign In' />
+          <input className='login-input' type='text' placeholder='username' name='uname' value={uname} onChange={e => setUname(e.target.value)} />
+          <input className='login-input' type='password' placeholder='password' name='pw' value={pw} onChange={e => setPw(e.target.value)} />
+          <span className='login-switch-text'>Don't have an account? <span onClick={onSwitch} className='login-link'>click here</span></span>
+          <input className='login-submit' type='submit' value='Sign In' />
         </form>
       </div>
     </div>

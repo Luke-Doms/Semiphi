@@ -1611,11 +1611,205 @@ input:checked + .slider::after {
   transition: transform .25s;
   cursor: pointer;
 }
-
+/*
 .login-link {
   cursor: pointer;
 }
+*/
 
+.login-container, .register-container, .notification-container {
+  background: var(--primary-color);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  padding: 28px 28px 24px;
+  width: 100%;
+  max-width: 340px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6);
+  transform: translate(-50%, -50%);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+}
+
+.login-container div, form, span {
+  background: transparent;
+}
+
+.register-container div, form, span {
+  background: transparent;
+}
+
+.notification-container div, form, span {
+  background: transparent;
+}
+ 
+/* Shake animation on bad login */
+.login-inner, .register-inner, .notification-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+ 
+@keyframes shake {
+  0%   { transform: translateX(0); }
+  20%  { transform: translateX(-6px); }
+  40%  { transform: translateX(6px); }
+  60%  { transform: translateX(-4px); }
+  80%  { transform: translateX(4px); }
+  100% { transform: translateX(0); }
+}
+ 
+.login-inner.shake {
+  animation: shake 0.3s ease;
+}
+
+.register-inner.shake {
+  animation: shake 0.3s ease;
+}
+
+.register-error-message {
+  font-size: 10px;
+  font-family: var(--font);
+  color: var(--red);
+  letter-spacing: 0.03em;
+}
+ 
+/* Header */
+.login-header, .register-header, .notification-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-color);
+}
+ 
+.login-header span {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-color);
+  letter-spacing: 0.02em;
+  font-family: var(--font);
+}
+
+.register-header span {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-color);
+  letter-spacing: 0.02em;
+  font-family: var(--font);
+}
+
+.notification-header span {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-color);
+  letter-spacing: 0.02em;
+  font-family: var(--font);
+}
+ 
+/* Form */
+.login-form, .register-form, .notification-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+ 
+/* Text / password inputs */
+.login-input, .register-input, .notification-input {
+  background: var(--secondary-color);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 8px 11px;
+  font-size: 11px;
+  font-family: var(--font);
+  color: var(--text-color);
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.15s ease;
+}
+ 
+.login-input:focus {
+  border-color: #444;
+}
+ 
+.login-input::placeholder {
+  color: var(--text-dim);
+}
+
+.register-input:focus {
+  border-color: #444;
+}
+ 
+.register-input::placeholder {
+  color: var(--text-dim);
+}
+
+.notification-input:focus {
+  border-color: #444;
+}
+ 
+.notification-input::placeholder {
+  color: var(--text-dim);
+}
+ 
+/* Switch text */
+.login-switch-text, .register-switch-text, .notification-switch-text {
+  font-size: 10px;
+  font-family: var(--font);
+  color: var(--text-dim);
+  letter-spacing: 0.03em;
+}
+ 
+.login-link, .register-link {
+  color: var(--sublabel);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.15s ease;
+}
+ 
+.login-link:hover {
+  color: var(--text-color);
+}
+
+.register-link:hover {
+  color: var(--text-color);
+}
+ 
+/* Submit button */
+.login-submit, .register-submit, .notification-submit {
+  background: var(--primary-color);
+  border: 1px solid #2a2a2a;
+  border-radius: 6px;
+  padding: 8px 14px;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-family: var(--font);
+  color: var(--text-color);
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+  width: 100%;
+  margin-top: 4px;
+}
+ 
+.login-submit:hover {
+  background: var(--settings-tab);
+  border-color: #444;
+}
+
+.register-submit:hover {
+  background: var(--settings-tab);
+  border-color: #444;
+}
+
+.notification-submit:hover {
+  background: var(--settings-tab);
+  border-color: #444;
+}
+
+/*
 .login-container, .notification-container, .register-container {
   position: fixed;
   top: 50%;
@@ -1686,6 +1880,7 @@ input:checked + .slider::after {
   color: purple;
   cursor: pointer;
 }
+*/
 
 .theme:hover {
   transform: scale(1.15);
