@@ -431,7 +431,7 @@ body {
 }
 
 .puzzle-title {
-  background-color: black;
+  background-color: transparent;
   position: relative;
   display: flex;
   flex-direction: column;
