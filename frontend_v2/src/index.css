@@ -20,6 +20,7 @@
   --text: #ccc;
   --text-dim: #666;
   --font: 'DM Mono', monospace;
+  /*--font: Inconsolata;*/
   --red: #c0392b;
   /*maybe add new for all these*/
 }
