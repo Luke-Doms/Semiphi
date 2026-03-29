@@ -3,6 +3,8 @@ import MainSpace from './components/MainSpace';
 import PuzzleNav from './components/PuzzleNav';
 import {Route, Routes, useLocation} from "react-router-dom";
 import {useState, useEffect} from 'react';
+import useMediaQuery from './components/MediaQuery.js';
+
 
 function App() {
   const puzzleConfigs = {
@@ -48,6 +50,15 @@ function App() {
     }
   }
 
+  const [menuOpen, setMenuOpen] = useState(false);
+  const isMobile = useMediaQuery("(max-width: 768px)");
+
+  useEffect(() => {
+    if (!isMobile) {
+      setMenuOpen(false);
+    }
+  }, [isMobile])
+
   if (!localStorage.getItem("puzzles")) {
     localStorage.setItem("puzzles", JSON.stringify(puzzleConfigs));
   }
@@ -82,7 +93,9 @@ function App() {
 
   return (
     <div className='background'>
-      <NavBar />
+      {!isMobile && (
+        <NavBar />
+      )}
       <div className='page-content'>
         <MainSpace currentPuzzleName={currentPuzzleName}/>
         {/*<Routes>

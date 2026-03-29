@@ -13,6 +13,8 @@ import { VscAccount } from "react-icons/vsc";
 import { IoLogOutOutline } from "react-icons/io5";
 import { IoMailOutline } from "react-icons/io5";
 import { VscGithub } from "react-icons/vsc";
+import NavModal from "./NavModal.jsx";
+import useMediaQuery from "./MediaQuery.js";
 import NotificationModal from "./NotificationModal.jsx";
 
 function MainSpace({ currentPuzzleName }) {
@@ -23,6 +25,15 @@ function MainSpace({ currentPuzzleName }) {
   const [isExiting, setIsExiting] = useState(false);
   const [ modal, setModal] = useState(false);
   const state = location.state;
+  const [menuOpen, setMenuOpen] = useState(false);
+  const isMobile = useMediaQuery("(max-width: 768px)");
+  const [navOpen, setNavOpen] = useState(false);
+
+  useEffect(() => {
+    if (!isMobile) {
+      setMenuOpen(false);
+    }
+  }, [isMobile])
 
   function handleLogin() {
       if (user) {
@@ -58,6 +69,16 @@ function MainSpace({ currentPuzzleName }) {
   return (
     <div className='mainspace'>
         <div className='topbar'>
+            {isMobile && (
+              <div>
+                <button onClick={() => setNavOpen(true)}>
+                  ☰
+                </button>
+              </div>
+            )}
+            {navOpen && (
+              <NavModal onClose={() => setNavOpen(false)}/>
+            )}
             <span onClick={()=>navigate('/')}>semiphi</span>
             <div className='topbar-icons'>
               <div className='notification-icon' onClick={() => handleNotifications()}>
