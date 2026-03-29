@@ -82,6 +82,16 @@ body {
   padding-left: 206.3px;
 }
 
+@media (max-width: 768px) {
+  .page-content {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    width: 100%;
+    padding: 0px;
+  }
+}
+
 .nav-container {
   position: fixed;
   display: flex;
