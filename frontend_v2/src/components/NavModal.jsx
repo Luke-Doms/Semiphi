@@ -21,16 +21,16 @@ function NavModal({ onClose }) {
 
   return createPortal(
     <div onClick={onClose} className='modal'>
-      <div onClick={e => e.stopPropagation()}>
-        <nav className='modal-navbar'>
+      <div className='modal-navbar' onClick={e => e.stopPropagation()}>
+        <nav>
           <div className='modal-link-wrapper'>
-            <Link onClick={onClose} style={ isPuzzlePage ? {color:'var(--highlight-color)'} : null } to='/Puzzles'>Puzzles</Link>
+            <Link onClick={onClose} to='/Puzzles'>Puzzles</Link>
           </div>
           <div className='modal-link-wrapper'>
-            <Link onClick={onClose} style={ isSettingsPage ? {color:'var(--highlight-color)'} : null } to='/Settings'>Settings</Link>
+            <Link onClick={onClose} to='/Settings'>Settings</Link>
           </div>
           <div className='modal-link-wrapper'>
-            <Link onClick={onClose} style={ isAboutPage ? {color:'var(--highlight-color)'} : null } to='/'>About</Link>
+            <Link onClick={onClose} to='/'>About</Link>
           </div >
         </nav>
       </div>

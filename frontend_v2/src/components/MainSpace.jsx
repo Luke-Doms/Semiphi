@@ -71,7 +71,7 @@ function MainSpace({ currentPuzzleName }) {
         <div className='topbar'>
             {isMobile && (
               <div>
-                <button onClick={() => setNavOpen(true)}>
+                <button className='modal-hamburger' onClick={() => setNavOpen(true)}>
                   ☰
                 </button>
               </div>
