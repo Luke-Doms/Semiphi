@@ -175,7 +175,7 @@ body {
   justify-content: center;
   gap: 4px;
   padding: 0;
-  margin-left: 1rem;
+  margin-right: 1rem;
   transition: background 0.15s;
 }
 
@@ -535,6 +535,12 @@ body {
   z-index: 4;
 }
 
+@media (max-width: 768px) {
+  .topbar{
+    margin-top: 0.5rem;
+  }
+}
+
 .topbar span {
   margin: 20px;
   font-size: 40px;
@@ -554,12 +560,17 @@ body {
   display: flex;
   flex-direction: row;
   align-items: center;
+  gap: 5px;
+  margin-right: 1rem;
 }
 
+.topbar-left {
+  display: flex;
+  flex-direction: row;
+}
 
 .notification-icon {
   border-radius: 5px;
-  margin-right: 20px;
   padding: 5px;
   cursor: pointer;
   transition: background-color .2s;
@@ -576,7 +587,6 @@ body {
 
 .login-icon {
   border-radius: 5px;
-  margin-right: 20px;
   padding: 5px;
   cursor: pointer;
   //background-color: var(--highlight-color);
@@ -592,6 +602,15 @@ body {
 .login-icon svg {
   font-size: 25px;
   color: white;
+}
+
+@media (max-width: 768px) {
+  .notification-icon svg {
+    font-size: 20px;
+  }
+  .login-icon svg {
+    font-size: 20px;
+  }
 }
 
 .topbar svg {
