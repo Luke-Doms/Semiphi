@@ -16,7 +16,7 @@ function Home() {
           </span>
         </div>
         <img className='homeimage' src={imageSrc} alt="2x2x2 rubiks cube"/>
-        <div>
+        <div className='home-paragraph'>
             <p className='landing'>
               Semiphi brings a variety of twisty puzzles to the browser, with tools that let you build and save your own algorithms. It’s designed for people who enjoy exploring puzzles creatively rather than racing through memorized solutions. The name itself is a nod to the group theoretic concepts underlying the mathemtaics of twisty puzzles. 
             </p>

@@ -54,13 +54,20 @@ body {
   animation: shake 0.3s ease;
 }
 
+.home-paragraph {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .landing {
   border: solid;
   border-width: 1px;
   border-color: var(--border-color);
-  margin-top: 50px;
-  margin-left: 100px;
-  margin-right: 100px;
+  margin-top: 35px;
+  margin-bottom: 48px;
+  width: 80%;
   font-size: larger;
   background-color: var(--secondary-color);
   border-radius: 15px;
@@ -549,7 +556,8 @@ body {
 }
 
 .about-title {
-  margin-bottom: 50px;
+  margin-top: 25px;
+  margin-bottom: 25px;
 }
 
 .about-title span {
@@ -627,11 +635,22 @@ body {
   min-height: 70px;
 }
 
-.bottom-icons-container {
-  display: flex;
-  flex-direction: row;
-  //transform: translateX(-5%);
-  gap: 10rem;
+@media (max-width: 768px) {
+  .bottom-icons-container {
+    display: flex;
+    flex-direction: row;
+    //transform: translateX(-5%);
+    gap: 4rem;
+  }
+}
+
+@media (width > 768px) {
+  .bottom-icons-container {
+    display: flex;
+    flex-direction: row;
+    //transform: translateX(-5%);
+    gap: 10rem;
+  }
 }
 
 .bottom-icons {
@@ -1516,6 +1535,13 @@ body {
   align-items: center;
 }
 */
+
+.theme-box {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
 .theme-menu {
   background: var(--card-color);
