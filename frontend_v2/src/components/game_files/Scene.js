@@ -25,9 +25,12 @@ export class Scene {
     this.z = z;
     this.name = name;
     this.PuzzleStorage = PuzzleStorage;
-    this.OnMouseMove = this.OnMouseMove.bind(this);
-    this.OnMouseDown = this.OnMouseDown.bind(this);
-    this.OnMouseUp = this.OnMouseUp.bind(this);
+    //this.OnMouseMove = this.OnMouseMove.bind(this);
+    //this.OnMouseDown = this.OnMouseDown.bind(this);
+    //this.OnMouseUp = this.OnMouseUp.bind(this);
+    this.OnPointerMove= this.OnPointerMove.bind(this);
+    this.OnPointerDown= this.OnPointerDown.bind(this);
+    this.OnPointerUp = this.OnPointerUp.bind(this);
   }
 
   async Load() {
@@ -92,8 +95,10 @@ export class Scene {
   }
 
   Unload() {
-    this.gl.canvas.removeEventListener("mousedown", this.OnMouseDown);
-    this.gl.canvas.removeEventListener("mouseup", this.OnMouseUp);
+    //this.gl.canvas.removeEventListener("mousedown", this.OnMouseDown);
+    //this.gl.canvas.removeEventListener("mouseup", this.OnMouseUp);
+    this.gl.canvas.removeEventListener("pointerdown", this.OnPointerDown);
+    this.gl.canvas.removeEventListener("pointerup", this.OnPointerUp);
     for (var cubie in this.puzzleModel) {
       const buffer = this.puzzleModel[cubie].buffer_id;
       this.gl.deleteBuffer(buffer);
@@ -103,20 +108,22 @@ export class Scene {
     this.stopRenderLoop = true;
   }
 
-  OnMouseMove(event) {
+  OnPointerMove(event) {
     if (!this.faceSelected) {
       this.eye.Move(this.gl, event, this.viewMatrix, this.projMatrix);
     }
   }
   
-  OnMouseDown(event) {
+  OnPointerDown(event) {
     this.faceSelected = CheckIntersection(this.gl, event, this.puzzleModel, this.eye.pos, this.projMatrix, this.viewMatrix); //boolean value
     this.eye.initialMouseEvent = event;
-    this.gl.canvas.addEventListener("mousemove", this.OnMouseMove);
+    //this.gl.canvas.addEventListener("mousemove", this.OnMouseMove);
+    this.gl.canvas.addEventListener("pointermove", this.OnPointerMove);
   }
 
-  OnMouseUp(event) {
-    this.gl.canvas.removeEventListener("mousemove", this.OnMouseMove);
+  OnPointerUp(event) {
+    //this.gl.canvas.removeEventListener("mousemove", this.OnMouseMove);
+    this.gl.canvas.removeEventListener("pointermove", this.OnPointerMove);
     if (this.faceSelected) {
       const rotationAxis = GetRotationAxis(this.gl, this.faceSelected, event, this.eye.pos, this.projMatrix, this.viewMatrix);
       this.moveQueue.push([rotationAxis, this.faceSelected]);
@@ -129,8 +136,10 @@ export class Scene {
   
   
   Begin() {
-    this.gl.canvas.addEventListener("mousedown", this.OnMouseDown);
-    this.gl.canvas.addEventListener("mouseup", this.OnMouseUp);
+    //this.gl.canvas.addEventListener("mousedown", this.OnMouseDown);
+    //this.gl.canvas.addEventListener("mouseup", this.OnMouseUp);
+    this.gl.canvas.addEventListener("pointerdown", this.OnPointerDown);
+    this.gl.canvas.addEventListener("pointerup", this.OnPointerUp);
 
     this.stopRenderLoop = false;
     this.startTime = 0;
