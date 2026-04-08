@@ -219,10 +219,10 @@ body {
   position: fixed;
   top: 0;
   left: 0;
-  //width: 100vw;     /* full viewport width */
-  width: calc(100vw - 62px);
-  //height: 100vh;    /* full viewport height */
-  height: calc(100vh - 100px);
+  width: 100vw;     /* full viewport width */
+  //width: calc(100vw - 62px);
+  height: 100vh;    /* full viewport height */
+  //height: calc(100vh - 100px);
   z-index: 1;      /* pushes it behind everything else */
   display: block;   /* ensures no weird inline gaps */
 }
@@ -245,6 +245,7 @@ body {
   font-size: 40px;
 }
 
+/*
 .puzzle-commands {
   border: solid;
   border-width: 1px;
@@ -261,7 +262,26 @@ body {
   justify-content: center;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 }
+*/
 
+.puzzle-commands {
+  border: solid;
+  border-width: 1px;
+  border-color: var(--border-color);
+  margin-top: 20px;
+  background-color: var(--secondary-color);
+  width: clamp(280px, 60%, 700px);  /* min, preferred, max */
+  height: 60px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;  /* swap out justify-content */
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  padding: 0 16px;
+}
+
+/*
 .puzzle-commands svg {
   width: 35px;
   height: 35px;
@@ -270,6 +290,17 @@ body {
   margin-left: 50px;
   margin-right: 10px;
   font-size: 40px;
+  background-color: var(--secondary-color);
+}
+*/
+
+.puzzle-commands svg {
+  width: clamp(20px, 4vw, 35px);
+  height: clamp(20px, 4vw, 35px);
+  flex-shrink: 1;          /* allow shrinking */
+  transform: none;         /* remove the translateX hack */
+  margin: 0;               /* remove fixed margins entirely */
+  font-size: clamp(24px, 4vw, 40px);
   background-color: var(--secondary-color);
 }
 

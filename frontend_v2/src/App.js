@@ -101,7 +101,7 @@ function App() {
         {/*<Routes>
           <Route path="/puzzles" element={<PuzzleNav />}/>
         </Routes>*/}
-        {puzzleNav ? <PuzzleNav setCurrentPuzzleName={setCurrentPuzzleName}/> : null }
+        {(puzzleNav && !isMobile) ? <PuzzleNav setCurrentPuzzleName={setCurrentPuzzleName}/> : null }
       </div>
     </div>
   );
