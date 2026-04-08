@@ -30,7 +30,7 @@ function PuzzleCommands({ onShuffle, onLoad, onSave, puzzleName, triggerReset, d
   };
 
   return (
-    <div className='puzzle-commands'>
+    <div id='puzzle-commands' className='puzzle-commands'>
       <IoRefreshOutline onClick={reset}/>
       <PiShuffleSimpleLight onClick={onShuffle}/>
       <CiSaveDown2 onClick={onSave}/>

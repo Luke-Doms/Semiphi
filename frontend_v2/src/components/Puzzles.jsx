@@ -13,6 +13,46 @@ function Puzzles({ currentPuzzleName }) {
 
   useEffect(() => {
     let isMounted = true;
+    const scene = initApp(current.dimensions.x, current.dimensions.y, current.dimensions.z, currentPuzzleName, PuzzleStorage);
+    sceneRef.current = scene;
+
+    scene.Load().then(() => {
+      if (isMounted) {
+        scene.Begin();
+
+        const leftNav = document.getElementById('nav-container');
+        const rightNav = document.getElementById('puzzleNav');
+        console.log(leftNav?.offsetWidth, rightNav?.offsetWidth, 'test');
+
+        const navObserver = new ResizeObserver(() => {
+          const leftWidth = leftNav?.offsetWidth ?? 0;
+          const rightWidth = rightNav?.offsetWidth ?? 0;
+          if (leftWidth > 0 || rightWidth > 0) {
+            sceneRef.current?.recalculateProjection();
+            navObserver.disconnect();
+          }
+        });
+
+        if (leftNav) navObserver.observe(leftNav);
+        if (rightNav) navObserver.observe(rightNav);
+
+        const canvas = document.getElementById('game-surface');
+        const canvasObserver = new ResizeObserver(() => {
+          sceneRef.current?.recalculateProjection();
+        });
+        canvasObserver.observe(canvas);
+      }
+    });
+
+    return () => {
+      isMounted = false;
+      scene?.Unload();
+      sceneRef.current = null;
+    };
+  }, [currentPuzzleName, reset]);
+  /*
+  useEffect(() => {
+    let isMounted = true;
 
 
     const scene = initApp(current.dimensions.x, current.dimensions.y, current.dimensions.z, currentPuzzleName, PuzzleStorage);
@@ -31,6 +71,7 @@ function Puzzles({ currentPuzzleName }) {
     }
   }, [currentPuzzleName, reset]
   );
+  */
 
   const savePosition = () => {
     sceneRef.current?.SavePosition(); // now this is accessible

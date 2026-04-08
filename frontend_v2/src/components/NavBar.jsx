@@ -20,7 +20,7 @@ function NavBar() {
     background?.pathname === "/Settings";
 
   return (
-    <div className='nav-container'>
+    <div id='nav-container' className='nav-container'>
         <svg
           width="50px"
           height="50px"

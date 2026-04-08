@@ -85,13 +85,7 @@ export class Scene {
     } else {
       glMatrix.mat4.lookAt(this.viewMatrix, this.eye.pos, [0, 0, 0], this.eye.up);
     }
-    glMatrix.mat4.perspective(
-      this.projMatrix,
-      glMatrix.glMatrix.toRadian(45),
-      this.gl.canvas.clientWidth/this.gl.canvas.clientHeight,
-      2,
-      1000.0
-    );
+    this.recalculateProjection();
   }
 
   Unload() {
@@ -106,6 +100,52 @@ export class Scene {
 
     this.gl.deleteProgram(this.program);
     this.stopRenderLoop = true;
+  }
+
+  recalculateProjection() {
+    console.log('recalc on instance:', this);
+    console.log('projMatrix after frustum:', this.projMatrix);
+    if (!this.projMatrix || !this.gl.canvas.clientWidth || !this.gl.canvas.clientHeight) return;
+    const leftNavWidth  = document.getElementById('nav-container')?.offsetWidth ?? 0;
+    const rightNavWidth = document.getElementById('puzzleNav')?.offsetWidth ?? 0;
+    console.log('left:', leftNavWidth, 'right:', rightNavWidth, 'canvasWidth:', this.gl.canvas.clientWidth);
+
+    const canvasWidth = this.gl.canvas.clientWidth;
+
+    const visibleLeft = leftNavWidth;
+    const visibleRight = canvasWidth - rightNavWidth;
+
+    const visibleCenter = (visibleLeft + visibleRight) / 2;
+    const canvasCenter = canvasWidth / 2;
+
+    const pixelShift = visibleCenter - canvasCenter;
+
+    const commandsHeight = document.getElementById('puzzle-commands')?.offsetHeight ?? 0;
+
+    const offsetY = commandsHeight / 2;
+
+    const fov = glMatrix.glMatrix.toRadian(45);
+    const aspect = this.gl.canvas.clientWidth / this.gl.canvas.clientHeight;
+    const near = 2;
+    const far = 1000.0;
+
+    const top = near * Math.tan(fov / 2);
+    const bottom = -top;
+    const right = top * aspect;
+    const left = -right;
+
+    const shiftX = -(pixelShift / this.gl.canvas.clientWidth) * (right - left);
+    const shiftY = (offsetY / this.gl.canvas.clientHeight) * (top - bottom);
+
+    glMatrix.mat4.frustum(
+      this.projMatrix,
+      left   + shiftX,
+      right  + shiftX,
+      bottom - shiftY,
+      top    - shiftY,
+      near,
+      far
+    );
   }
 
   OnPointerMove(event) {
@@ -226,6 +266,15 @@ export class Scene {
   }
 
   Render() {
+    const leftWidth = document.getElementById('nav-container')?.offsetWidth ?? 0;
+    const rightWidth = document.getElementById('puzzleNav')?.offsetWidth ?? 0;
+
+    if (leftWidth !== this.lastLeftWidth || rightWidth !== this.lastRightWidth) {
+      this.lastLeftWidth = leftWidth;
+      this.lastRightWidth = rightWidth;
+      this.recalculateProjection();
+    }
+
     var gl = this.gl;
     
     gl.enable(gl.DEPTH_TEST);
