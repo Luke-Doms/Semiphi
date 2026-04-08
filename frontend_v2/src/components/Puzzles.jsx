@@ -88,7 +88,7 @@ function Puzzles({ currentPuzzleName }) {
 //quick fix for canvas
   return (
     <div className='puzzleBox'>
-      <div className='puzzle-title'>
+      <div id='puzzle-title' className='puzzle-title'>
         <span>
           {currentPuzzleName}
         </span>

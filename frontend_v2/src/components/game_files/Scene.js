@@ -103,29 +103,51 @@ export class Scene {
   }
 
   recalculateProjection() {
-    console.log('recalc on instance:', this);
-    console.log('projMatrix after frustum:', this.projMatrix);
-    if (!this.projMatrix || !this.gl.canvas.clientWidth || !this.gl.canvas.clientHeight) return;
-    const leftNavWidth  = document.getElementById('nav-container')?.offsetWidth ?? 0;
-    const rightNavWidth = document.getElementById('puzzleNav')?.offsetWidth ?? 0;
-    console.log('left:', leftNavWidth, 'right:', rightNavWidth, 'canvasWidth:', this.gl.canvas.clientWidth);
+    const canvas = this.gl.canvas;
+    const canvasRect = canvas.getBoundingClientRect();
 
-    const canvasWidth = this.gl.canvas.clientWidth;
+    const leftNav = document.getElementById('nav-container');
+    const rightNav = document.getElementById('puzzleNav');
+    const titleBar = document.getElementById('puzzle-title');
+    const commandBar = document.getElementById('puzzle-commands');
 
-    const visibleLeft = leftNavWidth;
-    const visibleRight = canvasWidth - rightNavWidth;
+    const getOverlap = (element, side) => {
+      if (!element) return 0;
 
-    const visibleCenter = (visibleLeft + visibleRight) / 2;
-    const canvasCenter = canvasWidth / 2;
+      const rect = element.getBoundingClientRect();
 
-    const pixelShift = visibleCenter - canvasCenter;
+      switch (side) {
+        case 'left':
+          return Math.max(0, Math.min(rect.right, canvasRect.right) - canvasRect.left);
+        case 'right':
+          return Math.max(0, canvasRect.right - Math.max(rect.left, canvasRect.left));
+        case 'top':
+          return Math.max(0, Math.min(rect.bottom, canvasRect.bottom) - canvasRect.top);
+        case 'bottom':
+          return Math.max(0, canvasRect.bottom - Math.max(rect.top, canvasRect.top));
+        default:
+          return 0;
+      }
+    };
 
-    const commandsHeight = document.getElementById('puzzle-commands')?.offsetHeight ?? 0;
+    const leftOverlap   = getOverlap(leftNav, 'left');
+    const rightOverlap  = getOverlap(rightNav, 'right');
+    const topOverlap    = getOverlap(titleBar, 'top');
+    const bottomOverlap = getOverlap(commandBar, 'bottom');
 
-    const offsetY = commandsHeight / 2;
+    const canvasWidth  = canvas.clientWidth;
+    const canvasHeight = canvas.clientHeight;
+
+    const visibleCenterX =
+      (leftOverlap + (canvasWidth - rightOverlap)) / 2;
+    const visibleCenterY =
+      (topOverlap + (canvasHeight - bottomOverlap)) / 2;
+
+    const pixelShiftX = visibleCenterX - canvasWidth / 2;
+    const pixelShiftY = visibleCenterY - canvasHeight / 2;
 
     const fov = glMatrix.glMatrix.toRadian(45);
-    const aspect = this.gl.canvas.clientWidth / this.gl.canvas.clientHeight;
+    const aspect = canvasWidth / canvasHeight;
     const near = 2;
     const far = 1000.0;
 
@@ -134,15 +156,18 @@ export class Scene {
     const right = top * aspect;
     const left = -right;
 
-    const shiftX = -(pixelShift / this.gl.canvas.clientWidth) * (right - left);
-    const shiftY = (offsetY / this.gl.canvas.clientHeight) * (top - bottom);
+    const frustumWidth  = right - left;
+    const frustumHeight = top - bottom;
+
+    const shiftX = -(pixelShiftX / canvasWidth) * frustumWidth;
+    const shiftY =  (pixelShiftY / canvasHeight) * frustumHeight;
 
     glMatrix.mat4.frustum(
       this.projMatrix,
-      left   + shiftX,
-      right  + shiftX,
-      bottom - shiftY,
-      top    - shiftY,
+      left + shiftX,
+      right + shiftX,
+      bottom + shiftY,
+      top + shiftY,
       near,
       far
     );
