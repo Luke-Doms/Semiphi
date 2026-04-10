@@ -225,6 +225,7 @@ body {
   //height: calc(100vh - 100px);
   z-index: 1;      /* pushes it behind everything else */
   display: block;   /* ensures no weird inline gaps */
+  touch-action: none;
 }
 
 .puzzleBox {
