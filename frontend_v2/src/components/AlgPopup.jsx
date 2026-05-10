@@ -1,18 +1,19 @@
 import { useState } from "react";
+import { IoCloseOutline } from "react-icons/io5";
 
 export default function AlgModal({ mode, oldAlgName, oldSequence, puzzleName, dimensions, setModal }) {
   const move_options = { R: [], L: [], U: [], D: [], F: [], B: [] };
   const [moves, setMoves] = useState(oldSequence ?? []);
   const [inverse, setInverse] = useState(false);
-  const [algName, setAlgName] = useState(oldAlgName);
+  const [algName, setAlgName] = useState(oldAlgName ?? '');
   const [nameError, setNameError] = useState(false);
 
   const addMove = (move) => {
     if (move === "X") {
-      setMoves(moves.slice(0, -1));
+      setMoves(prev => prev.slice(0, -1));
     } else {
       const notation = inverse ? `${move}'` : move;
-      setMoves([...moves, notation]);
+      setMoves(prev => [...prev, notation]);
     }
   };
 
@@ -50,7 +51,6 @@ export default function AlgModal({ mode, oldAlgName, oldSequence, puzzleName, di
         credentials: 'include'
       });
       if (res.ok) {
-        console.log('helloooo');
         setModal(false);
         window.location.reload();
       }
@@ -62,48 +62,61 @@ export default function AlgModal({ mode, oldAlgName, oldSequence, puzzleName, di
   return (
     <div className="modal-overlay">
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <span className="alg-popup-header">Enter Algorithm</span>
-        <input
-          type="text"
-          placeholder="Algorithm name"
-          value={algName}
-          onChange={(e) => { setAlgName(e.target.value); setNameError(false); }}
-          className={`alg-name ${nameError ? 'shake' : ''}`}
-        />
-        <div className="preview">
-          {moves.length === 0 ? (
-            <span className="placeholder">No moves yet</span>
-          ) : (
-            moves.join(" ")
-          )}
-        </div>
-        <div className="move-buttons">
-          {Object.keys(move_options).map((key) => (
-            <div className="move-buttons-column" key={key}>
-              {move_options[key].map((move) => (
-                <button key={move} onClick={() => addMove(move)}>
-                  {move}
-                </button>
-              ))}
-            </div>
-          ))}
-        </div>
-        <div className="inverse-toggle">
-          <button onClick={() => addMove('X')}>
-            Delete
+
+        <div className="alg-modal-header">
+          <span className="alg-modal-title">
+            {mode === 'edit' ? 'Edit Algorithm' : 'New Algorithm'}
+          </span>
+          <button className="alg-modal-close" onClick={() => setModal(false)}>
+            <IoCloseOutline />
           </button>
-          <label>
-            <input
-              type="checkbox"
-              checked={inverse}
-              onChange={(e) => setInverse(e.target.checked)}
-            />
-            <span>Inverse (′)</span>
-          </label>
         </div>
-        <div className="action-buttons">
-          <button onClick={handleSubmit}>Submit</button>
+
+        <div className="alg-modal-body">
+          <input
+            type="text"
+            placeholder="Algorithm name"
+            value={algName}
+            onChange={(e) => { setAlgName(e.target.value); setNameError(false); }}
+            className={`alg-name${nameError ? ' shake' : ''}`}
+          />
+
+          <div className="preview">
+            {moves.length === 0
+              ? <span className="placeholder">No moves yet…</span>
+              : <span>{moves.join(' ')}</span>
+            }
+          </div>
+
+          <div className="move-buttons">
+            {Object.keys(move_options).map((key) => (
+              <div className="move-buttons-column" key={key}>
+                {move_options[key].map((move) => (
+                  <button key={move} onClick={() => addMove(move)}>
+                    {move}
+                  </button>
+                ))}
+              </div>
+            ))}
+          </div>
+
+          <div className="alg-controls">
+            <button className="alg-undo-btn" onClick={() => addMove('X')}>
+              ← Undo
+            </button>
+            <button
+              className={`alg-inverse-btn${inverse ? ' active' : ''}`}
+              onClick={() => setInverse(o => !o)}
+            >
+              Inverse {inverse ? '(on)' : '(off)'}
+            </button>
+          </div>
+
+          <button className="alg-submit-btn" onClick={handleSubmit}>
+            {mode === 'edit' ? 'Save Changes' : 'Save Algorithm'}
+          </button>
         </div>
+
       </div>
     </div>
   );

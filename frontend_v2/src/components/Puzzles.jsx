@@ -2,14 +2,17 @@ import React from 'react'
 import { useState, useEffect, useRef } from 'react';
 import { initApp } from './game_files/App.js';
 import PuzzleCommands from './PuzzleCommands.jsx';
+import BottomChrome from './BottomChrome.jsx';
 import PuzzleStorage from './PuzzleStorage.js';
+import useMediaQuery from './MediaQuery.js';
 
-function Puzzles({ currentPuzzleName }) {
+function Puzzles({ currentPuzzleName, setCurrentPuzzleName }) {
   const [ reset, incrementReset ] = useState(0);
   const sceneRef = useRef(null);
   const saved = localStorage.getItem("puzzles");
   const puzzles = JSON.parse(saved);
   const current = puzzles[currentPuzzleName];
+  const isMobile = useMediaQuery("(max-width: 768px)");
 
   useEffect(() => {
     let isMounted = true;
@@ -88,22 +91,34 @@ function Puzzles({ currentPuzzleName }) {
 //quick fix for canvas
   return (
     <div className='puzzleBox'>
-      <div id='puzzle-title' className='puzzle-title'>
-        <span>
-          {currentPuzzleName}
-        </span>
-      </div>
+      {!isMobile && (
+        <div id='puzzle-title' className='puzzle-title'>
+          <span>{currentPuzzleName}</span>
+        </div>
+      )}
       <canvas className='game-surface' id="game-surface" width={5000} height={4000} background-color='black'>
         Your browser does not support html5
       </canvas>
-      <PuzzleCommands 
-        onShuffle={shuffle}
-        onLoad={loadPosition} 
-        onSave={savePosition} 
-        puzzleName={currentPuzzleName} 
-        triggerReset={() => incrementReset(n => n + 1)}
-        dimensions={current.dimensions}
-      />
+      {isMobile ? (
+        <BottomChrome
+          currentPuzzleName={currentPuzzleName}
+          setCurrentPuzzleName={setCurrentPuzzleName}
+          onShuffle={shuffle}
+          onLoad={loadPosition}
+          onSave={savePosition}
+          triggerReset={() => incrementReset(n => n + 1)}
+          dimensions={current.dimensions}
+        />
+      ) : (
+        <PuzzleCommands
+          onShuffle={shuffle}
+          onLoad={loadPosition}
+          onSave={savePosition}
+          puzzleName={currentPuzzleName}
+          triggerReset={() => incrementReset(n => n + 1)}
+          dimensions={current.dimensions}
+        />
+      )}
     </div>
   )
 }

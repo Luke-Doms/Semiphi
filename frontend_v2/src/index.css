@@ -121,52 +121,128 @@ body {
   margin-top: 40px;
 }
 
-.modal-navbar {
-  background: var(--primary-color);
-  border: 1px solid var(--border-color);
-  border-radius: 14px;
-  padding: 28px 28px 24px;
-  width: 100%;
-  max-width: 340px;
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6);
-  transform: translate(-50%, -50%);
-  position: fixed;
-  top: 50%;
-  left: 50%;
+/* ── Mobile nav drawer ───────────────────────────────────────── */
+
+@keyframes nav-drawer-in {
+  from { transform: translateX(100%); }
+  to   { transform: translateX(0); }
 }
 
-.modal-navbar nav {
-  background: transparent;
+.nav-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 100;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.nav-modal-drawer {
+  width: min(80vw, 280px);
+  height: 100%;
+  background-color: var(--primary-color);
+  border-left: 1px solid var(--border-color);
+  box-shadow: -6px 0 28px rgba(0, 0, 0, 0.45);
   display: flex;
   flex-direction: column;
+  animation: nav-drawer-in 0.22s ease;
+}
+
+.nav-modal-header {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-}
-
-.modal-navbar nav div {
-  text-align: center;
-  width: 90%;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  padding: 12px 14px;
   border-bottom: 1px solid var(--border-color);
+  background-color: transparent;
 }
 
-.modal-navbar nav div:first-child {
-  padding-top: 0;
-}
-
-.modal-navbar nav div:last-child {
+.nav-modal-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
   border: none;
-  padding-bottom: 0;
+  border-radius: 6px;
+  padding: 4px;
+  cursor: pointer;
+  transition: background-color 0.15s;
 }
 
-.modal-navbar a {
-  font-size: 1.5rem;
-  background: transparent;
+.nav-modal-close:hover {
+  background-color: var(--secondary-color);
+}
+
+.nav-modal-close svg {
+  font-size: 22px;
+  background-color: transparent;
+}
+
+.nav-modal-links {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 8px 0;
+  background-color: transparent;
+}
+
+.nav-modal-link {
+  display: flex;
+  align-items: center;
+  padding: 15px 22px;
+  font-size: 15px;
+  font-family: var(--font);
+  color: var(--text-color);
   text-decoration: none;
+  background-color: transparent;
+  border-left: 2px solid transparent;
+  transition: background-color 0.15s, color 0.15s;
 }
 
-.modal-link-wrapper {
-  background: transparent;
+.nav-modal-link:hover {
+  background-color: var(--secondary-color);
+}
+
+.nav-modal-link.active {
+  color: var(--highlight-color);
+  border-left-color: var(--highlight-color);
+  background-color: color-mix(in srgb, var(--highlight-color) 8%, var(--primary-color));
+}
+
+.nav-modal-footer {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--border-color);
+  padding: 10px 0;
+  background-color: transparent;
+}
+
+.nav-modal-footer-link {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 22px;
+  cursor: pointer;
+  background-color: transparent;
+  transition: background-color 0.15s;
+}
+
+.nav-modal-footer-link:hover {
+  background-color: var(--secondary-color);
+}
+
+.nav-modal-footer-link svg {
+  font-size: 18px;
+  background-color: transparent;
+  flex-shrink: 0;
+}
+
+.nav-modal-footer-link span {
+  font-size: 14px;
+  font-family: var(--font);
+  color: var(--text-dim);
+  background-color: transparent;
 }
 
 .modal-hamburger {
@@ -311,20 +387,243 @@ body {
   cursor: pointer;
 }
 
-.alg-popup {
-  background-color: var(--secondary-color);
-  width: 600px;
-  height: 300px;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 15;
-  border-radius: 15px;
+/* ── Bottom Chrome (mobile only) ──────────────────────────────── */
+
+.bottom-chrome {
   display: flex;
   flex-direction: column;
-  padding-bottom: 20px;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  margin-top: auto;
+  background-color: transparent;
 }
+
+.bottom-chrome .puzzle-commands {
+  margin-top: 0;
+}
+
+/* Relative container so the strip can be absolute-positioned above */
+.puzzle-selector {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: transparent;
+}
+
+/* Pill + dots side by side */
+.puzzle-selector-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  background-color: transparent;
+}
+
+/* ── Pill ─────────────────────────────────────────────────────── */
+.puzzle-pill {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--secondary-color);
+  border: 1px solid var(--border-color);
+  border-radius: 24px;
+  padding: 6px 10px 6px 6px;
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+  font-family: var(--font);
+  transition: border-color 0.2s;
+}
+
+.puzzle-pill:hover {
+  border-color: color-mix(in srgb, var(--highlight-color) 70%, transparent);
+}
+
+.puzzle-pill svg {
+  background-color: var(--secondary-color);
+}
+
+.puzzle-pill-img {
+  width: 24px;
+  height: 24px;
+  object-fit: cover;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.puzzle-pill-name {
+  font-size: 13px;
+  font-family: var(--font);
+  color: var(--text-color);
+  background-color: transparent;
+  white-space: nowrap;
+}
+
+.puzzle-pill-chevron {
+  width: 14px !important;
+  height: 14px !important;
+  flex-shrink: 0;
+  transition: transform 0.25s ease;
+}
+
+.puzzle-pill-chevron.open {
+  transform: rotate(180deg);
+}
+
+/* ── Position dots ────────────────────────────────────────────── */
+.puzzle-selector-dots {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+  background-color: transparent;
+}
+
+.puzzle-dot {
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--label);
+  flex-shrink: 0;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.puzzle-dot.active {
+  background-color: var(--highlight-color);
+  transform: scale(1.4);
+}
+
+/* ── Puzzle strip (floats above the pill row) ─────────────────── */
+.puzzle-strip-wrapper {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%) translateY(8px);
+  width: min(90vw, 420px);
+  background-color: var(--secondary-color);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.35);
+  z-index: 10;
+  opacity: 0;
+  pointer-events: none;
+  overflow: hidden;
+  transition: opacity 0.22s ease, transform 0.22s ease;
+}
+
+.puzzle-strip-wrapper.open {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateX(-50%) translateY(0);
+}
+
+.puzzle-strip {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  padding: 10px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  background-color: transparent;
+}
+
+.puzzle-strip::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── Strip card ───────────────────────────────────────────────── */
+.puzzle-strip-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 8px;
+  min-width: 70px;
+  flex-shrink: 0;
+  background-color: var(--primary-color);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  cursor: pointer;
+  user-select: none;
+  transition: border-color 0.18s, background-color 0.18s;
+}
+
+.puzzle-strip-card img {
+  width: 46px;
+  height: 46px;
+  object-fit: cover;
+  border-radius: 8px;
+  background-color: transparent;
+  display: block;
+}
+
+.puzzle-strip-card span {
+  font-size: 10px;
+  font-family: var(--font);
+  color: var(--text-dim);
+  background-color: transparent;
+  white-space: nowrap;
+}
+
+.puzzle-strip-card:hover {
+  border-color: color-mix(in srgb, var(--highlight-color) 60%, transparent);
+}
+
+.puzzle-strip-card.active {
+  border-color: var(--highlight-color);
+  background-color: color-mix(in srgb, var(--highlight-color) 10%, var(--primary-color));
+}
+
+.puzzle-strip-card.active span {
+  color: var(--highlight-color);
+  background-color: transparent;
+}
+
+/* ── About tab links in Settings ─────────────────────────────── */
+.about-links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.about-link-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background-color: var(--secondary-color);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.about-link-row:hover {
+  background-color: var(--button-color);
+}
+
+.about-link-row svg {
+  font-size: 20px;
+  background-color: transparent;
+  flex-shrink: 0;
+}
+
+.about-link-row:hover svg {
+  background-color: var(--button-color);
+}
+
+.about-link-row span {
+  font-size: 14px;
+  font-family: var(--font);
+  background-color: transparent;
+}
+
+/* ── Algorithm modal ─────────────────────────────────────────── */
 
 .modal-overlay {
   position: fixed;
@@ -339,128 +638,211 @@ body {
 .modal-content {
   display: flex;
   flex-direction: column;
-  background: var(--primary-color) !important;
-  padding: 2rem;
-  border: solid;
-  border-width: 1px;
-  border-color: var(--border-color);
-  border-radius: 12px;
+  background-color: var(--primary-color);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
   width: 90%;
-  max-width: 450px;
-  text-align: center;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  max-width: 460px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+
+/* Header */
+.alg-modal-header {
+  display: flex;
+  flex-direction: row;
   align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border-color);
+  background-color: var(--secondary-color);
 }
 
-.alg-popup-header {
-  font-size: 30px;
+.alg-modal-title {
+  font-size: 13px;
+  font-family: var(--font);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-color);
+  background-color: transparent;
 }
 
-.modal-content input {
-  border: solid;
-  border-width: 1px;
-  border-color: var(--border-color);
-  border-radius: 10px;
-  margin-top: 20px;
+.alg-modal-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  padding: 3px;
+  cursor: pointer;
+  transition: background-color 0.15s;
 }
 
-.modal-content input[type='text'] {
-  width: 100%;
+.alg-modal-close:hover {
+  background-color: var(--button-color);
 }
 
+.alg-modal-close svg {
+  font-size: 18px;
+  background-color: transparent;
+}
+
+/* Body */
+.alg-modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 18px;
+  background-color: transparent;
+}
+
+/* Name input */
 .alg-name {
   width: 100%;
-  padding: 0.5rem;
-  margin-bottom: 1rem;
-  font-size: 1rem;
+  padding: 9px 12px;
+  font-size: 13px;
+  font-family: var(--font);
+  background-color: var(--secondary-color);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  color: var(--text-color);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.alg-name:focus {
+  border-color: color-mix(in srgb, var(--highlight-color) 55%, transparent);
 }
 
 .alg-name::placeholder {
-  color: var(--text-color);
+  color: var(--text-dim);
 }
 
+/* Sequence preview */
 .preview {
-  min-height: 2rem;
-  margin-bottom: 1rem;
-  padding: 0.5rem;
-  background-color: var(--secondary-color);
-  border-radius: 8px;
-  font-size: 1.2rem;
   width: 100%;
+  min-height: 36px;
+  padding: 9px 12px;
+  background-color: var(--secondary-color);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 13px;
+  font-family: var(--font);
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: none;
+}
+
+.preview::-webkit-scrollbar {
+  display: none;
 }
 
 .preview span {
-  background-color: var(--secondary-color);
+  background-color: transparent;
+  color: var(--text-color);
 }
 
 .placeholder {
-  color: #999;
+  color: var(--text-dim);
+  background-color: transparent;
 }
 
+/* Move buttons */
 .move-buttons {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 8px;
   justify-content: center;
-  margin-bottom: 1rem;
+  background-color: transparent;
 }
 
 .move-buttons-column {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 6px;
+  background-color: transparent;
 }
 
-.inverse-toggle {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 1rem;
-}
-
-.move-buttons button, .inverse-toggle button {
-  flex: 0 0 auto;
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
+.move-buttons button {
+  padding: 6px 14px;
+  font-size: 12px;
+  font-family: var(--font);
   cursor: pointer;
-  border: solid;
-  border-width: 1px;
-  border-color: var(--border-color);
-  border-radius: 15px;
+  background-color: var(--secondary-color);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  color: var(--text-color);
+  min-width: 44px;
+  transition: border-color 0.15s, background-color 0.15s;
 }
 
-.inverse-toggle span {
-  margin-left: 10px;
+.move-buttons button:hover {
+  border-color: var(--highlight-color);
+  background-color: color-mix(in srgb, var(--highlight-color) 12%, var(--secondary-color));
 }
 
-.action-buttons {
+/* Controls row: undo + inverse toggle */
+.alg-controls {
   display: flex;
-  justify-content: center;
-  width: 100%;
-  margin-top: 20px;
+  flex-direction: row;
+  gap: 8px;
+  background-color: transparent;
 }
 
-.action-buttons button {
-  background-color: color-mix(in srgb, var(--highlight-color) 60%, transparent);
-  font-size: 1rem;
-  width: 100%;
-  min-height: 2rem;
-  border: solid;
-  border-width: 1px;
-  border-color: transparent;
-  border-radius: 10px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  padding-left: 5px;
-  padding-right: 5px;
-  transition: transform 0.3s ease;
-}
-
-.action-buttons button:hover {
+.alg-undo-btn {
+  padding: 7px 14px;
+  font-size: 12px;
+  font-family: var(--font);
   cursor: pointer;
-  background-color: var(--highlight-color);
-  transform: translateY(-3px);
+  background-color: var(--secondary-color);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  color: var(--text-dim);
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.alg-undo-btn:hover {
+  border-color: color-mix(in srgb, var(--highlight-color) 50%, transparent);
+  color: var(--text-color);
+}
+
+.alg-inverse-btn {
+  padding: 7px 14px;
+  font-size: 12px;
+  font-family: var(--font);
+  cursor: pointer;
+  background-color: var(--secondary-color);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  color: var(--text-dim);
+  transition: border-color 0.15s, background-color 0.15s, color 0.15s;
+}
+
+.alg-inverse-btn.active {
+  border-color: var(--highlight-color);
+  background-color: color-mix(in srgb, var(--highlight-color) 14%, var(--secondary-color));
+  color: var(--highlight-color);
+}
+
+/* Submit */
+.alg-submit-btn {
+  width: 100%;
+  padding: 10px;
+  font-size: 13px;
+  font-family: var(--font);
+  cursor: pointer;
+  background-color: color-mix(in srgb, var(--highlight-color) 20%, var(--secondary-color));
+  border: 1px solid color-mix(in srgb, var(--highlight-color) 35%, transparent);
+  border-radius: 8px;
+  color: var(--text-color);
+  transition: background-color 0.2s, transform 0.15s;
+}
+
+.alg-submit-btn:hover {
+  background-color: color-mix(in srgb, var(--highlight-color) 38%, var(--secondary-color));
+  transform: translateY(-1px);
 }
 
 @keyframes puzzlenav {

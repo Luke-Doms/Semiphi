@@ -18,7 +18,7 @@ import useMediaQuery from "./MediaQuery.js";
 import NotificationModal from "./NotificationModal.jsx";
 import Logo from '../assets/Logo.svg';
 
-function MainSpace({ currentPuzzleName }) {
+function MainSpace({ currentPuzzleName, setCurrentPuzzleName }) {
   const navigate = useNavigate();
   const location = useLocation();
   const { user, logout, refreshUser } = useContext(AuthContext);
@@ -137,7 +137,7 @@ function MainSpace({ currentPuzzleName }) {
         <Routes location={state?.background || location}>
           <Route path="/" element={<Home />}/>
           <Route path="/settings" element={<Settings />}/>
-          <Route path="/Puzzles" element={<Puzzles currentPuzzleName={currentPuzzleName}/>} />
+          <Route path="/Puzzles" element={<Puzzles currentPuzzleName={currentPuzzleName} setCurrentPuzzleName={setCurrentPuzzleName}/>} />
         </Routes>
 
         
@@ -170,18 +170,20 @@ function MainSpace({ currentPuzzleName }) {
           </Routes>
         )}
 
-        <div className='bottombar'>
-          <div className='bottom-icons-container'>
-            <div className='bottom-icons' onClick={() => {sendEmail()}}>
-              <span>Contact Us</span>
-              <IoMailOutline />
-            </div>
-            <div className='bottom-icons' onClick={() => (window.open('https://github.com/Luke-Doms/Semiphi'))}>
-              <span>Github</span>
-              <VscGithub />
+        {!isMobile && (
+          <div className='bottombar'>
+            <div className='bottom-icons-container'>
+              <div className='bottom-icons' onClick={() => sendEmail()}>
+                <span>Contact Us</span>
+                <IoMailOutline />
+              </div>
+              <div className='bottom-icons' onClick={() => window.open('https://github.com/Luke-Doms/Semiphi')}>
+                <span>Github</span>
+                <VscGithub />
+              </div>
             </div>
           </div>
-        </div>
+        )}
     </div>
   )
 }

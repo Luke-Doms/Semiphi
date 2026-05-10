@@ -97,7 +97,7 @@ function App() {
         <NavBar />
       )}
       <div className='page-content'>
-        <MainSpace currentPuzzleName={currentPuzzleName}/>
+        <MainSpace currentPuzzleName={currentPuzzleName} setCurrentPuzzleName={setCurrentPuzzleName}/>
         {/*<Routes>
           <Route path="/puzzles" element={<PuzzleNav />}/>
         </Routes>*/}
